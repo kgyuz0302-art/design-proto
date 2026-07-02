@@ -291,42 +291,127 @@
       .preview-wrap {
         display: grid;
         align-content: start;
+        gap: 14px;
+      }
+
+      .preview-lead {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .sticker-heading {
+        margin: 0 0 6px;
+        font-size: 1rem;
+      }
+
+      .sticker-actions {
+        display: flex;
+        flex-wrap: wrap;
         gap: 10px;
       }
 
-      .preview-card {
-        min-height: 360px;
-        border: 1px solid var(--line);
-        background: var(--paper);
-        padding: 24px;
-        font-family: "Yu Mincho", "Hiragino Mincho ProN", "Times New Roman", serif;
-        box-shadow: 9px 9px 0 rgba(31, 29, 26, 0.08);
+      .sticker-sheet {
+        display: flex;
+        justify-content: center;
+        padding: 30px 18px;
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        background:
+          repeating-linear-gradient(
+            to bottom,
+            rgba(143, 111, 69, 0.08) 0,
+            rgba(143, 111, 69, 0.08) 1px,
+            transparent 1px,
+            transparent 28px
+          ),
+          #fbf4e5;
       }
 
-      .preview-date {
+      .print-area {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .story-sticker {
+        width: 230px;
+        min-height: 560px;
+        box-sizing: border-box;
+        padding: 18px 20px 22px;
+        border: 1.5px solid #333;
+        background: #fff;
+        color: #222;
+        font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      }
+
+      .story-sticker-date {
         margin: 0 0 12px;
-        color: var(--muted);
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        font-size: 0.8rem;
-      }
-
-      .preview-title {
-        margin: 0 0 18px;
-        font-size: 1.45rem;
+        font-size: 12px;
         font-weight: 600;
-        line-height: 1.35;
+        line-height: 1.4;
+        text-align: right;
       }
 
-      .preview-body {
+      .story-sticker-title {
+        margin: 0 0 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #333;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      .story-sticker-body {
         margin: 0;
+        font-size: 14px;
+        letter-spacing: 0.03em;
+        line-height: 1.9;
         white-space: pre-wrap;
-        line-height: 2;
       }
 
       .note {
         margin: 0;
         color: var(--muted);
         font-size: 0.86rem;
+      }
+
+      @media print {
+        @page {
+          margin: 10mm;
+        }
+
+        body {
+          background: #fff;
+        }
+
+        body * {
+          visibility: hidden;
+        }
+
+        .print-area,
+        .print-area * {
+          visibility: visible;
+        }
+
+        .print-area {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          background: #fff;
+        }
+
+        .story-sticker {
+          box-shadow: none;
+        }
+
+        .no-print {
+          display: none !important;
+        }
       }
 
       @media (max-width: 900px) {
@@ -365,9 +450,14 @@
           width: 100%;
         }
 
-        .preview-card {
-          padding: 18px;
-          min-height: 300px;
+        .sticker-sheet {
+          padding: 24px 10px;
+        }
+
+        .story-sticker {
+          width: min(230px, 100%);
+          min-height: 520px;
+          padding: 16px 18px 20px;
         }
       }
     </style>
@@ -381,7 +471,7 @@
 
       <section class="intro" aria-label="サービス説明">
         <div class="intro-text">
-          <p>「会話の日記」は、LINEに残った会話から小さな出来事を見つけ、日記のような短編小説カードに変換するプロトタイプです。</p>
+          <p>「会話の日記」は、LINEに残った会話から小さな出来事を見つけ、日記のような文章シールに変換するプロトタイプです。</p>
           <p>このプロトタイプでは、会話をそのまま保存せず、名前や場所をぼかして物語化する想定です。</p>
           <p>今回はAI APIを使わず、ブラウザ上のJavaScriptだけでキーワードを見つけ、候補を作ります。</p>
         </div>
@@ -390,7 +480,8 @@
           <ol>
             <li>LINEトークを貼る</li>
             <li>小説候補をつくる</li>
-            <li>気に入ったカードを選ぶ</li>
+            <li>気に入った物語を選ぶ</li>
+            <li>縦長シールとして残す</li>
           </ol>
         </div>
       </section>
@@ -423,8 +514,8 @@
         </div>
       </section>
 
-      <section class="panel" style="margin-top: 22px" aria-label="編集とプレビュー">
-        <h2>編集・プレビュー</h2>
+      <section class="panel" style="margin-top: 22px" aria-label="編集とシールプレビュー">
+        <h2>編集・シールプレビュー</h2>
         <div class="editor-grid">
           <div>
             <label class="field" for="dateEdit">
@@ -442,11 +533,23 @@
           </div>
 
           <div class="preview-wrap">
-            <article class="preview-card" aria-label="カードプレビュー">
-              <p class="preview-date" id="previewDate">日付なし</p>
-              <h3 class="preview-title" id="previewTitle">まだカードがありません</h3>
-              <p class="preview-body" id="previewBody">候補を選ぶと、ここに紙の切り抜き風のカードが表示されます。</p>
-            </article>
+            <div class="no-print">
+              <h3 class="sticker-heading">シールプレビュー</h3>
+              <p class="preview-lead">選んだ物語を、縦長の文章シールとして確認できます。印刷してノートに貼ることを想定しています。</p>
+            </div>
+            <div class="sticker-actions no-print">
+              <button class="button" id="printButton" type="button">印刷する</button>
+              <button class="button secondary" id="saveStickerButton" type="button">シールとして残す</button>
+            </div>
+            <div class="sticker-sheet" aria-label="ノートに貼ったシールのイメージ">
+              <div class="print-area">
+                <article class="story-sticker" aria-label="シールプレビュー">
+                  <p class="story-sticker-date" id="previewDate">日付なし</p>
+                  <h3 class="story-sticker-title" id="previewTitle">まだシールがありません</h3>
+                  <p class="story-sticker-body" id="previewBody">候補を選ぶと、ここに縦長の文章シールとして表示されます。</p>
+                </article>
+              </div>
+            </div>
             <p class="note">Webリンクは「リンク」に置き換え、会話の名前は本文に出さない想定です。</p>
           </div>
         </div>
@@ -580,7 +683,9 @@
           bodyEdit: document.getElementById("bodyEdit"),
           previewDate: document.getElementById("previewDate"),
           previewTitle: document.getElementById("previewTitle"),
-          previewBody: document.getElementById("previewBody")
+          previewBody: document.getElementById("previewBody"),
+          printButton: document.getElementById("printButton"),
+          saveStickerButton: document.getElementById("saveStickerButton")
         };
 
         const missingElements = Object.keys(elements).filter(function (key) {
@@ -619,6 +724,18 @@
 
         [elements.dateEdit, elements.titleEdit, elements.bodyEdit].forEach(function (input) {
           input.addEventListener("input", updatePreview);
+        });
+
+        [elements.printButton, elements.saveStickerButton].forEach(function (button) {
+          button.addEventListener("click", function () {
+            console.log(button.textContent + " button clicked");
+            try {
+              setStatus("シールの印刷画面を開きます");
+              window.print();
+            } catch (error) {
+              handleError(error);
+            }
+          });
         });
 
         window.addEventListener("error", function (event) {
@@ -822,8 +939,8 @@
 
         function updatePreview() {
           elements.previewDate.textContent = elements.dateEdit.value.trim() || "日付なし";
-          elements.previewTitle.textContent = elements.titleEdit.value.trim() || "まだカードがありません";
-          elements.previewBody.textContent = elements.bodyEdit.value.trim() || "候補を選ぶと、ここに紙の切り抜き風のカードが表示されます。";
+          elements.previewTitle.textContent = elements.titleEdit.value.trim() || "まだシールがありません";
+          elements.previewBody.textContent = elements.bodyEdit.value.trim() || "候補を選ぶと、ここに縦長の文章シールとして表示されます。";
         }
 
         function firstParagraph(text) {
