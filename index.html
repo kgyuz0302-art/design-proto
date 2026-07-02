@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>会話の日記</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f1e6;
+        --paper: #fffdf8;
+        --paper-soft: #fbf6eb;
+        --ink: #1f1d1a;
+        --muted: #6c675f;
+        --line: #26221d;
+        --line-soft: #ded4c3;
+        --accent: #8f6f45;
+        --accent-soft: #efe3d0;
+        --shadow: 0 18px 50px rgba(61, 48, 31, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.7;
+      }
+
+      button,
+      input,
+      textarea {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .page {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 34px 0 56px;
+      }
+
+      .hero {
+        padding: 28px 0 22px;
+        border-bottom: 1px solid var(--line-soft);
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", "Times New Roman", serif;
+        font-size: clamp(2.1rem, 5vw, 4rem);
+        font-weight: 600;
+        letter-spacing: 0;
+      }
+
+      .hero p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+
+      .intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+        gap: 22px;
+        padding: 26px 0;
+      }
+
+      .intro-text,
+      .steps,
+      .panel {
+        background: rgba(255, 253, 248, 0.72);
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      .intro-text {
+        padding: 22px;
+      }
+
+      .intro-text p {
+        margin: 0 0 14px;
+      }
+
+      .intro-text p:last-child {
+        margin-bottom: 0;
+      }
+
+      .steps {
+        padding: 20px 22px;
+      }
+
+      .steps h2,
+      .panel h2 {
+        margin: 0 0 12px;
+        font-size: 1.08rem;
+      }
+
+      .steps ol {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding-left: 1.35rem;
+      }
+
+      .steps li::marker {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .status {
+        min-height: 42px;
+        margin: 0 0 18px;
+        padding: 10px 14px;
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        background: var(--paper);
+        color: var(--muted);
+      }
+
+      .status.is-active {
+        border-color: var(--line);
+        color: var(--ink);
+      }
+
+      .status.is-error {
+        border-color: #9f3b31;
+        color: #7f2f27;
+        background: #fff8f5;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+        gap: 22px;
+        align-items: start;
+      }
+
+      .panel {
+        padding: 20px;
+      }
+
+      .label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      textarea,
+      input {
+        width: 100%;
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        background: #fffefa;
+        color: var(--ink);
+        outline: none;
+      }
+
+      textarea:focus,
+      input:focus {
+        border-color: var(--line);
+        box-shadow: 0 0 0 3px rgba(143, 111, 69, 0.16);
+      }
+
+      #talkInput {
+        min-height: 330px;
+        resize: vertical;
+        padding: 14px;
+        white-space: pre-wrap;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .button {
+        min-height: 44px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        padding: 0 18px;
+        background: var(--ink);
+        color: #fffdf8;
+      }
+
+      .button.secondary {
+        background: transparent;
+        color: var(--ink);
+      }
+
+      .button:hover,
+      .candidate-card:hover {
+        transform: translateY(-1px);
+      }
+
+      .candidate-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .empty {
+        margin: 0;
+        padding: 22px;
+        border: 1px dashed var(--line-soft);
+        border-radius: 8px;
+        color: var(--muted);
+        background: rgba(255, 253, 248, 0.55);
+      }
+
+      .candidate-card {
+        display: block;
+        width: 100%;
+        min-height: 178px;
+        padding: 14px;
+        text-align: left;
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        background: var(--paper);
+        color: var(--ink);
+        transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+      }
+
+      .candidate-card.is-selected {
+        border-color: var(--line);
+        background: var(--accent-soft);
+        box-shadow: inset 0 0 0 1px var(--line);
+      }
+
+      .candidate-date,
+      .source-label {
+        display: block;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .candidate-card h3 {
+        margin: 6px 0 8px;
+        font-size: 1.06rem;
+      }
+
+      .source-label {
+        margin-bottom: 8px;
+      }
+
+      .excerpt {
+        display: -webkit-box;
+        margin: 0;
+        overflow: hidden;
+        color: #3d3933;
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", "Times New Roman", serif;
+        font-size: 0.92rem;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+      }
+
+      .editor-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
+        gap: 18px;
+      }
+
+      .field {
+        display: grid;
+        gap: 7px;
+        margin-bottom: 13px;
+      }
+
+      .field input {
+        min-height: 42px;
+        padding: 8px 11px;
+      }
+
+      #bodyEdit {
+        min-height: 260px;
+        padding: 12px;
+        resize: vertical;
+      }
+
+      .preview-wrap {
+        display: grid;
+        align-content: start;
+        gap: 10px;
+      }
+
+      .preview-card {
+        min-height: 360px;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        padding: 24px;
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", "Times New Roman", serif;
+        box-shadow: 9px 9px 0 rgba(31, 29, 26, 0.08);
+      }
+
+      .preview-date {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 0.8rem;
+      }
+
+      .preview-title {
+        margin: 0 0 18px;
+        font-size: 1.45rem;
+        font-weight: 600;
+        line-height: 1.35;
+      }
+
+      .preview-body {
+        margin: 0;
+        white-space: pre-wrap;
+        line-height: 2;
+      }
+
+      .note {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      @media (max-width: 900px) {
+        .intro,
+        .workspace,
+        .editor-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .candidate-list {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .page {
+          width: min(100% - 22px, 1120px);
+          padding-top: 18px;
+        }
+
+        .hero {
+          padding-top: 18px;
+        }
+
+        .panel,
+        .intro-text,
+        .steps {
+          padding: 16px;
+        }
+
+        .actions {
+          display: grid;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        .preview-card {
+          padding: 18px;
+          min-height: 300px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <h1>会話の日記</h1>
+        <p>日記にならなかった会話を、小さな物語として残す。</p>
+      </header>
+
+      <section class="intro" aria-label="サービス説明">
+        <div class="intro-text">
+          <p>「会話の日記」は、LINEに残った会話から小さな出来事を見つけ、日記のような短編小説カードに変換するプロトタイプです。</p>
+          <p>このプロトタイプでは、会話をそのまま保存せず、名前や場所をぼかして物語化する想定です。</p>
+          <p>今回はAI APIを使わず、ブラウザ上のJavaScriptだけでキーワードを見つけ、候補を作ります。</p>
+        </div>
+        <div class="steps">
+          <h2>使い方</h2>
+          <ol>
+            <li>LINEトークを貼る</li>
+            <li>小説候補をつくる</li>
+            <li>気に入ったカードを選ぶ</li>
+          </ol>
+        </div>
+      </section>
+
+      <p class="status" id="statusMessage" role="status" aria-live="polite">LINEトークを貼るか、サンプルを入れてください。</p>
+
+      <section class="workspace" aria-label="会話からカードを作る">
+        <div class="panel">
+          <h2>LINEトーク</h2>
+          <label class="label" for="talkInput">貼り付け欄</label>
+          <textarea id="talkInput" placeholder="2026/06/25(木)
+09:02 そら 今日って泊まりの準備いる？
+09:05 なな いると思う！タオルと歯ブラシは持った
+09:09 そら 荷物もういっぱいなんだけど
+09:12 なな 雨も降ってるし大変だね
+09:30 そら まだ出発前なのに少し疲れてきた
+13:40 なな 授業終わったらどこ集合する？
+13:42 そら 出口の近くで待ってる"></textarea>
+          <div class="actions">
+            <button class="button secondary" id="sampleButton" type="button">サンプルを入れる</button>
+            <button class="button" id="generateButton" type="button">小説候補をつくる</button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>小説候補</h2>
+          <div class="candidate-list" id="candidateList">
+            <p class="empty">まだ候補はありません。会話を貼って「小説候補をつくる」を押してください。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" style="margin-top: 22px" aria-label="編集とプレビュー">
+        <h2>編集・プレビュー</h2>
+        <div class="editor-grid">
+          <div>
+            <label class="field" for="dateEdit">
+              <span class="label">日付</span>
+              <input id="dateEdit" type="text" placeholder="候補を選ぶと入ります" />
+            </label>
+            <label class="field" for="titleEdit">
+              <span class="label">題名</span>
+              <input id="titleEdit" type="text" placeholder="候補を選ぶと入ります" />
+            </label>
+            <label class="field" for="bodyEdit">
+              <span class="label">本文</span>
+              <textarea id="bodyEdit" placeholder="候補を選ぶと入ります"></textarea>
+            </label>
+          </div>
+
+          <div class="preview-wrap">
+            <article class="preview-card" aria-label="カードプレビュー">
+              <p class="preview-date" id="previewDate">日付なし</p>
+              <h3 class="preview-title" id="previewTitle">まだカードがありません</h3>
+              <p class="preview-body" id="previewBody">候補を選ぶと、ここに紙の切り抜き風のカードが表示されます。</p>
+            </article>
+            <p class="note">Webリンクは「リンク」に置き換え、会話の名前は本文に出さない想定です。</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const SAMPLE_TEXT = `2026/06/18(木)
+13:10 みお 今日のレポートどうする？
+13:12 はる 参考文献探してるけど全然決まらない
+13:14 みお AIに聞いたらそれっぽいの出たけど、リンク開けなかった
+13:15 はる 便利なのか不便なのか分からんね
+13:18 みお 最後は自分で確認するしかないやつ
+13:20 はる それも含めて課題って感じする
+
+2026/06/25(木)
+09:02 そら 今日って泊まりの準備いる？
+09:05 なな いると思う！タオルと歯ブラシは持った
+09:09 そら 荷物もういっぱいなんだけど
+09:12 なな 雨も降ってるし最悪だね
+09:30 そら まだ家出てないのに帰りたい
+13:40 なな 授業終わったらどこ集合する？
+13:42 そら 出口の近くで待ってる
+13:45 なな 了解、あとで笑い話にしよ
+
+2026/06/27(土)
+18:20 りく 今どこにいる？
+18:21 まお 駅の近く！
+18:22 りく 迎えに行こうか？
+18:23 まお それはかなり助かる
+18:25 りく じゃあ少し待ってて
+18:26 まお ありがとう、今日いちばん安心した`;
+
+        const STORY_RULES = [
+          {
+            id: "rain-bag",
+            keywords: ["雨", "荷物", "泊まり", "準備", "歯ブラシ", "タオル", "いっぱい", "集合", "出口", "笑い話"],
+            minHits: 2,
+            topic: "雨、荷物、泊まりの準備",
+            title: "荷物",
+            body: `朝から、荷物は思ったより早く一日を重くしていた。
+
+泊まりの準備をしようと必要なものを確かめるほど、鞄の中はすぐにいっぱいになっていく。タオル、歯ブラシ、替えのもの。忘れ物を減らすほど身軽になるはずなのに、なぜか出発前から少しだけへとへとだった。
+
+雨の中で移動のことを考えると、予定はさらに遠く感じられる。それでも授業が終わって、出口の近くで待ち合わせる頃には、重たかった午前中も少しずつ笑い話に変わりはじめていた。`
+          },
+          {
+            id: "references",
+            keywords: ["レポート", "参考文献", "リンク", "開けなかった", "ai", "課題", "確認"],
+            minHits: 2,
+            topic: "レポート、参考文献、AIの使い方",
+            title: "参考文献",
+            body: `レポートの話になると、画面の向こうの会話が少しだけ真剣になった。
+
+参考文献を探して、候補を比べて、機械が出してきた情報をもう一度たしかめる。便利なはずの道具は、最後のところで人の目を必要としていた。開かないリンクを前にすると、近道だったはずのものが急に遠回りに見えてくる。
+
+それでも、分からなさも含めて課題なのだと思えば、少しだけ気が楽になる。ふたりはまた画面の向こうで、提出までの小さな作戦を立てていた。`
+          },
+          {
+            id: "attendance",
+            keywords: ["出席", "遅刻", "いまいってる", "2限", "おくれる", "ゆるして", "雨", "こける"],
+            minHits: 2,
+            topic: "出席、遅刻、雨の連絡",
+            title: "出席",
+            body: `短い連絡で、ゆるんでいた時間が急に走り出した。
+
+出席が始まったと聞いて、まだ向かっている途中の足取りが少しだけ速くなる。遅れることはもう決まっているのに、友だちは笑って許してくれて、雨に気をつけてと言ってくれた。
+
+大学の一日は、こういう小さな連絡で形を変える。間に合うか分からなくても、とりあえず向かっている。そのことだけで、今日をちゃんとやっている気がした。`
+          },
+          {
+            id: "seminar",
+            keywords: ["ゼミ", "説明会", "卒論", "人気", "マネジ", "国際ビジネス", "先生", "ガチゼミ"],
+            minHits: 1,
+            topic: "ゼミ選び、説明会、先生の話",
+            title: "ゼミ",
+            body: `ゼミの話になると、急に未来が近づいてくる。
+
+楽しそうなところ、厳しそうなところ、人気がありすぎて少し怖いところ。どれを選んでも正解に見えるし、どれを選んでも後悔しそうだった。
+
+結局、行ってみないと分からない。その当たり前の言葉に背中を押されて、ふたりはひとつの候補に丸をつけた。迷路の出口ではなく、まず入口を選ぶみたいに。`
+          },
+          {
+            id: "meetup",
+            keywords: ["集合", "何時", "駅", "会場", "遅れてもいい", "飲み物", "徒歩", "行く"],
+            minHits: 2,
+            topic: "集合時間、駅、会場までの道",
+            title: "集合",
+            body: `前日の夜、集合時間はなかなか決まらなかった。
+
+何分前に着けばいいのか。駅から会場まではどれくらいなのか。飲み物は買っておくべきなのか。真面目に考えているようで、ふたりとも心のどこかでは分かっていた。
+
+きっと、みんな少し遅れる。
+
+そう思った瞬間、予定は急にゆるくなった。完璧な集合ではなくてもいい。会場で会えたら、それでちゃんと間に合っている気がした。`
+          },
+          {
+            id: "pickup",
+            keywords: ["迎え", "車", "送る", "待ってて", "来てくれる", "安心"],
+            minHits: 1,
+            topic: "迎え、待ち合わせ、帰り道",
+            title: "迎え",
+            body: `迎えに来てもらうことは、ただ移動が楽になることではなかった。
+
+場所を送れば、そこへ向かってくれる。遅くなりそうでも、待ってくれる。疲れた一日の最後に、自分のために誰かが近づいてきてくれる。
+
+その事実が、帰り道を少しだけ特別にしていた。`
+          }
+        ];
+
+        const GENERIC_STORY = {
+          id: "generic",
+          topic: "短い連絡、何気ない返事、共有された時間",
+          title: "小さな会話",
+          body: `大きな出来事は何もなかった。
+
+それでも、短い連絡や何気ない返事の中に、その日らしさは少しずつ残っていた。予定を確認したり、困ったことを送ったり、笑って返したりするだけで、ただの一日が誰かと共有された時間に変わっていく。
+
+日記にはならなかった会話も、切り抜いてみると小さな物語になっていた。`
+        };
+
+        const elements = {
+          talkInput: document.getElementById("talkInput"),
+          sampleButton: document.getElementById("sampleButton"),
+          generateButton: document.getElementById("generateButton"),
+          statusMessage: document.getElementById("statusMessage"),
+          candidateList: document.getElementById("candidateList"),
+          dateEdit: document.getElementById("dateEdit"),
+          titleEdit: document.getElementById("titleEdit"),
+          bodyEdit: document.getElementById("bodyEdit"),
+          previewDate: document.getElementById("previewDate"),
+          previewTitle: document.getElementById("previewTitle"),
+          previewBody: document.getElementById("previewBody")
+        };
+
+        const missingElements = Object.keys(elements).filter(function (key) {
+          return !elements[key];
+        });
+
+        if (missingElements.length > 0) {
+          console.error("必要なHTML要素が見つかりません", missingElements);
+          if (elements.statusMessage) {
+            setStatus("画面の準備中にエラーが起きました。HTML要素を確認してください", true);
+          }
+          return;
+        }
+
+        let candidates = [];
+        let selectedIndex = -1;
+
+        elements.sampleButton.addEventListener("click", function () {
+          console.log("サンプルを入れる button clicked");
+          try {
+            elements.talkInput.value = SAMPLE_TEXT;
+            setStatus("サンプルを入れました");
+          } catch (error) {
+            handleError(error);
+          }
+        });
+
+        elements.generateButton.addEventListener("click", function () {
+          console.log("小説候補をつくる button clicked");
+          try {
+            generateFromInput();
+          } catch (error) {
+            handleError(error);
+          }
+        });
+
+        [elements.dateEdit, elements.titleEdit, elements.bodyEdit].forEach(function (input) {
+          input.addEventListener("input", updatePreview);
+        });
+
+        window.addEventListener("error", function (event) {
+          console.error("画面エラー", event.error || event.message);
+          setStatus("エラーが起きました。もう一度試してください", true);
+        });
+
+        window.addEventListener("unhandledrejection", function (event) {
+          console.error("処理エラー", event.reason);
+          setStatus("エラーが起きました。もう一度試してください", true);
+        });
+
+        function generateFromInput() {
+          const rawText = elements.talkInput.value.trim();
+
+          if (!rawText) {
+            candidates = [];
+            selectedIndex = -1;
+            renderCandidates();
+            clearEditor();
+            setStatus("LINEトークを貼ってください", true);
+            elements.talkInput.focus();
+            return;
+          }
+
+          const safeText = maskSensitiveText(rawText);
+          candidates = buildCandidates(safeText);
+
+          if (candidates.length === 0) {
+            candidates = [buildGenericCandidate(safeText)];
+            selectedIndex = 0;
+            renderCandidates();
+            selectCandidate(0);
+            setStatus("候補が見つかりませんでした。もう少し長い会話を貼ってください");
+            return;
+          }
+
+          selectedIndex = 0;
+          renderCandidates();
+          selectCandidate(0);
+          setStatus(candidates.length + "件の小説候補を作りました");
+        }
+
+        function buildCandidates(text) {
+          const blocks = splitByDate(text);
+          const found = [];
+          const used = new Set();
+
+          blocks.forEach(function (block) {
+            const lowerText = block.text.toLowerCase();
+
+            STORY_RULES.forEach(function (rule) {
+              const matchedKeywords = rule.keywords.filter(function (keyword) {
+                return lowerText.includes(keyword.toLowerCase());
+              });
+
+              if (matchedKeywords.length < rule.minHits) {
+                return;
+              }
+
+              const key = block.date + "-" + rule.id;
+              if (used.has(key)) {
+                return;
+              }
+
+              used.add(key);
+              found.push({
+                id: rule.id,
+                date: block.date,
+                title: typeof rule.title === "function" ? rule.title(lowerText) : rule.title,
+                topic: rule.topic,
+                body: rule.body,
+                score: matchedKeywords.length
+              });
+            });
+          });
+
+          return found.slice(0, 6);
+        }
+
+        function buildGenericCandidate(text) {
+          return {
+            id: GENERIC_STORY.id,
+            date: detectFirstDate(text),
+            title: GENERIC_STORY.title,
+            topic: GENERIC_STORY.topic,
+            body: GENERIC_STORY.body,
+            score: 0
+          };
+        }
+
+        function splitByDate(text) {
+          const lines = text.split(/\r?\n/);
+          const blocks = [];
+          let current = { date: "日付なし", text: "" };
+          const dateLine = /^\s*(\d{4}[\/.-]\d{1,2}[\/.-]\d{1,2}(?:\(.+?\))?)\s*$/;
+
+          lines.forEach(function (line) {
+            const dateMatch = line.match(dateLine);
+            if (dateMatch) {
+              if (current.text.trim()) {
+                blocks.push(current);
+              }
+              current = { date: dateMatch[1], text: line + "\n" };
+              return;
+            }
+
+            current.text += line + "\n";
+          });
+
+          if (current.text.trim()) {
+            blocks.push(current);
+          }
+
+          return blocks.length > 0 ? blocks : [{ date: "日付なし", text: text }];
+        }
+
+        function detectFirstDate(text) {
+          const match = text.match(/\d{4}[\/.-]\d{1,2}[\/.-]\d{1,2}(?:\(.+?\))?/);
+          return match ? match[0] : "日付なし";
+        }
+
+        function maskSensitiveText(text) {
+          return text
+            .replace(/https?:\/\/[^\s]+/gi, "リンク")
+            .replace(/line\.me\/[^\s]+/gi, "リンク")
+            .replace(/(?:pay|payment)[^\s]*/gi, "リンク");
+        }
+
+        function renderCandidates() {
+          elements.candidateList.innerHTML = "";
+
+          if (candidates.length === 0) {
+            const empty = document.createElement("p");
+            empty.className = "empty";
+            empty.textContent = "まだ候補はありません。会話を貼って「小説候補をつくる」を押してください。";
+            elements.candidateList.appendChild(empty);
+            return;
+          }
+
+          candidates.forEach(function (candidate, index) {
+            const card = document.createElement("button");
+            card.type = "button";
+            card.className = "candidate-card" + (index === selectedIndex ? " is-selected" : "");
+            card.setAttribute("aria-pressed", index === selectedIndex ? "true" : "false");
+
+            const date = document.createElement("span");
+            date.className = "candidate-date";
+            date.textContent = candidate.date;
+
+            const title = document.createElement("h3");
+            title.textContent = candidate.title;
+
+            const topic = document.createElement("span");
+            topic.className = "source-label";
+            topic.textContent = "抽出した話題: " + candidate.topic;
+
+            const excerpt = document.createElement("p");
+            excerpt.className = "excerpt";
+            excerpt.textContent = firstParagraph(candidate.body);
+
+            card.appendChild(date);
+            card.appendChild(title);
+            card.appendChild(topic);
+            card.appendChild(excerpt);
+
+            card.addEventListener("click", function () {
+              console.log("候補カード button clicked", candidate.title);
+              try {
+                selectCandidate(index);
+                setStatus("「" + candidate.title + "」を選びました");
+              } catch (error) {
+                handleError(error);
+              }
+            });
+
+            elements.candidateList.appendChild(card);
+          });
+        }
+
+        function selectCandidate(index) {
+          const candidate = candidates[index];
+          if (!candidate) {
+            return;
+          }
+
+          selectedIndex = index;
+          elements.dateEdit.value = candidate.date;
+          elements.titleEdit.value = candidate.title;
+          elements.bodyEdit.value = candidate.body;
+          renderCandidates();
+          updatePreview();
+        }
+
+        function clearEditor() {
+          elements.dateEdit.value = "";
+          elements.titleEdit.value = "";
+          elements.bodyEdit.value = "";
+          updatePreview();
+        }
+
+        function updatePreview() {
+          elements.previewDate.textContent = elements.dateEdit.value.trim() || "日付なし";
+          elements.previewTitle.textContent = elements.titleEdit.value.trim() || "まだカードがありません";
+          elements.previewBody.textContent = elements.bodyEdit.value.trim() || "候補を選ぶと、ここに紙の切り抜き風のカードが表示されます。";
+        }
+
+        function firstParagraph(text) {
+          return text.split(/\n\s*\n/)[0];
+        }
+
+        function setStatus(message, isError) {
+          elements.statusMessage.textContent = message;
+          elements.statusMessage.classList.add("is-active");
+          elements.statusMessage.classList.toggle("is-error", Boolean(isError));
+        }
+
+        function handleError(error) {
+          console.error(error);
+          setStatus("エラーが起きました。もう一度試してください", true);
+        }
+      });
+    </script>
+  </body>
+</html>
