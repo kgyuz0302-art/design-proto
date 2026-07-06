@@ -239,7 +239,8 @@
       }
 
       .candidate-date,
-      .source-label {
+      .source-label,
+      .theme-label {
         display: block;
         color: var(--muted);
         font-size: 0.78rem;
@@ -252,6 +253,11 @@
 
       .source-label {
         margin-bottom: 8px;
+      }
+
+      .theme-label {
+        margin: 8px 0 0;
+        font-weight: 700;
       }
 
       .excerpt {
@@ -311,6 +317,38 @@
         gap: 10px;
       }
 
+      .theme-controls {
+        display: grid;
+        gap: 8px;
+        padding: 12px;
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        background: rgba(255, 253, 248, 0.72);
+      }
+
+      .theme-control-row {
+        display: grid;
+        grid-template-columns: minmax(120px, 0.55fr) minmax(0, 1fr);
+        gap: 10px;
+        align-items: center;
+      }
+
+      .theme-select {
+        min-height: 40px;
+        width: 100%;
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        background: #fffefa;
+        color: var(--ink);
+        padding: 8px 10px;
+      }
+
+      .theme-recommendation {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
       .sticker-sheet {
         display: flex;
         justify-content: center;
@@ -335,15 +373,21 @@
       }
 
       .story-sticker {
+        --sticker-bg: #fff;
+        --sticker-ink: #222;
+        --sticker-line: #333;
+        position: relative;
         width: 230px;
         min-height: 560px;
         box-sizing: border-box;
         padding: 18px 20px 22px;
-        border: 1.5px solid #333;
-        background: #fff;
-        color: #222;
+        border: 1.5px solid var(--sticker-line);
+        background: var(--sticker-bg);
+        color: var(--sticker-ink);
         font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
       }
 
       .story-sticker-date {
@@ -357,7 +401,7 @@
       .story-sticker-title {
         margin: 0 0 16px;
         padding-bottom: 8px;
-        border-bottom: 1px solid #333;
+        border-bottom: 1px solid var(--sticker-line);
         font-size: 24px;
         font-weight: 700;
         line-height: 1.3;
@@ -541,6 +585,13 @@
               <button class="button" id="printButton" type="button">印刷する</button>
               <button class="button secondary" id="saveStickerButton" type="button">シールとして残す</button>
             </div>
+            <div class="theme-controls no-print" aria-label="シールの色テーマ">
+              <p class="theme-recommendation" id="themeRecommendation">AIおすすめ：アイボリー</p>
+              <label class="theme-control-row" for="themeSelect">
+                <span class="label">色テーマ</span>
+                <select class="theme-select" id="themeSelect"></select>
+              </label>
+            </div>
             <div class="sticker-sheet" aria-label="ノートに貼ったシールのイメージ">
               <div class="print-area">
                 <article class="story-sticker" aria-label="シールプレビュー">
@@ -583,6 +634,17 @@
 18:23 まお それはかなり助かる
 18:25 りく じゃあ少し待ってて
 18:26 まお ありがとう、今日いちばん安心した`;
+
+        const STICKER_THEMES = [
+          { id: "ivory", name: "アイボリー", bg: "#FFF9ED", ink: "#7A654F", line: "#7A654F" },
+          { id: "beige", name: "ベージュ", bg: "#F4E7D3", ink: "#6F5A45", line: "#6F5A45" },
+          { id: "greige", name: "グレージュ", bg: "#EEEAE3", ink: "#6B655E", line: "#6B655E" },
+          { id: "monochrome", name: "モノクロ", bg: "#F4F4F2", ink: "#3A3A3A", line: "#3A3A3A" },
+          { id: "pale-blue", name: "薄い水色", bg: "#DDF4F8", ink: "#2F5F68", line: "#2F5F68" },
+          { id: "pale-pink", name: "薄いピンク", bg: "#F6D8D1", ink: "#7A4A4A", line: "#7A4A4A" },
+          { id: "lavender", name: "ラベンダー", bg: "#E7D8F5", ink: "#56325F", line: "#56325F" },
+          { id: "pale-yellow", name: "薄いイエロー", bg: "#FFF1B8", ink: "#7A5B32", line: "#7A5B32" }
+        ];
 
         const STORY_RULES = [
           {
@@ -685,7 +747,10 @@
           previewTitle: document.getElementById("previewTitle"),
           previewBody: document.getElementById("previewBody"),
           printButton: document.getElementById("printButton"),
-          saveStickerButton: document.getElementById("saveStickerButton")
+          saveStickerButton: document.getElementById("saveStickerButton"),
+          themeSelect: document.getElementById("themeSelect"),
+          themeRecommendation: document.getElementById("themeRecommendation"),
+          storySticker: document.querySelector(".story-sticker")
         };
 
         const missingElements = Object.keys(elements).filter(function (key) {
@@ -702,6 +767,10 @@
 
         let candidates = [];
         let selectedIndex = -1;
+        let selectedThemeId = "ivory";
+
+        setupThemeSelect();
+        applyStickerTheme(selectedThemeId, "AIおすすめ");
 
         elements.sampleButton.addEventListener("click", function () {
           console.log("サンプルを入れる button clicked");
@@ -724,6 +793,13 @@
 
         [elements.dateEdit, elements.titleEdit, elements.bodyEdit].forEach(function (input) {
           input.addEventListener("input", updatePreview);
+        });
+
+        elements.themeSelect.addEventListener("change", function () {
+          console.log("色テーマ select changed", elements.themeSelect.value);
+          selectedThemeId = elements.themeSelect.value;
+          applyStickerTheme(selectedThemeId, "選択中");
+          setStatus("色テーマを「" + getThemeName(selectedThemeId) + "」に変更しました");
         });
 
         [elements.printButton, elements.saveStickerButton].forEach(function (button) {
@@ -802,12 +878,14 @@
               }
 
               used.add(key);
+              const titleValue = typeof rule.title === "function" ? rule.title(lowerText) : rule.title;
               found.push({
                 id: rule.id,
                 date: block.date,
-                title: typeof rule.title === "function" ? rule.title(lowerText) : rule.title,
+                title: titleValue,
                 topic: rule.topic,
                 body: rule.body,
+                themeId: recommendThemeForStory(titleValue, rule.body),
                 score: matchedKeywords.length
               });
             });
@@ -823,6 +901,7 @@
             title: GENERIC_STORY.title,
             topic: GENERIC_STORY.topic,
             body: GENERIC_STORY.body,
+            themeId: recommendThemeForStory(GENERIC_STORY.title, GENERIC_STORY.body),
             score: 0
           };
         }
@@ -893,6 +972,10 @@
             topic.className = "source-label";
             topic.textContent = "抽出した話題: " + candidate.topic;
 
+            const theme = document.createElement("span");
+            theme.className = "theme-label";
+            theme.textContent = "AIおすすめ：" + getThemeName(candidate.themeId);
+
             const excerpt = document.createElement("p");
             excerpt.className = "excerpt";
             excerpt.textContent = firstParagraph(candidate.body);
@@ -900,6 +983,7 @@
             card.appendChild(date);
             card.appendChild(title);
             card.appendChild(topic);
+            card.appendChild(theme);
             card.appendChild(excerpt);
 
             card.addEventListener("click", function () {
@@ -926,6 +1010,9 @@
           elements.dateEdit.value = candidate.date;
           elements.titleEdit.value = candidate.title;
           elements.bodyEdit.value = candidate.body;
+          selectedThemeId = candidate.themeId || "ivory";
+          elements.themeSelect.value = selectedThemeId;
+          applyStickerTheme(selectedThemeId, "AIおすすめ");
           renderCandidates();
           updatePreview();
         }
@@ -934,6 +1021,9 @@
           elements.dateEdit.value = "";
           elements.titleEdit.value = "";
           elements.bodyEdit.value = "";
+          selectedThemeId = "ivory";
+          elements.themeSelect.value = selectedThemeId;
+          applyStickerTheme(selectedThemeId, "AIおすすめ");
           updatePreview();
         }
 
@@ -941,6 +1031,53 @@
           elements.previewDate.textContent = elements.dateEdit.value.trim() || "日付なし";
           elements.previewTitle.textContent = elements.titleEdit.value.trim() || "まだシールがありません";
           elements.previewBody.textContent = elements.bodyEdit.value.trim() || "候補を選ぶと、ここに縦長の文章シールとして表示されます。";
+        }
+
+        function setupThemeSelect() {
+          STICKER_THEMES.forEach(function (theme) {
+            const option = document.createElement("option");
+            option.value = theme.id;
+            option.textContent = theme.name;
+            elements.themeSelect.appendChild(option);
+          });
+          elements.themeSelect.value = selectedThemeId;
+        }
+
+        function applyStickerTheme(themeId, labelPrefix) {
+          const theme = getTheme(themeId);
+          elements.storySticker.style.setProperty("--sticker-bg", theme.bg);
+          elements.storySticker.style.setProperty("--sticker-ink", theme.ink);
+          elements.storySticker.style.setProperty("--sticker-line", theme.line);
+          elements.themeRecommendation.textContent = labelPrefix + "：" + theme.name;
+        }
+
+        function getTheme(themeId) {
+          return STICKER_THEMES.find(function (theme) {
+            return theme.id === themeId;
+          }) || STICKER_THEMES[0];
+        }
+
+        function getThemeName(themeId) {
+          return getTheme(themeId).name;
+        }
+
+        function recommendThemeForStory(title, body) {
+          const text = (title + "\n" + body).toLowerCase();
+          const rules = [
+            { themeId: "pale-blue", keywords: ["迎え", "安心", "待ち合わせ", "ありがとう", "会う", "来てくれる"] },
+            { themeId: "pale-pink", keywords: ["ごめん", "待つ", "怒る", "寂しい", "すれ違い"] },
+            { themeId: "lavender", keywords: ["夢", "夜", "怖い", "不思議", "眠い"] },
+            { themeId: "pale-yellow", keywords: ["楽しい", "笑", "遊ぶ", "かわいい", "花束", "メイク"] },
+            { themeId: "beige", keywords: ["課題", "レポート", "参考文献", "ai", "授業", "提出"] }
+          ];
+
+          const matched = rules.find(function (rule) {
+            return rule.keywords.some(function (keyword) {
+              return text.includes(keyword.toLowerCase());
+            });
+          });
+
+          return matched ? matched.themeId : "ivory";
         }
 
         function firstParagraph(text) {
