@@ -645,7 +645,7 @@
       .shape-drop {
         width: min(100%, 430px);
         min-height: 560px;
-        padding: 88px 74px 74px;
+        padding: 0;
         border: none;
         border-radius: 0;
         background: transparent;
@@ -709,8 +709,8 @@
       }
 
       .shape-drop .drop-decor-top {
-        top: 92px;
-        left: 122px;
+        top: 82px;
+        left: 128px;
         width: 98px;
         height: 76px;
       }
@@ -759,34 +759,39 @@
       }
 
       .shape-drop .story-content {
-        width: min(300px, 100%);
+        width: min(270px, 100%);
         margin: 0 auto;
-        padding: 30px 0 60px;
+        padding: 0 0 70px;
+        padding-top: 118px;
+        box-sizing: border-box;
       }
 
       .shape-drop .story-date {
-        margin: 0 0 26px;
-        font-size: 13px;
+        margin: 0 0 28px;
+        font-size: 12px;
         font-weight: 500;
         letter-spacing: 0.03em;
       }
 
       .shape-drop .story-title {
-        margin-bottom: 10px;
+        margin: 0 0 10px;
         font-size: 30px;
-        line-height: 1.18;
+        line-height: 1.2;
+        text-align: left;
       }
 
       .shape-drop .story-divider {
         width: 100%;
         height: 1.5px;
-        margin: 0 0 22px;
+        margin: 0 0 24px;
         opacity: 0.78;
       }
 
       .shape-drop .story-body {
         letter-spacing: 0.055em;
-        line-height: 1.95;
+        font-size: 13px;
+        line-height: 1.9;
+        text-align: left;
       }
 
       .shape-ticket {
@@ -885,19 +890,19 @@
       .shape-drop.text-small {
         width: min(100%, 460px);
         min-height: 620px;
-        padding: 96px 78px 80px;
+        padding: 0;
       }
 
       .shape-drop.text-xsmall {
         width: min(100%, 480px);
         min-height: 660px;
-        padding: 100px 82px 86px;
+        padding: 0;
       }
 
       .shape-drop.text-small .story-content,
       .shape-drop.text-xsmall .story-content {
-        width: min(320px, 100%);
-        padding-top: 34px;
+        width: min(290px, 100%);
+        padding-top: 124px;
       }
 
       .note {
@@ -1021,21 +1026,25 @@
         .shape-drop {
           width: min(360px, 90vw);
           min-height: 470px;
-          padding: 68px 44px 58px;
+          padding: 0;
         }
 
         .shape-drop.text-small,
         .shape-drop.text-xsmall {
           width: min(380px, 90vw);
           min-height: 520px;
-          padding: 74px 48px 64px;
+          padding: 0;
         }
 
-        .shape-drop .story-content,
+        .shape-drop .story-content {
+          width: min(245px, 100%);
+          padding-top: 100px;
+        }
+
         .shape-drop.text-small .story-content,
         .shape-drop.text-xsmall .story-content {
-          width: min(280px, 100%);
-          padding-top: 28px;
+          width: min(260px, 100%);
+          padding-top: 106px;
         }
 
         .shape-label,
