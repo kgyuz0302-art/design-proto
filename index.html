@@ -374,6 +374,7 @@
         --sticker-text: #5e5247;
         --sticker-line: #5e5247;
         position: relative;
+        isolation: isolate;
         box-sizing: border-box;
         width: min(100%, 300px);
         min-height: auto;
@@ -398,6 +399,7 @@
         border-radius: inherit;
         opacity: 0.45;
         pointer-events: none;
+        z-index: 1;
       }
 
       .story-date,
@@ -405,7 +407,7 @@
       .story-divider,
       .story-body {
         position: relative;
-        z-index: 1;
+        z-index: 2;
       }
 
       .story-date {
@@ -501,8 +503,14 @@
       .shape-long {
         width: min(100%, 300px);
         min-height: auto;
-        padding: 24px 24px 28px;
+        padding: 26px 26px 30px;
         border-radius: 2px;
+      }
+
+      .shape-long::before {
+        inset: 10px;
+        border-radius: 1px;
+        opacity: 0.62;
       }
 
       .shape-long .story-title {
@@ -512,25 +520,46 @@
       .shape-card {
         width: min(100%, 310px);
         min-height: auto;
-        padding: 26px 28px 30px;
+        padding: 30px 32px 32px;
         border-radius: 18px;
+        box-shadow: 0 9px 22px rgba(70, 58, 45, 0.12);
       }
 
       .shape-card::before {
-        inset: 10px;
-        border-radius: 14px;
+        inset: 11px;
+        border-radius: 13px;
+        opacity: 0.5;
       }
 
       .shape-label {
         width: min(100%, 430px);
         min-height: auto;
-        padding: 24px 36px;
+        padding: 26px 42px 24px 92px;
         border-radius: 18px;
+        background:
+          radial-gradient(circle at left center, #fbf4e5 0 23px, transparent 24px),
+          radial-gradient(circle at right center, #fbf4e5 0 23px, transparent 24px),
+          var(--sticker-bg);
+        box-shadow: 0 8px 18px rgba(97, 61, 70, 0.12);
       }
 
       .shape-label::before {
-        inset: 9px 14px;
-        border-radius: 11px;
+        inset: 10px 16px;
+        border-radius: 12px;
+        opacity: 0.58;
+      }
+
+      .shape-label::after {
+        content: "♥";
+        position: absolute;
+        right: 28px;
+        bottom: 16px;
+        z-index: 1;
+        color: var(--sticker-line);
+        font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
+        font-size: 20px;
+        line-height: 1;
+        opacity: 0.62;
       }
 
       .shape-label .story-date {
@@ -538,12 +567,24 @@
       }
 
       .shape-label .story-title {
-        font-size: 24px;
+        font-size: 25px;
         margin-bottom: 10px;
       }
 
       .shape-label .story-divider {
+        position: relative;
         margin-bottom: 12px;
+      }
+
+      .shape-label .story-divider::before {
+        content: "";
+        position: absolute;
+        left: -40px;
+        top: -62px;
+        width: 1px;
+        height: 126px;
+        border-left: 1.4px dashed var(--sticker-line);
+        opacity: 0.48;
       }
 
       .shape-label .story-body {
@@ -551,26 +592,50 @@
       }
 
       .shape-round {
-        width: min(100%, 320px);
-        min-height: 320px;
-        aspect-ratio: 1 / 1;
-        padding: 42px 38px;
-        border-radius: 50%;
+        width: min(100%, 330px);
+        min-height: 340px;
+        padding: 46px 42px 50px;
+        border-radius: 48% 48% 44% 44% / 50% 50% 47% 47%;
+        box-shadow: 0 9px 20px rgba(91, 72, 55, 0.12);
       }
 
       .shape-round::before {
         inset: 13px;
-        border-radius: 50%;
+        border-style: dotted;
+        border-radius: inherit;
+        opacity: 0.48;
+      }
+
+      .shape-round::after {
+        content: "❧";
+        position: absolute;
+        left: 50%;
+        bottom: 22px;
+        z-index: 1;
+        color: var(--sticker-line);
+        font-size: 24px;
+        line-height: 1;
+        transform: translateX(-50%) rotate(-8deg);
+        opacity: 0.5;
       }
 
       .shape-round .story-title {
-        text-align: center;
+        text-align: left;
+      }
+
+      .shape-round .story-divider {
+        background: repeating-linear-gradient(
+          to right,
+          var(--sticker-line) 0 3px,
+          transparent 3px 7px
+        );
+        opacity: 0.78;
       }
 
       .shape-drop {
         width: min(100%, 330px);
-        min-height: 360px;
-        padding: 56px 44px 48px;
+        min-height: 372px;
+        padding: 70px 48px 56px;
         border: none;
         border-radius: 0;
         background: transparent;
@@ -584,30 +649,97 @@
         background: var(--sticker-bg);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         opacity: 1;
+        z-index: 0;
+      }
+
+      .shape-drop::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 22px;
+        z-index: 1;
+        width: 11px;
+        height: 17px;
+        border-radius: 62% 62% 70% 70% / 58% 58% 78% 78%;
+        background: var(--sticker-line);
+        transform: translateX(-50%) rotate(8deg);
+        opacity: 0.34;
+      }
+
+      .shape-drop .story-date::before {
+        content: "";
+        position: absolute;
+        left: -172px;
+        top: 6px;
+        width: 9px;
+        height: 15px;
+        border-radius: 62% 62% 70% 70% / 58% 58% 78% 78%;
+        background: var(--sticker-line);
+        box-shadow:
+          22px 12px 0 -1px var(--sticker-line),
+          43px -6px 0 1px var(--sticker-line),
+          48px 22px 0 -2px var(--sticker-line);
+        transform: rotate(12deg);
+        opacity: 0.18;
       }
 
       .shape-drop .story-title {
-        font-size: 30px;
+        font-size: 27px;
+      }
+
+      .shape-drop .story-divider {
+        width: 82%;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .shape-ticket {
         width: min(100%, 440px);
         min-height: auto;
-        padding: 26px 42px;
+        padding: 28px 46px 28px 108px;
         border-radius: 14px;
         background:
-          radial-gradient(circle at left center, #fbf4e5 0 18px, transparent 19px),
-          radial-gradient(circle at right center, #fbf4e5 0 18px, transparent 19px),
+          radial-gradient(circle at left center, #fbf4e5 0 21px, transparent 22px),
+          radial-gradient(circle at right center, #fbf4e5 0 21px, transparent 22px),
           var(--sticker-bg);
+        box-shadow: 0 9px 20px rgba(102, 84, 45, 0.12);
       }
 
       .shape-ticket::before {
-        inset: 11px 18px;
+        inset: 12px 19px;
         border-radius: 10px;
+        opacity: 0.6;
+      }
+
+      .shape-ticket::after {
+        content: "★";
+        position: absolute;
+        left: 34px;
+        bottom: 30px;
+        z-index: 1;
+        color: var(--sticker-line);
+        font-size: 25px;
+        line-height: 1;
+        opacity: 0.5;
       }
 
       .shape-ticket .story-title {
         font-size: 28px;
+      }
+
+      .shape-ticket .story-divider {
+        position: relative;
+      }
+
+      .shape-ticket .story-divider::before {
+        content: "";
+        position: absolute;
+        left: -45px;
+        top: -70px;
+        width: 1px;
+        height: 156px;
+        border-left: 1.4px dashed var(--sticker-line);
+        opacity: 0.45;
       }
 
       .text-large .story-body {
@@ -641,7 +773,7 @@
       @supports (clip-path: path("M0 0")) {
         .shape-drop::before {
           border-radius: 0;
-          clip-path: path("M165 8 C248 58 318 132 318 232 C318 318 252 360 165 360 C78 360 12 318 12 232 C12 132 82 58 165 8 Z");
+          clip-path: path("M165 10 C218 44 295 120 306 205 C318 306 250 374 165 374 C80 374 12 306 24 205 C35 120 112 44 165 10 Z");
         }
       }
 
@@ -926,6 +1058,13 @@
           { id: "yellow", name: "yellow", label: "イエロー", bg: "#F7EFC9", ink: "#6B5F3F", line: "#6B5F3F" }
         ];
 
+        const SHAPE_TEXT_LIMITS = {
+          label: 70,
+          round: 120,
+          drop: 120,
+          ticket: 160
+        };
+
         const STORY_RULES = [
           {
             id: "rain-bag",
@@ -1083,13 +1222,22 @@
           console.log("色テーマ select changed", elements.themeSelect.value);
           selectedThemeId = elements.themeSelect.value;
           applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "選択中");
+          fitStickerLayout("選択中");
           setStatus("色テーマを「" + getThemeLabel(selectedThemeId) + "」に変更しました");
         });
 
         elements.shapeSelect.addEventListener("change", function () {
           console.log("かたち select changed", elements.shapeSelect.value);
-          selectedShapeId = elements.shapeSelect.value;
+          const requestedShapeId = elements.shapeSelect.value;
+          const safeShapeId = getSafeShapeForLength(requestedShapeId, countStoryChars(elements.bodyEdit.value));
+          selectedShapeId = safeShapeId;
+          elements.shapeSelect.value = selectedShapeId;
           applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "選択中");
+          fitStickerLayout("選択中");
+          if (safeShapeId !== requestedShapeId) {
+            setStatus("本文量に合わせて「" + getShapeLabel(selectedShapeId) + "」に調整しました");
+            return;
+          }
           setStatus("シールのかたちを「" + getShapeLabel(selectedShapeId) + "」に変更しました");
         });
 
@@ -1349,7 +1497,7 @@
           elements.previewDate.textContent = elements.dateEdit.value.trim() || "日付なし";
           elements.previewTitle.textContent = title;
           renderStoryBody(body);
-          ensureStickerFits();
+          fitStickerLayout("AIおすすめ");
         }
 
         function renderStoryBody(text) {
@@ -1505,17 +1653,7 @@
             }
           }
 
-          if (length > 280) {
-            shape = "shape-long";
-          } else if (length > 160 && !["shape-card", "shape-long"].includes(shape)) {
-            shape = "shape-card";
-          } else if (length > 120 && ["shape-round", "shape-drop"].includes(shape)) {
-            shape = "shape-card";
-          } else if (length > 160 && shape === "shape-ticket") {
-            shape = "shape-card";
-          } else if (length > 70 && shape === "shape-label") {
-            shape = "shape-card";
-          }
+          shape = "shape-" + getSafeShapeForLength(shape.replace("shape-", ""), length);
 
           let sizeClass = "text-medium";
           if (length > 280) {
@@ -1540,10 +1678,42 @@
           return (text || "").replace(/\s/g, "").length;
         }
 
-        function ensureStickerFits() {
+        function getSafeShapeForLength(shapeId, length) {
+          if (length > 280) {
+            return "long";
+          }
+
+          if (length > 160) {
+            return ["long", "card"].includes(shapeId) ? shapeId : "card";
+          }
+
+          if (length > SHAPE_TEXT_LIMITS.round && ["round", "drop"].includes(shapeId)) {
+            return "card";
+          }
+
+          if (length > SHAPE_TEXT_LIMITS.ticket && shapeId === "ticket") {
+            return "card";
+          }
+
+          if (length > SHAPE_TEXT_LIMITS.label && shapeId === "label") {
+            return "card";
+          }
+
+          return getShape(shapeId).id;
+        }
+
+        function fitStickerLayout(labelPrefix) {
           const sticker = elements.storySticker;
           if (!sticker || !sticker.scrollHeight || !sticker.clientHeight) {
             return;
+          }
+
+          const length = countStoryChars(elements.bodyEdit.value || elements.previewBody.textContent || "");
+          const safeShapeId = getSafeShapeForLength(selectedShapeId, length);
+          if (safeShapeId !== selectedShapeId) {
+            selectedShapeId = safeShapeId;
+            elements.shapeSelect.value = selectedShapeId;
+            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, labelPrefix || "AIおすすめ");
           }
 
           if (sticker.scrollHeight <= sticker.clientHeight + 2) {
@@ -1554,14 +1724,14 @@
           const currentSizeIndex = sizeOrder.indexOf(selectedSizeClass);
           if (currentSizeIndex >= 0 && currentSizeIndex < sizeOrder.length - 1) {
             selectedSizeClass = sizeOrder[currentSizeIndex + 1];
-            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "AIおすすめ");
+            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, labelPrefix || "AIおすすめ");
           }
 
           if (sticker.scrollHeight > sticker.clientHeight + 2) {
             selectedShapeId = "long";
             selectedSizeClass = "text-xsmall";
             elements.shapeSelect.value = selectedShapeId;
-            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "AIおすすめ");
+            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, labelPrefix || "AIおすすめ");
           }
         }
 
