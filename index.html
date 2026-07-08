@@ -385,7 +385,7 @@
         background: var(--sticker-bg);
         color: var(--sticker-text);
         font-family: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "BIZ UDPMincho", serif;
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
       }
@@ -415,7 +415,7 @@
         font-weight: 600;
         font-variant-numeric: tabular-nums;
         letter-spacing: 0.04em;
-        line-height: 1;
+        line-height: 1.2;
         text-align: right;
       }
 
@@ -510,9 +510,9 @@
       }
 
       .shape-card {
-        width: min(100%, 300px);
+        width: min(100%, 310px);
         min-height: auto;
-        padding: 24px;
+        padding: 26px 28px 30px;
         border-radius: 18px;
       }
 
@@ -524,8 +524,8 @@
       .shape-label {
         width: min(100%, 430px);
         min-height: auto;
-        padding: 22px 34px;
-        border-radius: 16px;
+        padding: 24px 36px;
+        border-radius: 18px;
       }
 
       .shape-label::before {
@@ -551,15 +551,16 @@
       }
 
       .shape-round {
-        width: min(100%, 300px);
-        min-height: 300px;
-        padding: 36px 32px;
-        border-radius: 46% 46% 42% 42%;
+        width: min(100%, 320px);
+        min-height: 320px;
+        aspect-ratio: 1 / 1;
+        padding: 42px 38px;
+        border-radius: 50%;
       }
 
       .shape-round::before {
         inset: 13px;
-        border-radius: 46% 46% 42% 42%;
+        border-radius: 50%;
       }
 
       .shape-round .story-title {
@@ -567,15 +568,22 @@
       }
 
       .shape-drop {
-        width: min(100%, 300px);
+        width: min(100%, 330px);
         min-height: 360px;
-        padding: 48px 34px 42px;
-        border-radius: 60% 60% 50% 50% / 70% 70% 45% 45%;
+        padding: 56px 44px 48px;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
       }
 
       .shape-drop::before {
-        inset: 16px;
-        border-radius: 60% 60% 50% 50% / 70% 70% 45% 45%;
+        inset: 0;
+        border: 1.4px solid var(--sticker-line);
+        border-radius: 58% 58% 50% 50% / 70% 70% 44% 44%;
+        background: var(--sticker-bg);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        opacity: 1;
       }
 
       .shape-drop .story-title {
@@ -583,15 +591,19 @@
       }
 
       .shape-ticket {
-        width: min(100%, 430px);
+        width: min(100%, 440px);
         min-height: auto;
-        padding: 24px 40px;
-        border-radius: 12px;
+        padding: 26px 42px;
+        border-radius: 14px;
+        background:
+          radial-gradient(circle at left center, #fbf4e5 0 18px, transparent 19px),
+          radial-gradient(circle at right center, #fbf4e5 0 18px, transparent 19px),
+          var(--sticker-bg);
       }
 
       .shape-ticket::before {
         inset: 11px 18px;
-        border-radius: 9px;
+        border-radius: 10px;
       }
 
       .shape-ticket .story-title {
@@ -609,12 +621,28 @@
       }
 
       .text-small .story-body {
-        font-size: 12px;
+        font-size: 12.5px;
         line-height: 1.85;
       }
 
       .text-small .story-title {
         font-size: 26px;
+      }
+
+      .text-xsmall .story-body {
+        font-size: 11.5px;
+        line-height: 1.75;
+      }
+
+      .text-xsmall .story-title {
+        font-size: 24px;
+      }
+
+      @supports (clip-path: path("M0 0")) {
+        .shape-drop::before {
+          border-radius: 0;
+          clip-path: path("M165 8 C248 58 318 132 318 232 C318 318 252 360 165 360 C78 360 12 318 12 232 C12 132 82 58 165 8 Z");
+        }
       }
 
       .note {
@@ -1321,6 +1349,7 @@
           elements.previewDate.textContent = elements.dateEdit.value.trim() || "日付なし";
           elements.previewTitle.textContent = title;
           renderStoryBody(body);
+          ensureStickerFits();
         }
 
         function renderStoryBody(text) {
@@ -1359,16 +1388,8 @@
         function applyStickerStyle(shapeId, themeId, sizeClass, labelPrefix) {
           const shape = getShape(shapeId);
           const theme = getTheme(themeId);
-          STICKER_SHAPES.forEach(function (item) {
-            elements.storySticker.classList.remove("shape-" + item.id);
-          });
-          STICKER_THEMES.forEach(function (item) {
-            elements.storySticker.classList.remove("theme-" + item.id);
-          });
-          ["text-large", "text-medium", "text-small"].forEach(function (className) {
-            elements.storySticker.classList.remove(className);
-          });
-          elements.storySticker.classList.add("shape-" + shape.id, "theme-" + theme.id, sizeClass || "text-medium");
+          const safeSizeClass = ["text-large", "text-medium", "text-small", "text-xsmall"].includes(sizeClass) ? sizeClass : "text-medium";
+          elements.storySticker.className = "story-sticker shape-" + shape.id + " theme-" + theme.id + " " + safeSizeClass;
           elements.storySticker.style.setProperty("--sticker-bg", theme.bg);
           elements.storySticker.style.setProperty("--sticker-text", theme.ink);
           elements.storySticker.style.setProperty("--sticker-line", theme.line);
@@ -1404,86 +1425,144 @@
         function getStickerDesign(title, body, sourceText) {
           const text = title + "\n" + body + "\n" + (sourceText || "");
           const length = countStoryChars(body);
-          const isRainy = /雨|濡れる|濡れ|傘|夜|怖い|不安|寂しい|待つ|まだ|ごめん/.test(text);
-          const isWarm = /迎え|安心|ありがとう|待ち合わせ|ついた|来てくれる|やさし|優し/.test(text);
+          const isRainy = /雨|濡れる|濡れ|傘|夜|怖い|怖|不安|寂しい|寂|待つ|待|まだ|ごめん/.test(text);
+          const isWarm = /迎え|安心|ありがとう|待ち合わせ|ついた|来てくれる|やさし|優し|ほっと/.test(text);
           const isEvent = /花束|メイク|遊ぶ|遊び|おでかけ|ライブ|イベント|駅|集合|予定/.test(text);
-          const isSchool = /課題|レポート|参考文献|AI|ai|授業|提出|確認/.test(text);
+          const isSchool = /課題|レポート|参考文献|AI|ai|授業|提出|確認|学校/.test(text);
 
-          let shapeId = "card";
-          let themeId = "ivory";
+          let shape = "shape-card";
+          let theme = "theme-ivory";
 
           if (length > 280) {
-            shapeId = "long";
+            shape = "shape-long";
             if (isRainy) {
-              themeId = "lavender";
+              theme = "theme-lavender";
             } else if (isSchool) {
-              themeId = "beige";
+              theme = "theme-beige";
             } else if (isEvent) {
-              themeId = "yellow";
+              theme = "theme-yellow";
             } else if (isWarm) {
-              themeId = "ivory";
+              theme = "theme-ivory";
             } else {
-              themeId = "sky";
+              theme = "theme-sky";
             }
           } else if (length > 160) {
             if (isRainy) {
-              shapeId = "long";
-              themeId = "lavender";
-            } else if (isSchool && length > 180) {
-              shapeId = "long";
-              themeId = "beige";
-            } else if (isEvent) {
-              shapeId = "card";
-              themeId = "yellow";
-            } else if (isWarm) {
-              shapeId = "card";
-              themeId = "ivory";
+              shape = length > 240 ? "shape-long" : "shape-card";
+              theme = "theme-lavender";
             } else if (isSchool) {
-              shapeId = "card";
-              themeId = "beige";
+              shape = "shape-long";
+              theme = "theme-beige";
+            } else if (isEvent) {
+              shape = "shape-card";
+              theme = "theme-yellow";
+            } else if (isWarm) {
+              shape = "shape-card";
+              theme = "theme-ivory";
             } else {
-              shapeId = "card";
-              themeId = "ivory";
+              shape = "shape-card";
+              theme = "theme-ivory";
             }
-          } else if (isRainy) {
-            shapeId = "drop";
-            themeId = "lavender";
-          } else if (isWarm) {
-            shapeId = length <= 160 ? "round" : "card";
-            themeId = length <= 160 ? "beige" : "ivory";
-          } else if (isEvent) {
-            shapeId = "ticket";
-            themeId = "yellow";
-          } else if (isSchool) {
-            shapeId = "card";
-            themeId = length > 120 ? "beige" : "ivory";
           } else if (length <= 70) {
-            shapeId = "label";
-            themeId = "pink";
+            if (isRainy) {
+              shape = "shape-drop";
+              theme = "theme-lavender";
+            } else if (isWarm) {
+              shape = "shape-round";
+              theme = "theme-beige";
+            } else if (isEvent) {
+              shape = "shape-ticket";
+              theme = "theme-yellow";
+            } else if (isSchool) {
+              shape = "shape-card";
+              theme = "theme-ivory";
+            } else {
+              shape = "shape-label";
+              theme = "theme-pink";
+            }
+          } else {
+            if (isRainy && length <= 120) {
+              shape = "shape-drop";
+              theme = "theme-lavender";
+            } else if (isRainy) {
+              shape = "shape-card";
+              theme = "theme-lavender";
+            } else if (isWarm && length <= 120) {
+              shape = "shape-round";
+              theme = "theme-beige";
+            } else if (isWarm) {
+              shape = "shape-card";
+              theme = "theme-ivory";
+            } else if (isEvent) {
+              shape = "shape-ticket";
+              theme = "theme-yellow";
+            } else if (isSchool) {
+              shape = "shape-card";
+              theme = "theme-ivory";
+            } else {
+              shape = "shape-card";
+              theme = "theme-ivory";
+            }
           }
 
           if (length > 280) {
-            shapeId = "long";
-          } else if (length > 160 && ["label", "round", "drop"].includes(shapeId)) {
-            shapeId = shapeId === "drop" ? "long" : "card";
-          } else if (length > 160 && shapeId === "ticket") {
-            shapeId = "card";
-          } else if (length > 70 && shapeId === "label") {
-            shapeId = "card";
+            shape = "shape-long";
+          } else if (length > 160 && !["shape-card", "shape-long"].includes(shape)) {
+            shape = "shape-card";
+          } else if (length > 120 && ["shape-round", "shape-drop"].includes(shape)) {
+            shape = "shape-card";
+          } else if (length > 160 && shape === "shape-ticket") {
+            shape = "shape-card";
+          } else if (length > 70 && shape === "shape-label") {
+            shape = "shape-card";
           }
 
           let sizeClass = "text-medium";
           if (length > 280) {
+            sizeClass = "text-xsmall";
+          } else if (length > 160) {
             sizeClass = "text-small";
-          } else if (length <= 80) {
+          } else if (length <= 70) {
             sizeClass = "text-large";
           }
 
-          return { shapeId: shapeId, themeId: themeId, sizeClass: sizeClass, length: length };
+          return {
+            shape: shape,
+            theme: theme,
+            shapeId: shape.replace("shape-", ""),
+            themeId: theme.replace("theme-", ""),
+            sizeClass: sizeClass,
+            length: length
+          };
         }
 
         function countStoryChars(text) {
           return (text || "").replace(/\s/g, "").length;
+        }
+
+        function ensureStickerFits() {
+          const sticker = elements.storySticker;
+          if (!sticker || !sticker.scrollHeight || !sticker.clientHeight) {
+            return;
+          }
+
+          if (sticker.scrollHeight <= sticker.clientHeight + 2) {
+            return;
+          }
+
+          const sizeOrder = ["text-large", "text-medium", "text-small", "text-xsmall"];
+          const currentSizeIndex = sizeOrder.indexOf(selectedSizeClass);
+          if (currentSizeIndex >= 0 && currentSizeIndex < sizeOrder.length - 1) {
+            selectedSizeClass = sizeOrder[currentSizeIndex + 1];
+            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "AIおすすめ");
+          }
+
+          if (sticker.scrollHeight > sticker.clientHeight + 2) {
+            selectedShapeId = "long";
+            selectedSizeClass = "text-xsmall";
+            elements.shapeSelect.value = selectedShapeId;
+            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "AIおすすめ");
+          }
         }
 
         function firstParagraph(text) {
