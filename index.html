@@ -402,6 +402,7 @@
         z-index: 1;
       }
 
+      .drop-svg,
       .drop-decor {
         display: none;
       }
@@ -644,35 +645,49 @@
       .shape-drop {
         width: min(100%, 430px);
         min-height: 560px;
-        padding: 82px 72px 70px;
-        border: 1.5px solid var(--sticker-line);
-        border-radius: 58% 58% 50% 50% / 68% 68% 45% 45%;
-        background: var(--sticker-bg);
+        padding: 88px 74px 74px;
+        border: none;
+        border-radius: 0;
+        background: transparent;
         color: var(--sticker-text);
-        box-shadow: 0 10px 24px rgba(55, 47, 70, 0.12);
+        box-shadow: none;
       }
 
-      .shape-drop::before {
-        content: "";
-        position: absolute;
-        inset: 18px;
-        z-index: 1;
-        border: 1.25px solid var(--sticker-line);
-        border-radius: 58% 58% 50% 50% / 68% 68% 45% 45%;
-        opacity: 0.58;
-        pointer-events: none;
-      }
-
+      .shape-drop::before,
       .shape-drop::after {
-        content: "";
+        content: none;
+      }
+
+      .shape-drop .drop-svg {
+        display: block;
         position: absolute;
-        inset: 10px;
+        inset: 0;
+        width: 100%;
+        height: 100%;
         z-index: 0;
-        border-radius: inherit;
-        background:
-          radial-gradient(circle at 44% 26%, rgba(255, 255, 255, 0.28), transparent 38%),
-          var(--sticker-bg);
+        overflow: visible;
         pointer-events: none;
+      }
+
+      .drop-fill {
+        fill: var(--sticker-bg);
+        filter: drop-shadow(0 10px 22px rgba(55, 47, 70, 0.13));
+      }
+
+      .drop-outline {
+        fill: none;
+        stroke: var(--sticker-line);
+        stroke-width: 1.45;
+        stroke-linejoin: round;
+        opacity: 0.82;
+      }
+
+      .drop-inner {
+        fill: none;
+        stroke: var(--sticker-line);
+        stroke-width: 1.05;
+        stroke-linejoin: round;
+        opacity: 0.68;
       }
 
       .shape-drop .drop-decor {
@@ -694,8 +709,8 @@
       }
 
       .shape-drop .drop-decor-top {
-        top: 82px;
-        left: 118px;
+        top: 92px;
+        left: 122px;
         width: 98px;
         height: 76px;
       }
@@ -730,7 +745,7 @@
 
       .shape-drop .drop-decor-bottom {
         left: 50%;
-        bottom: 54px;
+        bottom: 76px;
         width: 22px;
         height: 32px;
         transform: translateX(-50%);
@@ -744,21 +759,21 @@
       }
 
       .shape-drop .story-content {
-        width: min(310px, 100%);
+        width: min(300px, 100%);
         margin: 0 auto;
-        padding: 58px 0 54px;
+        padding: 30px 0 60px;
       }
 
       .shape-drop .story-date {
-        margin: 0 0 30px;
+        margin: 0 0 26px;
         font-size: 13px;
         font-weight: 500;
         letter-spacing: 0.03em;
       }
 
       .shape-drop .story-title {
-        margin-bottom: 12px;
-        font-size: 32px;
+        margin-bottom: 10px;
+        font-size: 30px;
         line-height: 1.18;
       }
 
@@ -870,19 +885,19 @@
       .shape-drop.text-small {
         width: min(100%, 460px);
         min-height: 620px;
-        padding: 90px 78px 76px;
+        padding: 96px 78px 80px;
       }
 
       .shape-drop.text-xsmall {
         width: min(100%, 480px);
         min-height: 660px;
-        padding: 94px 82px 82px;
+        padding: 100px 82px 86px;
       }
 
       .shape-drop.text-small .story-content,
       .shape-drop.text-xsmall .story-content {
         width: min(320px, 100%);
-        padding-top: 62px;
+        padding-top: 34px;
       }
 
       .note {
@@ -923,6 +938,15 @@
           box-shadow: none;
           background-color: var(--sticker-bg);
           color: var(--sticker-text);
+        }
+
+        .shape-drop {
+          background: transparent;
+          background-color: transparent;
+        }
+
+        .shape-drop .drop-svg {
+          display: block;
         }
 
         .story-date {
@@ -996,22 +1020,22 @@
 
         .shape-drop {
           width: min(360px, 90vw);
-          min-height: 520px;
-          padding: 74px 46px 62px;
+          min-height: 470px;
+          padding: 68px 44px 58px;
         }
 
         .shape-drop.text-small,
         .shape-drop.text-xsmall {
           width: min(380px, 90vw);
-          min-height: 560px;
-          padding: 78px 48px 66px;
+          min-height: 520px;
+          padding: 74px 48px 64px;
         }
 
         .shape-drop .story-content,
         .shape-drop.text-small .story-content,
         .shape-drop.text-xsmall .story-content {
           width: min(280px, 100%);
-          padding-top: 50px;
+          padding-top: 28px;
         }
 
         .shape-label,
@@ -1124,6 +1148,11 @@
             <div class="sticker-sheet" aria-label="ノートに貼ったシールのイメージ">
               <div class="print-area">
                 <article class="story-sticker shape-card theme-ivory text-medium" aria-label="シールプレビュー">
+                  <svg class="drop-svg" viewBox="0 0 430 560" aria-hidden="true" focusable="false">
+                    <path class="drop-fill" d="M250 28 C310 95 374 168 382 275 C391 401 318 520 215 530 C112 520 42 410 50 286 C56 194 103 118 175 68 C207 45 228 34 250 28 Z"></path>
+                    <path class="drop-outline" d="M250 28 C310 95 374 168 382 275 C391 401 318 520 215 530 C112 520 42 410 50 286 C56 194 103 118 175 68 C207 45 228 34 250 28 Z"></path>
+                    <path class="drop-inner" d="M245 52 C299 112 352 180 358 278 C365 388 302 492 215 500 C128 492 72 394 78 286 C83 206 124 137 184 90 C207 72 227 60 245 52 Z"></path>
+                  </svg>
                   <div class="drop-decor drop-decor-top" aria-hidden="true">
                     <span></span>
                     <span></span>
