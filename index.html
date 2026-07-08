@@ -402,7 +402,6 @@
         z-index: 1;
       }
 
-      .sticker-shape-bg,
       .drop-decor {
         display: none;
       }
@@ -643,49 +642,37 @@
       }
 
       .shape-drop {
-        width: min(100%, 360px);
-        min-height: 420px;
-        padding: 0;
-        border: none;
-        border-radius: 0;
-        background: transparent;
-        box-shadow: none;
+        width: min(100%, 430px);
+        min-height: 560px;
+        padding: 82px 72px 70px;
+        border: 1.5px solid var(--sticker-line);
+        border-radius: 58% 58% 50% 50% / 68% 68% 45% 45%;
+        background: var(--sticker-bg);
+        color: var(--sticker-text);
+        box-shadow: 0 10px 24px rgba(55, 47, 70, 0.12);
       }
 
-      .shape-drop::before,
-      .shape-drop::after {
-        content: none;
-      }
-
-      .shape-drop .sticker-shape-bg {
-        display: block;
+      .shape-drop::before {
+        content: "";
         position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        overflow: visible;
-        filter: drop-shadow(0 9px 18px rgba(55, 47, 70, 0.14));
-      }
-
-      .drop-fill {
-        fill: var(--sticker-bg);
-      }
-
-      .drop-line {
-        fill: none;
-        stroke: var(--sticker-line);
-        stroke-width: 1.7;
-        stroke-linejoin: round;
-        opacity: 0.82;
-      }
-
-      .drop-inner-line {
-        fill: none;
-        stroke: var(--sticker-line);
-        stroke-width: 1.25;
-        stroke-linejoin: round;
+        inset: 18px;
+        z-index: 1;
+        border: 1.25px solid var(--sticker-line);
+        border-radius: 58% 58% 50% 50% / 68% 68% 45% 45%;
         opacity: 0.58;
+        pointer-events: none;
+      }
+
+      .shape-drop::after {
+        content: "";
+        position: absolute;
+        inset: 10px;
+        z-index: 0;
+        border-radius: inherit;
+        background:
+          radial-gradient(circle at 44% 26%, rgba(255, 255, 255, 0.28), transparent 38%),
+          var(--sticker-bg);
+        pointer-events: none;
       }
 
       .shape-drop .drop-decor {
@@ -707,43 +694,43 @@
       }
 
       .shape-drop .drop-decor-top {
-        top: 84px;
-        left: 92px;
-        width: 86px;
-        height: 74px;
+        top: 82px;
+        left: 118px;
+        width: 98px;
+        height: 76px;
       }
 
       .shape-drop .drop-decor-top span:nth-child(1) {
-        top: 24px;
-        left: 0;
+        top: 26px;
+        left: 4px;
         width: 13px;
         height: 20px;
       }
 
       .shape-drop .drop-decor-top span:nth-child(2) {
-        top: 45px;
-        left: 32px;
+        top: 48px;
+        left: 42px;
         width: 17px;
         height: 26px;
       }
 
       .shape-drop .drop-decor-top span:nth-child(3) {
         top: 0;
-        left: 56px;
+        left: 68px;
         width: 19px;
         height: 31px;
       }
 
       .shape-drop .drop-decor-top span:nth-child(4) {
-        top: 52px;
-        left: -18px;
+        top: 56px;
+        left: 22px;
         width: 11px;
         height: 17px;
       }
 
       .shape-drop .drop-decor-bottom {
         left: 50%;
-        bottom: 40px;
+        bottom: 54px;
         width: 22px;
         height: 32px;
         transform: translateX(-50%);
@@ -757,28 +744,28 @@
       }
 
       .shape-drop .story-content {
-        width: min(230px, calc(100% - 104px));
+        width: min(310px, 100%);
         margin: 0 auto;
-        padding: 112px 0 86px;
+        padding: 58px 0 54px;
       }
 
       .shape-drop .story-date {
-        margin: 0 0 36px;
+        margin: 0 0 30px;
         font-size: 13px;
         font-weight: 500;
         letter-spacing: 0.03em;
       }
 
       .shape-drop .story-title {
-        margin-bottom: 14px;
-        font-size: 34px;
+        margin-bottom: 12px;
+        font-size: 32px;
         line-height: 1.18;
       }
 
       .shape-drop .story-divider {
         width: 100%;
         height: 1.5px;
-        margin: 0 0 20px;
+        margin: 0 0 22px;
         opacity: 0.78;
       }
 
@@ -866,7 +853,7 @@
 
       .shape-drop.text-large .story-body {
         font-size: 14px;
-        line-height: 1.95;
+        line-height: 1.9;
       }
 
       .shape-drop.text-medium .story-body {
@@ -877,7 +864,25 @@
       .shape-drop.text-small .story-body,
       .shape-drop.text-xsmall .story-body {
         font-size: 12px;
-        line-height: 1.78;
+        line-height: 1.76;
+      }
+
+      .shape-drop.text-small {
+        width: min(100%, 460px);
+        min-height: 620px;
+        padding: 90px 78px 76px;
+      }
+
+      .shape-drop.text-xsmall {
+        width: min(100%, 480px);
+        min-height: 660px;
+        padding: 94px 82px 82px;
+      }
+
+      .shape-drop.text-small .story-content,
+      .shape-drop.text-xsmall .story-content {
+        width: min(320px, 100%);
+        padding-top: 62px;
       }
 
       .note {
@@ -918,14 +923,6 @@
           box-shadow: none;
           background-color: var(--sticker-bg);
           color: var(--sticker-text);
-        }
-
-        .shape-drop {
-          background: transparent;
-        }
-
-        .shape-drop .sticker-shape-bg {
-          filter: none;
         }
 
         .story-date {
@@ -998,7 +995,23 @@
         }
 
         .shape-drop {
-          width: min(330px, 88vw);
+          width: min(360px, 90vw);
+          min-height: 520px;
+          padding: 74px 46px 62px;
+        }
+
+        .shape-drop.text-small,
+        .shape-drop.text-xsmall {
+          width: min(380px, 90vw);
+          min-height: 560px;
+          padding: 78px 48px 66px;
+        }
+
+        .shape-drop .story-content,
+        .shape-drop.text-small .story-content,
+        .shape-drop.text-xsmall .story-content {
+          width: min(280px, 100%);
+          padding-top: 50px;
         }
 
         .shape-label,
@@ -1111,11 +1124,6 @@
             <div class="sticker-sheet" aria-label="ノートに貼ったシールのイメージ">
               <div class="print-area">
                 <article class="story-sticker shape-card theme-ivory text-medium" aria-label="シールプレビュー">
-                  <svg class="sticker-shape-bg" viewBox="0 0 360 420" aria-hidden="true" focusable="false">
-                    <path class="drop-fill" d="M205 18 C265 72 320 148 320 258 C320 354 260 402 180 402 C100 402 40 354 40 258 C40 150 112 74 205 18 Z"></path>
-                    <path class="drop-line" d="M205 18 C265 72 320 148 320 258 C320 354 260 402 180 402 C100 402 40 354 40 258 C40 150 112 74 205 18 Z"></path>
-                    <path class="drop-inner-line" d="M198 42 C252 92 296 164 296 256 C296 338 246 378 180 378 C114 378 64 338 64 256 C64 168 122 92 198 42 Z"></path>
-                  </svg>
                   <div class="drop-decor drop-decor-top" aria-hidden="true">
                     <span></span>
                     <span></span>
@@ -1191,7 +1199,7 @@
         const SHAPE_TEXT_LIMITS = {
           label: 70,
           round: 120,
-          drop: 120,
+          drop: 280,
           ticket: 160
         };
 
@@ -1726,7 +1734,7 @@
             }
           } else if (length > 160) {
             if (isRainy) {
-              shape = length > 220 ? "shape-long" : "shape-card";
+              shape = "shape-drop";
               theme = "theme-lavender";
             } else if (isSchool) {
               shape = "shape-long";
@@ -1759,11 +1767,8 @@
               theme = "theme-pink";
             }
           } else {
-            if (isRainy && length <= 120) {
+            if (isRainy) {
               shape = "shape-drop";
-              theme = "theme-lavender";
-            } else if (isRainy) {
-              shape = "shape-card";
               theme = "theme-lavender";
             } else if (isWarm && length <= 120) {
               shape = "shape-round";
@@ -1810,12 +1815,10 @@
 
         function getSafeShapeForLength(shapeId, length) {
           if (shapeId === "drop") {
-            if (length > 220) {
+            if (length > SHAPE_TEXT_LIMITS.drop) {
               return "long";
             }
-            if (length > SHAPE_TEXT_LIMITS.drop) {
-              return "card";
-            }
+            return "drop";
           }
 
           if (length > 280) {
