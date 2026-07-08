@@ -643,7 +643,7 @@
       }
 
       .shape-drop {
-        width: min(100%, 430px);
+        width: min(100%, 460px);
         min-height: 560px;
         padding: 0;
         border: none;
@@ -700,19 +700,31 @@
       .shape-drop .drop-decor span {
         position: absolute;
         display: block;
-        border: 1px solid var(--sticker-line);
-        border-radius: 64% 64% 72% 72% / 58% 58% 82% 82%;
+        border: 0;
+        border-radius: 0;
         background: var(--sticker-line);
-        background: color-mix(in srgb, var(--sticker-line) 22%, var(--sticker-bg));
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34'%3E%3Cpath fill='black' d='M12 1 C18 8 22 16 22 24 C22 31 17 33 12 33 C7 33 2 31 2 24 C2 16 6 8 12 1 Z'/%3E%3C/svg%3E")
+          center / contain no-repeat;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34'%3E%3Cpath fill='black' d='M12 1 C18 8 22 16 22 24 C22 31 17 33 12 33 C7 33 2 31 2 24 C2 16 6 8 12 1 Z'/%3E%3C/svg%3E")
+          center / contain no-repeat;
         transform: rotate(2deg);
-        opacity: 0.42;
+        opacity: 0.5;
+      }
+
+      .shape-drop .drop-decor span::after {
+        content: "";
+        position: absolute;
+        inset: 1.4px;
+        background: color-mix(in srgb, var(--sticker-line) 20%, var(--sticker-bg));
+        -webkit-mask: inherit;
+        mask: inherit;
       }
 
       .shape-drop .drop-decor-top {
-        top: 82px;
-        left: 128px;
-        width: 98px;
-        height: 76px;
+        top: 90px;
+        left: 136px;
+        width: 106px;
+        height: 82px;
       }
 
       .shape-drop .drop-decor-top span:nth-child(1) {
@@ -745,7 +757,7 @@
 
       .shape-drop .drop-decor-bottom {
         left: 50%;
-        bottom: 76px;
+        bottom: 72px;
         width: 22px;
         height: 32px;
         transform: translateX(-50%);
@@ -759,10 +771,10 @@
       }
 
       .shape-drop .story-content {
-        width: min(270px, 100%);
+        width: min(260px, 100%);
         margin: 0 auto;
         padding: 0 0 70px;
-        padding-top: 118px;
+        padding-top: 124px;
         box-sizing: border-box;
       }
 
@@ -888,21 +900,21 @@
       }
 
       .shape-drop.text-small {
-        width: min(100%, 460px);
-        min-height: 620px;
+        width: min(100%, 500px);
+        min-height: 610px;
         padding: 0;
       }
 
       .shape-drop.text-xsmall {
-        width: min(100%, 480px);
-        min-height: 660px;
+        width: min(100%, 520px);
+        min-height: 640px;
         padding: 0;
       }
 
       .shape-drop.text-small .story-content,
       .shape-drop.text-xsmall .story-content {
-        width: min(290px, 100%);
-        padding-top: 124px;
+        width: min(286px, 100%);
+        padding-top: 128px;
       }
 
       .note {
@@ -1024,27 +1036,27 @@
         }
 
         .shape-drop {
-          width: min(360px, 90vw);
+          width: min(390px, 90vw);
           min-height: 470px;
           padding: 0;
         }
 
         .shape-drop.text-small,
         .shape-drop.text-xsmall {
-          width: min(380px, 90vw);
-          min-height: 520px;
+          width: min(410px, 90vw);
+          min-height: 510px;
           padding: 0;
         }
 
         .shape-drop .story-content {
-          width: min(245px, 100%);
-          padding-top: 100px;
+          width: min(230px, 100%);
+          padding-top: 102px;
         }
 
         .shape-drop.text-small .story-content,
         .shape-drop.text-xsmall .story-content {
-          width: min(260px, 100%);
-          padding-top: 106px;
+          width: min(246px, 100%);
+          padding-top: 108px;
         }
 
         .shape-label,
@@ -1157,10 +1169,10 @@
             <div class="sticker-sheet" aria-label="ノートに貼ったシールのイメージ">
               <div class="print-area">
                 <article class="story-sticker shape-card theme-ivory text-medium" aria-label="シールプレビュー">
-                  <svg class="drop-svg" viewBox="0 0 430 560" aria-hidden="true" focusable="false">
-                    <path class="drop-fill" d="M250 28 C310 95 374 168 382 275 C391 401 318 520 215 530 C112 520 42 410 50 286 C56 194 103 118 175 68 C207 45 228 34 250 28 Z"></path>
-                    <path class="drop-outline" d="M250 28 C310 95 374 168 382 275 C391 401 318 520 215 530 C112 520 42 410 50 286 C56 194 103 118 175 68 C207 45 228 34 250 28 Z"></path>
-                    <path class="drop-inner" d="M245 52 C299 112 352 180 358 278 C365 388 302 492 215 500 C128 492 72 394 78 286 C83 206 124 137 184 90 C207 72 227 60 245 52 Z"></path>
+                  <svg class="drop-svg" viewBox="0 0 460 560" aria-hidden="true" focusable="false">
+                    <path class="drop-fill" d="M268 34 C320 88 396 164 420 292 C438 392 358 530 230 542 C102 530 24 392 42 304 C56 198 135 104 212 60 C235 47 256 38 268 34 Z"></path>
+                    <path class="drop-outline" d="M268 34 C320 88 396 164 420 292 C438 392 358 530 230 542 C102 530 24 392 42 304 C56 198 135 104 212 60 C235 47 256 38 268 34 Z"></path>
+                    <path class="drop-inner" d="M263 64 C306 112 370 182 390 294 C406 382 340 500 230 512 C120 500 54 382 70 306 C82 214 151 132 220 88 C239 76 255 67 263 64 Z"></path>
                   </svg>
                   <div class="drop-decor drop-decor-top" aria-hidden="true">
                     <span></span>
