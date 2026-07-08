@@ -402,6 +402,16 @@
         z-index: 1;
       }
 
+      .sticker-shape-bg,
+      .drop-decor {
+        display: none;
+      }
+
+      .story-content {
+        position: relative;
+        z-index: 2;
+      }
+
       .story-date,
       .story-title,
       .story-divider,
@@ -633,64 +643,148 @@
       }
 
       .shape-drop {
-        width: min(100%, 330px);
-        min-height: 372px;
-        padding: 70px 48px 56px;
+        width: min(100%, 360px);
+        min-height: 420px;
+        padding: 0;
         border: none;
         border-radius: 0;
         background: transparent;
         box-shadow: none;
       }
 
-      .shape-drop::before {
-        inset: 0;
-        border: 1.4px solid var(--sticker-line);
-        border-radius: 58% 58% 50% 50% / 70% 70% 44% 44%;
-        background: var(--sticker-bg);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        opacity: 1;
-        z-index: 0;
+      .shape-drop::before,
+      .shape-drop::after {
+        content: none;
       }
 
-      .shape-drop::after {
-        content: "";
+      .shape-drop .sticker-shape-bg {
+        display: block;
         position: absolute;
-        left: 50%;
-        bottom: 22px;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        overflow: visible;
+        filter: drop-shadow(0 9px 18px rgba(55, 47, 70, 0.14));
+      }
+
+      .drop-fill {
+        fill: var(--sticker-bg);
+      }
+
+      .drop-line {
+        fill: none;
+        stroke: var(--sticker-line);
+        stroke-width: 1.7;
+        stroke-linejoin: round;
+        opacity: 0.82;
+      }
+
+      .drop-inner-line {
+        fill: none;
+        stroke: var(--sticker-line);
+        stroke-width: 1.25;
+        stroke-linejoin: round;
+        opacity: 0.58;
+      }
+
+      .shape-drop .drop-decor {
+        display: block;
+        position: absolute;
         z-index: 1;
+        pointer-events: none;
+      }
+
+      .shape-drop .drop-decor span {
+        position: absolute;
+        display: block;
+        border: 1px solid var(--sticker-line);
+        border-radius: 64% 64% 72% 72% / 58% 58% 82% 82%;
+        background: var(--sticker-line);
+        background: color-mix(in srgb, var(--sticker-line) 22%, var(--sticker-bg));
+        transform: rotate(2deg);
+        opacity: 0.42;
+      }
+
+      .shape-drop .drop-decor-top {
+        top: 84px;
+        left: 92px;
+        width: 86px;
+        height: 74px;
+      }
+
+      .shape-drop .drop-decor-top span:nth-child(1) {
+        top: 24px;
+        left: 0;
+        width: 13px;
+        height: 20px;
+      }
+
+      .shape-drop .drop-decor-top span:nth-child(2) {
+        top: 45px;
+        left: 32px;
+        width: 17px;
+        height: 26px;
+      }
+
+      .shape-drop .drop-decor-top span:nth-child(3) {
+        top: 0;
+        left: 56px;
+        width: 19px;
+        height: 31px;
+      }
+
+      .shape-drop .drop-decor-top span:nth-child(4) {
+        top: 52px;
+        left: -18px;
         width: 11px;
         height: 17px;
-        border-radius: 62% 62% 70% 70% / 58% 58% 78% 78%;
-        background: var(--sticker-line);
-        transform: translateX(-50%) rotate(8deg);
-        opacity: 0.34;
       }
 
-      .shape-drop .story-date::before {
-        content: "";
-        position: absolute;
-        left: -172px;
-        top: 6px;
-        width: 9px;
-        height: 15px;
-        border-radius: 62% 62% 70% 70% / 58% 58% 78% 78%;
-        background: var(--sticker-line);
-        box-shadow:
-          22px 12px 0 -1px var(--sticker-line),
-          43px -6px 0 1px var(--sticker-line),
-          48px 22px 0 -2px var(--sticker-line);
-        transform: rotate(12deg);
-        opacity: 0.18;
+      .shape-drop .drop-decor-bottom {
+        left: 50%;
+        bottom: 40px;
+        width: 22px;
+        height: 32px;
+        transform: translateX(-50%);
+      }
+
+      .shape-drop .drop-decor-bottom span {
+        inset: 0;
+        width: 18px;
+        height: 28px;
+        opacity: 0.5;
+      }
+
+      .shape-drop .story-content {
+        width: min(230px, calc(100% - 104px));
+        margin: 0 auto;
+        padding: 112px 0 86px;
+      }
+
+      .shape-drop .story-date {
+        margin: 0 0 36px;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.03em;
       }
 
       .shape-drop .story-title {
-        font-size: 27px;
+        margin-bottom: 14px;
+        font-size: 34px;
+        line-height: 1.18;
       }
 
       .shape-drop .story-divider {
-        width: 82%;
-        margin-left: auto;
-        margin-right: auto;
+        width: 100%;
+        height: 1.5px;
+        margin: 0 0 20px;
+        opacity: 0.78;
+      }
+
+      .shape-drop .story-body {
+        letter-spacing: 0.055em;
+        line-height: 1.95;
       }
 
       .shape-ticket {
@@ -770,11 +864,20 @@
         font-size: 24px;
       }
 
-      @supports (clip-path: path("M0 0")) {
-        .shape-drop::before {
-          border-radius: 0;
-          clip-path: path("M165 10 C218 44 295 120 306 205 C318 306 250 374 165 374 C80 374 12 306 24 205 C35 120 112 44 165 10 Z");
-        }
+      .shape-drop.text-large .story-body {
+        font-size: 14px;
+        line-height: 1.95;
+      }
+
+      .shape-drop.text-medium .story-body {
+        font-size: 13px;
+        line-height: 1.86;
+      }
+
+      .shape-drop.text-small .story-body,
+      .shape-drop.text-xsmall .story-body {
+        font-size: 12px;
+        line-height: 1.78;
       }
 
       .note {
@@ -815,6 +918,14 @@
           box-shadow: none;
           background-color: var(--sticker-bg);
           color: var(--sticker-text);
+        }
+
+        .shape-drop {
+          background: transparent;
+        }
+
+        .shape-drop .sticker-shape-bg {
+          filter: none;
         }
 
         .story-date {
@@ -882,9 +993,12 @@
 
         .shape-long,
         .shape-card,
-        .shape-round,
-        .shape-drop {
+        .shape-round {
           width: min(300px, 86vw);
+        }
+
+        .shape-drop {
+          width: min(330px, 88vw);
         }
 
         .shape-label,
@@ -913,7 +1027,7 @@
 
       <section class="intro" aria-label="サービス説明">
         <div class="intro-text">
-          <p>「会話の日記」は、LINEに残った会話から小さな出来事を見つけ、日記のような文章シールに変換するプロトタイプです。</p>
+          <p>「会話の日記」は、LINEに残った会話から小さな出来事を見つけ、縦長や丸型などの文章シールに変換するプロトタイプです。</p>
           <p>このプロトタイプでは、会話をそのまま保存せず、名前や場所をぼかして物語化する想定です。</p>
           <p>今回はAI APIを使わず、ブラウザ上のJavaScriptだけでキーワードを見つけ、候補を作ります。</p>
         </div>
@@ -930,7 +1044,7 @@
 
       <p class="status" id="statusMessage" role="status" aria-live="polite">LINEトークを貼るか、サンプルを入れてください。</p>
 
-      <section class="workspace" aria-label="会話からカードを作る">
+      <section class="workspace" aria-label="会話からシールを作る">
         <div class="panel">
           <h2>LINEトーク</h2>
           <label class="label" for="talkInput">貼り付け欄</label>
@@ -977,7 +1091,7 @@
           <div class="preview-wrap">
             <div class="no-print">
               <h3 class="sticker-heading">シールプレビュー</h3>
-              <p class="preview-lead">選んだ物語を、内容に合う形と色の文章シールとして確認できます。印刷してノートに貼ることを想定しています。</p>
+              <p class="preview-lead">候補を選ぶと、ここに内容に合った形と色のシールが表示されます。印刷してノートに貼ることを想定しています。</p>
             </div>
             <div class="sticker-actions no-print">
               <button class="button" id="printButton" type="button">印刷する</button>
@@ -997,11 +1111,27 @@
             <div class="sticker-sheet" aria-label="ノートに貼ったシールのイメージ">
               <div class="print-area">
                 <article class="story-sticker shape-card theme-ivory text-medium" aria-label="シールプレビュー">
-                  <div class="story-date" id="previewDate">日付なし</div>
-                  <h3 class="story-title" id="previewTitle">まだシールがありません</h3>
-                  <div class="story-divider" aria-hidden="true"></div>
-                  <div class="story-body" id="previewBody">
-                    <p>候補を選ぶと、ここに内容に合う形と色の文章シールとして表示されます。</p>
+                  <svg class="sticker-shape-bg" viewBox="0 0 360 420" aria-hidden="true" focusable="false">
+                    <path class="drop-fill" d="M205 18 C265 72 320 148 320 258 C320 354 260 402 180 402 C100 402 40 354 40 258 C40 150 112 74 205 18 Z"></path>
+                    <path class="drop-line" d="M205 18 C265 72 320 148 320 258 C320 354 260 402 180 402 C100 402 40 354 40 258 C40 150 112 74 205 18 Z"></path>
+                    <path class="drop-inner-line" d="M198 42 C252 92 296 164 296 256 C296 338 246 378 180 378 C114 378 64 338 64 256 C64 168 122 92 198 42 Z"></path>
+                  </svg>
+                  <div class="drop-decor drop-decor-top" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <div class="drop-decor drop-decor-bottom" aria-hidden="true">
+                    <span></span>
+                  </div>
+                  <div class="story-content">
+                    <div class="story-date" id="previewDate">日付なし</div>
+                    <h3 class="story-title" id="previewTitle">まだシールがありません</h3>
+                    <div class="story-divider" aria-hidden="true"></div>
+                    <div class="story-body" id="previewBody">
+                      <p>候補を選ぶと、ここに内容に合った形と色のシールが表示されます。</p>
+                    </div>
                   </div>
                 </article>
               </div>
@@ -1482,7 +1612,7 @@
           const rawTitle = elements.titleEdit.value.trim();
           const rawBody = elements.bodyEdit.value.trim();
           const title = rawTitle || "まだシールがありません";
-          const body = rawBody || "候補を選ぶと、ここに内容と文章量に合う形と色の文章シールとして表示されます。";
+          const body = rawBody || "候補を選ぶと、ここに内容に合った形と色のシールが表示されます。";
 
           if (rawTitle || rawBody) {
             const design = getStickerDesign(title, body, "");
@@ -1596,7 +1726,7 @@
             }
           } else if (length > 160) {
             if (isRainy) {
-              shape = length > 240 ? "shape-long" : "shape-card";
+              shape = length > 220 ? "shape-long" : "shape-card";
               theme = "theme-lavender";
             } else if (isSchool) {
               shape = "shape-long";
@@ -1679,6 +1809,15 @@
         }
 
         function getSafeShapeForLength(shapeId, length) {
+          if (shapeId === "drop") {
+            if (length > 220) {
+              return "long";
+            }
+            if (length > SHAPE_TEXT_LIMITS.drop) {
+              return "card";
+            }
+          }
+
           if (length > 280) {
             return "long";
           }
@@ -1687,7 +1826,7 @@
             return ["long", "card"].includes(shapeId) ? shapeId : "card";
           }
 
-          if (length > SHAPE_TEXT_LIMITS.round && ["round", "drop"].includes(shapeId)) {
+          if (length > SHAPE_TEXT_LIMITS.round && shapeId === "round") {
             return "card";
           }
 
