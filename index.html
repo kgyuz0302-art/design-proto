@@ -116,6 +116,59 @@
         font-weight: 700;
       }
 
+      .sample-section {
+        margin: 0 0 22px;
+        padding: 20px;
+      }
+
+      .sample-section h2 {
+        margin: 0 0 6px;
+        font-size: 1.08rem;
+      }
+
+      .sample-lead {
+        margin: 0 0 16px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .sticker-sample-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        align-items: start;
+      }
+
+      .sample-item {
+        display: grid;
+        gap: 10px;
+        justify-items: center;
+        min-height: 100%;
+        padding: 16px 12px 14px;
+        border: 1px solid var(--line-soft);
+        border-radius: 8px;
+        background: rgba(255, 253, 248, 0.68);
+      }
+
+      .sample-caption {
+        width: 100%;
+        text-align: center;
+      }
+
+      .sample-kind {
+        margin: 0 0 4px;
+        color: var(--ink);
+        font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+        font-size: 0.76rem;
+      }
+
+      .sample-desc {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.5;
+      }
+
       .status {
         min-height: 42px;
         margin: 0 0 18px;
@@ -333,7 +386,8 @@
         align-items: center;
       }
 
-      .theme-select {
+      .theme-select,
+      .shape-select {
         min-height: 40px;
         width: 100%;
         border: 1px solid var(--line-soft);
@@ -372,23 +426,43 @@
         width: 100%;
       }
 
+      .sticker,
       .story-sticker {
-        --sticker-bg: #fff;
-        --sticker-text: #222;
-        --sticker-line: #333;
-        width: 300px;
-        min-height: auto;
+        --sticker-bg: #fff9ed;
+        --sticker-text: #7a654f;
+        --sticker-line: #7a654f;
+        position: relative;
+        width: min(100%, 310px);
+        min-height: 390px;
         box-sizing: border-box;
-        padding: 22px 24px 26px;
+        padding: 30px 30px 34px;
         border: 1.4px solid var(--sticker-line);
-        border-radius: 0;
         margin: 0 auto;
+        overflow: hidden;
         background: var(--sticker-bg);
         color: var(--sticker-text);
-        font-family: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "BIZ UDPMincho", serif;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", "BIZ UDPMincho", serif;
+        box-shadow: 0 8px 22px rgba(47, 39, 27, 0.1);
         print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
+      }
+
+      .sticker::before,
+      .story-sticker::before {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border: 1px solid var(--sticker-line);
+        opacity: 0.6;
+        pointer-events: none;
+      }
+
+      .story-date,
+      .story-title,
+      .story-divider,
+      .story-body {
+        position: relative;
+        z-index: 1;
       }
 
       .story-date {
@@ -397,19 +471,19 @@
         font-size: 12px;
         font-weight: 600;
         font-variant-numeric: tabular-nums;
-        letter-spacing: 0.03em;
+        letter-spacing: 0.08em;
         line-height: 1;
         text-align: right;
       }
 
       .story-title {
-        margin: 0 0 8px;
+        margin: 0 0 14px;
         color: var(--sticker-text);
-        font-family: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "BIZ UDPMincho", serif;
-        font-size: 28px;
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", "BIZ UDPMincho", serif;
+        font-size: 32px;
         font-weight: 700;
-        letter-spacing: 0.02em;
-        line-height: 1.25;
+        letter-spacing: 0.04em;
+        line-height: 1.2;
         word-break: keep-all;
         overflow-wrap: anywhere;
       }
@@ -417,26 +491,246 @@
       .story-divider {
         width: 100%;
         height: 1px;
-        margin: 0 0 22px;
+        margin: 0 0 26px;
         background: var(--sticker-line);
+      }
+
+      .story-divider::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 8px;
+        height: 8px;
+        background: var(--sticker-line);
+        transform: translate(-50%, -50%) rotate(45deg);
       }
 
       .story-body {
         margin: 0;
         color: var(--sticker-text);
         font-size: 14px;
-        letter-spacing: 0.035em;
-        line-height: 2;
+        letter-spacing: 0.04em;
+        line-height: 2.1;
         text-align: left;
         overflow-wrap: anywhere;
+        white-space: normal;
       }
 
       .story-body p {
-        margin: 0 0 1.3em;
+        margin: 0 0 1.45em;
       }
 
       .story-body p:last-child {
         margin-bottom: 0;
+      }
+
+      .theme-sky {
+        --sticker-bg: #ddf4f8;
+        --sticker-text: #2f5f68;
+        --sticker-line: #2f5f68;
+      }
+
+      .theme-ivory {
+        --sticker-bg: #fff9ed;
+        --sticker-text: #7a654f;
+        --sticker-line: #7a654f;
+      }
+
+      .theme-pink {
+        --sticker-bg: #f6d8d1;
+        --sticker-text: #7a4a4a;
+        --sticker-line: #7a4a4a;
+      }
+
+      .theme-beige {
+        --sticker-bg: #f4e7d3;
+        --sticker-text: #6f5a45;
+        --sticker-line: #6f5a45;
+      }
+
+      .theme-lavender {
+        --sticker-bg: #e7d8f5;
+        --sticker-text: #56325f;
+        --sticker-line: #56325f;
+      }
+
+      .theme-yellow {
+        --sticker-bg: #fff1b8;
+        --sticker-text: #7a5b32;
+        --sticker-line: #7a5b32;
+      }
+
+      .shape-long {
+        width: min(100%, 310px);
+        min-height: 560px;
+        padding: 36px 32px 40px;
+        border-radius: 2px;
+      }
+
+      .shape-long .story-title {
+        font-size: 38px;
+      }
+
+      .shape-long .story-body {
+        line-height: 2.22;
+      }
+
+      .shape-card {
+        width: min(100%, 320px);
+        min-height: 390px;
+        border-radius: 22px;
+      }
+
+      .shape-card::before {
+        border-radius: 16px;
+      }
+
+      .shape-label {
+        width: min(100%, 430px);
+        min-height: 174px;
+        padding: 24px 34px;
+        border-radius: 999px;
+      }
+
+      .shape-label::before {
+        inset: 10px 16px;
+        border-radius: 999px;
+      }
+
+      .shape-label .story-date {
+        margin-bottom: 10px;
+      }
+
+      .shape-label .story-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .shape-label .story-divider {
+        margin-bottom: 12px;
+      }
+
+      .shape-label .story-body {
+        font-size: 13px;
+        line-height: 1.75;
+      }
+
+      .shape-round {
+        width: min(100%, 320px);
+        min-height: 420px;
+        padding: 52px 42px 50px;
+        border-radius: 50% / 34%;
+      }
+
+      .shape-round::before {
+        inset: 18px;
+        border-radius: 50% / 34%;
+      }
+
+      .shape-round .story-title {
+        text-align: center;
+      }
+
+      .shape-drop {
+        width: min(100%, 310px);
+        min-height: 440px;
+        padding: 58px 36px 46px;
+        clip-path: polygon(50% 0, 78% 14%, 95% 40%, 96% 67%, 82% 90%, 50% 100%, 18% 90%, 4% 67%, 5% 40%, 22% 14%);
+      }
+
+      .shape-drop::before {
+        inset: 22px 24px 20px;
+        clip-path: polygon(50% 0, 78% 14%, 95% 40%, 96% 67%, 82% 90%, 50% 100%, 18% 90%, 4% 67%, 5% 40%, 22% 14%);
+      }
+
+      .shape-drop .story-title {
+        font-size: 30px;
+      }
+
+      .shape-ticket {
+        width: min(100%, 390px);
+        min-height: 260px;
+        padding: 30px 38px 34px;
+        border-radius: 12px;
+        clip-path: polygon(8% 0, 92% 0, 92% 32%, 100% 39%, 100% 61%, 92% 68%, 92% 100%, 8% 100%, 8% 68%, 0 61%, 0 39%, 8% 32%);
+      }
+
+      .shape-ticket::before {
+        inset: 12px 22px;
+        clip-path: polygon(8% 0, 92% 0, 92% 32%, 100% 39%, 100% 61%, 92% 68%, 92% 100%, 8% 100%, 8% 68%, 0 61%, 0 39%, 8% 32%);
+      }
+
+      .shape-ticket .story-title {
+        font-size: 28px;
+      }
+
+      .sticker-sample {
+        max-width: 100%;
+        box-shadow: 0 5px 14px rgba(47, 39, 27, 0.08);
+      }
+
+      .sticker-sample.shape-long {
+        width: 180px;
+        min-height: 320px;
+        padding: 24px 20px 26px;
+      }
+
+      .sticker-sample.shape-card {
+        width: 188px;
+        min-height: 260px;
+        padding: 22px 20px 24px;
+      }
+
+      .sticker-sample.shape-label {
+        width: min(100%, 260px);
+        min-height: 124px;
+        padding: 20px 28px;
+      }
+
+      .sticker-sample.shape-round {
+        width: 210px;
+        min-height: 260px;
+        padding: 40px 34px 36px;
+      }
+
+      .sticker-sample.shape-drop {
+        width: 200px;
+        min-height: 280px;
+        padding: 46px 30px 34px;
+      }
+
+      .sticker-sample.shape-ticket {
+        width: min(100%, 270px);
+        min-height: 170px;
+        padding: 24px 34px;
+      }
+
+      .sticker-sample .story-date {
+        margin-bottom: 12px;
+        font-size: 10px;
+      }
+
+      .sticker-sample .story-title {
+        margin-bottom: 9px;
+        font-size: 22px;
+      }
+
+      .sticker-sample.shape-long .story-title {
+        font-size: 26px;
+      }
+
+      .sticker-sample .story-divider {
+        margin-bottom: 14px;
+      }
+
+      .sticker-sample .story-body {
+        font-size: 11px;
+        line-height: 1.85;
+      }
+
+      .sticker-sample .story-body p {
+        margin-bottom: 0.9em;
       }
 
       .note {
@@ -474,10 +768,6 @@
         }
 
         .story-sticker {
-          width: 78mm;
-          min-height: auto;
-          padding: 6mm 6.5mm 7mm;
-          border-width: 0.4mm;
           box-shadow: none;
           background-color: var(--sticker-bg);
           color: var(--sticker-text);
@@ -511,6 +801,10 @@
         .candidate-list {
           grid-template-columns: 1fr;
         }
+
+        .sticker-sample-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
       }
 
       @media (max-width: 560px) {
@@ -542,8 +836,19 @@
         }
 
         .story-sticker {
+          max-width: 92vw;
+        }
+
+        .shape-long,
+        .shape-card,
+        .shape-round,
+        .shape-drop {
           width: min(300px, 86vw);
-          padding: 20px 22px 24px;
+        }
+
+        .shape-label,
+        .shape-ticket {
+          width: min(100%, 86vw);
         }
 
         .story-title {
@@ -553,6 +858,14 @@
         .story-body {
           font-size: 13.5px;
           line-height: 1.95;
+        }
+
+        .sticker-sample-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .sample-item {
+          padding-inline: 10px;
         }
       }
     </style>
@@ -576,8 +889,109 @@
             <li>LINEトークを貼る</li>
             <li>小説候補をつくる</li>
             <li>気に入った物語を選ぶ</li>
-            <li>縦長シールとして残す</li>
+            <li>形と色が合う物語シールとして残す</li>
           </ol>
+        </div>
+      </section>
+
+      <section class="panel sample-section no-print" aria-label="シールのかたち見本">
+        <h2>シールのかたち見本</h2>
+        <p class="sample-lead">会話の内容に合わせて、AI風のルールが shape と theme を選びます。見本の文章はすべて公開用の架空テキストです。</p>
+        <div class="sticker-sample-grid">
+          <article class="sample-item">
+            <div class="sticker sticker-sample shape-long theme-sky">
+              <div class="story-date">2026/07/02</div>
+              <h3 class="story-title">長い日</h3>
+              <div class="story-divider" aria-hidden="true"></div>
+              <div class="story-body">
+                <p>予定がいくつも重なって、朝から少しだけ遠くまで歩いた。</p>
+                <p>帰るころには、ただ忙しかっただけの一日にも、小さな順番があったことに気づいた。</p>
+              </div>
+            </div>
+            <div class="sample-caption">
+              <p class="sample-kind">shape: long / theme: sky</p>
+              <p class="sample-desc">長い物語や出来事に</p>
+            </div>
+          </article>
+
+          <article class="sample-item">
+            <div class="sticker sticker-sample shape-card theme-ivory">
+              <div class="story-date">2026/07/03</div>
+              <h3 class="story-title">いつものこと</h3>
+              <div class="story-divider" aria-hidden="true"></div>
+              <div class="story-body">
+                <p>短い返事だけで、その日の空気が少し伝わった。</p>
+                <p>大きな出来事ではないのに、あとから思い出すと不思議と残っている。</p>
+              </div>
+            </div>
+            <div class="sample-caption">
+              <p class="sample-kind">shape: card / theme: ivory</p>
+              <p class="sample-desc">日常の会話や短めの物語に</p>
+            </div>
+          </article>
+
+          <article class="sample-item">
+            <div class="sticker sticker-sample shape-label theme-pink">
+              <div class="story-date">2026/07/04</div>
+              <h3 class="story-title">ひとこと</h3>
+              <div class="story-divider" aria-hidden="true"></div>
+              <div class="story-body">
+                <p>「あとでね」の短さが、かえってやさしく残った。</p>
+              </div>
+            </div>
+            <div class="sample-caption">
+              <p class="sample-kind">shape: label / theme: pink</p>
+              <p class="sample-desc">一言メッセージや短いやりとりに</p>
+            </div>
+          </article>
+
+          <article class="sample-item">
+            <div class="sticker sticker-sample shape-round theme-beige">
+              <div class="story-date">2026/07/05</div>
+              <h3 class="story-title">安心</h3>
+              <div class="story-divider" aria-hidden="true"></div>
+              <div class="story-body">
+                <p>待っていると返事が届いた。</p>
+                <p>ただそれだけで、帰り道の重さが少し軽くなった。</p>
+              </div>
+            </div>
+            <div class="sample-caption">
+              <p class="sample-kind">shape: round / theme: beige</p>
+              <p class="sample-desc">やさしい気持ち・ほっこりした話に</p>
+            </div>
+          </article>
+
+          <article class="sample-item">
+            <div class="sticker sticker-sample shape-drop theme-lavender">
+              <div class="story-date">2026/07/06</div>
+              <h3 class="story-title">雨の帰り道</h3>
+              <div class="story-divider" aria-hidden="true"></div>
+              <div class="story-body">
+                <p>雨の音だけが大きくて、返事を待つ時間が長く感じられた。</p>
+                <p>それでも画面が光ると、夜は少しだけ静かになった。</p>
+              </div>
+            </div>
+            <div class="sample-caption">
+              <p class="sample-kind">shape: drop / theme: lavender</p>
+              <p class="sample-desc">雨・不安・夜・しんみりした話に</p>
+            </div>
+          </article>
+
+          <article class="sample-item">
+            <div class="sticker sticker-sample shape-ticket theme-yellow">
+              <div class="story-date">2026/07/07</div>
+              <h3 class="story-title">週末の切符</h3>
+              <div class="story-divider" aria-hidden="true"></div>
+              <div class="story-body">
+                <p>集合時間を決めただけで、週末が少し近づいた。</p>
+                <p>まだ何も始まっていないのに、もう楽しい予感がしていた。</p>
+              </div>
+            </div>
+            <div class="sample-caption">
+              <p class="sample-kind">shape: ticket / theme: yellow</p>
+              <p class="sample-desc">おでかけ・イベント・特別な日の記録に</p>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -630,14 +1044,18 @@
           <div class="preview-wrap">
             <div class="no-print">
               <h3 class="sticker-heading">シールプレビュー</h3>
-              <p class="preview-lead">選んだ物語を、縦長の文章シールとして確認できます。印刷してノートに貼ることを想定しています。</p>
+              <p class="preview-lead">選んだ物語を、内容に合う形と色の文章シールとして確認できます。印刷してノートに貼ることを想定しています。</p>
             </div>
             <div class="sticker-actions no-print">
               <button class="button" id="printButton" type="button">印刷する</button>
               <button class="button secondary" id="saveStickerButton" type="button">シールとして残す</button>
             </div>
-            <div class="theme-controls no-print" aria-label="シールの色テーマ">
-              <p class="theme-recommendation" id="themeRecommendation">AIおすすめ：アイボリー</p>
+            <div class="theme-controls no-print" aria-label="シールのかたちと色テーマ">
+              <p class="theme-recommendation" id="themeRecommendation">AIおすすめ：shape: card / theme: ivory</p>
+              <label class="theme-control-row" for="shapeSelect">
+                <span class="label">かたち</span>
+                <select class="shape-select" id="shapeSelect"></select>
+              </label>
               <label class="theme-control-row" for="themeSelect">
                 <span class="label">色テーマ</span>
                 <select class="theme-select" id="themeSelect"></select>
@@ -645,12 +1063,12 @@
             </div>
             <div class="sticker-sheet" aria-label="ノートに貼ったシールのイメージ">
               <div class="print-area">
-                <article class="story-sticker" aria-label="シールプレビュー">
+                <article class="story-sticker sticker shape-card theme-ivory" aria-label="シールプレビュー">
                   <div class="story-date" id="previewDate">日付なし</div>
                   <h3 class="story-title" id="previewTitle">まだシールがありません</h3>
                   <div class="story-divider" aria-hidden="true"></div>
                   <div class="story-body" id="previewBody">
-                    <p>候補を選ぶと、ここに縦長の文章シールとして表示されます。</p>
+                    <p>候補を選ぶと、ここに内容に合う形と色の文章シールとして表示されます。</p>
                   </div>
                 </article>
               </div>
@@ -689,15 +1107,22 @@
 18:25 りく じゃあ少し待ってて
 18:26 まお ありがとう、今日いちばん安心した`;
 
+        const STICKER_SHAPES = [
+          { id: "long", name: "long", label: "細長い縦長", description: "長い物語や出来事に" },
+          { id: "card", name: "card", label: "カード型", description: "日常の会話や短めの物語に" },
+          { id: "label", name: "label", label: "横長ラベル", description: "一言メッセージや短いやりとりに" },
+          { id: "round", name: "round", label: "丸・楕円型", description: "やさしい気持ちやほっこりした話に" },
+          { id: "drop", name: "drop", label: "しずく型", description: "雨、不安、夜、しんみりした話に" },
+          { id: "ticket", name: "ticket", label: "チケット型", description: "おでかけ、イベント、特別な日に" }
+        ];
+
         const STICKER_THEMES = [
-          { id: "ivory", name: "アイボリー", bg: "#FFF9ED", ink: "#7A654F", line: "#7A654F" },
-          { id: "beige", name: "ベージュ", bg: "#F4E7D3", ink: "#6F5A45", line: "#6F5A45" },
-          { id: "greige", name: "グレージュ", bg: "#EEEAE3", ink: "#6B655E", line: "#6B655E" },
-          { id: "monochrome", name: "モノクロ", bg: "#F4F4F2", ink: "#3A3A3A", line: "#3A3A3A" },
-          { id: "pale-blue", name: "薄い水色", bg: "#DDF4F8", ink: "#2F5F68", line: "#2F5F68" },
-          { id: "pale-pink", name: "薄いピンク", bg: "#F6D8D1", ink: "#7A4A4A", line: "#7A4A4A" },
-          { id: "lavender", name: "ラベンダー", bg: "#E7D8F5", ink: "#56325F", line: "#56325F" },
-          { id: "pale-yellow", name: "薄いイエロー", bg: "#FFF1B8", ink: "#7A5B32", line: "#7A5B32" }
+          { id: "sky", name: "sky", label: "淡い水色", bg: "#DDF4F8", ink: "#2F5F68", line: "#2F5F68" },
+          { id: "ivory", name: "ivory", label: "アイボリー", bg: "#FFF9ED", ink: "#7A654F", line: "#7A654F" },
+          { id: "pink", name: "pink", label: "淡いピンク", bg: "#F6D8D1", ink: "#7A4A4A", line: "#7A4A4A" },
+          { id: "beige", name: "beige", label: "淡いベージュ", bg: "#F4E7D3", ink: "#6F5A45", line: "#6F5A45" },
+          { id: "lavender", name: "lavender", label: "ラベンダー", bg: "#E7D8F5", ink: "#56325F", line: "#56325F" },
+          { id: "yellow", name: "yellow", label: "淡いイエロー", bg: "#FFF1B8", ink: "#7A5B32", line: "#7A5B32" }
         ];
 
         const STORY_RULES = [
@@ -802,6 +1227,7 @@
           previewBody: document.getElementById("previewBody"),
           printButton: document.getElementById("printButton"),
           saveStickerButton: document.getElementById("saveStickerButton"),
+          shapeSelect: document.getElementById("shapeSelect"),
           themeSelect: document.getElementById("themeSelect"),
           themeRecommendation: document.getElementById("themeRecommendation"),
           storySticker: document.querySelector(".story-sticker")
@@ -821,10 +1247,12 @@
 
         let candidates = [];
         let selectedIndex = -1;
+        let selectedShapeId = "card";
         let selectedThemeId = "ivory";
 
+        setupShapeSelect();
         setupThemeSelect();
-        applyStickerTheme(selectedThemeId, "AIおすすめ");
+        applyStickerStyle(selectedShapeId, selectedThemeId, "AIおすすめ");
 
         elements.sampleButton.addEventListener("click", function () {
           console.log("サンプルを入れる button clicked");
@@ -852,8 +1280,15 @@
         elements.themeSelect.addEventListener("change", function () {
           console.log("色テーマ select changed", elements.themeSelect.value);
           selectedThemeId = elements.themeSelect.value;
-          applyStickerTheme(selectedThemeId, "選択中");
-          setStatus("色テーマを「" + getThemeName(selectedThemeId) + "」に変更しました");
+          applyStickerStyle(selectedShapeId, selectedThemeId, "選択中");
+          setStatus("色テーマを「" + getThemeLabel(selectedThemeId) + "」に変更しました");
+        });
+
+        elements.shapeSelect.addEventListener("change", function () {
+          console.log("かたち select changed", elements.shapeSelect.value);
+          selectedShapeId = elements.shapeSelect.value;
+          applyStickerStyle(selectedShapeId, selectedThemeId, "選択中");
+          setStatus("シールのかたちを「" + getShapeLabel(selectedShapeId) + "」に変更しました");
         });
 
         [elements.printButton, elements.saveStickerButton].forEach(function (button) {
@@ -933,13 +1368,15 @@
 
               used.add(key);
               const titleValue = typeof rule.title === "function" ? rule.title(lowerText) : rule.title;
+              const stickerType = recommendStickerType(titleValue, rule.body, block.text);
               found.push({
                 id: rule.id,
                 date: block.date,
                 title: titleValue,
                 topic: rule.topic,
                 body: rule.body,
-                themeId: recommendThemeForStory(titleValue, rule.body),
+                shapeId: stickerType.shapeId,
+                themeId: stickerType.themeId,
                 score: matchedKeywords.length
               });
             });
@@ -949,13 +1386,15 @@
         }
 
         function buildGenericCandidate(text) {
+          const stickerType = recommendStickerType(GENERIC_STORY.title, GENERIC_STORY.body, text);
           return {
             id: GENERIC_STORY.id,
             date: detectFirstDate(text),
             title: GENERIC_STORY.title,
             topic: GENERIC_STORY.topic,
             body: GENERIC_STORY.body,
-            themeId: recommendThemeForStory(GENERIC_STORY.title, GENERIC_STORY.body),
+            shapeId: stickerType.shapeId,
+            themeId: stickerType.themeId,
             score: 0
           };
         }
@@ -1028,7 +1467,7 @@
 
             const theme = document.createElement("span");
             theme.className = "theme-label";
-            theme.textContent = "AIおすすめ：" + getThemeName(candidate.themeId);
+            theme.textContent = "AIおすすめ：" + getStickerTypeText(candidate.shapeId, candidate.themeId);
 
             const excerpt = document.createElement("p");
             excerpt.className = "excerpt";
@@ -1064,9 +1503,11 @@
           elements.dateEdit.value = candidate.date;
           elements.titleEdit.value = candidate.title;
           elements.bodyEdit.value = candidate.body;
+          selectedShapeId = candidate.shapeId || "card";
           selectedThemeId = candidate.themeId || "ivory";
+          elements.shapeSelect.value = selectedShapeId;
           elements.themeSelect.value = selectedThemeId;
-          applyStickerTheme(selectedThemeId, "AIおすすめ");
+          applyStickerStyle(selectedShapeId, selectedThemeId, "AIおすすめ");
           renderCandidates();
           updatePreview();
         }
@@ -1075,16 +1516,18 @@
           elements.dateEdit.value = "";
           elements.titleEdit.value = "";
           elements.bodyEdit.value = "";
+          selectedShapeId = "card";
           selectedThemeId = "ivory";
+          elements.shapeSelect.value = selectedShapeId;
           elements.themeSelect.value = selectedThemeId;
-          applyStickerTheme(selectedThemeId, "AIおすすめ");
+          applyStickerStyle(selectedShapeId, selectedThemeId, "AIおすすめ");
           updatePreview();
         }
 
         function updatePreview() {
           elements.previewDate.textContent = elements.dateEdit.value.trim() || "日付なし";
           elements.previewTitle.textContent = elements.titleEdit.value.trim() || "まだシールがありません";
-          renderStoryBody(elements.bodyEdit.value.trim() || "候補を選ぶと、ここに縦長の文章シールとして表示されます。");
+          renderStoryBody(elements.bodyEdit.value.trim() || "候補を選ぶと、ここに内容に合う形と色の文章シールとして表示されます。");
         }
 
         function renderStoryBody(text) {
@@ -1100,42 +1543,77 @@
           });
         }
 
+        function setupShapeSelect() {
+          STICKER_SHAPES.forEach(function (shape) {
+            const option = document.createElement("option");
+            option.value = shape.id;
+            option.textContent = shape.name + "（" + shape.label + "）";
+            elements.shapeSelect.appendChild(option);
+          });
+          elements.shapeSelect.value = selectedShapeId;
+        }
+
         function setupThemeSelect() {
           STICKER_THEMES.forEach(function (theme) {
             const option = document.createElement("option");
             option.value = theme.id;
-            option.textContent = theme.name;
+            option.textContent = theme.name + "（" + theme.label + "）";
             elements.themeSelect.appendChild(option);
           });
           elements.themeSelect.value = selectedThemeId;
         }
 
-        function applyStickerTheme(themeId, labelPrefix) {
+        function applyStickerStyle(shapeId, themeId, labelPrefix) {
+          const shape = getShape(shapeId);
           const theme = getTheme(themeId);
+          STICKER_SHAPES.forEach(function (item) {
+            elements.storySticker.classList.remove("shape-" + item.id);
+          });
+          STICKER_THEMES.forEach(function (item) {
+            elements.storySticker.classList.remove("theme-" + item.id);
+          });
+          elements.storySticker.classList.add("sticker", "shape-" + shape.id, "theme-" + theme.id);
           elements.storySticker.style.setProperty("--sticker-bg", theme.bg);
           elements.storySticker.style.setProperty("--sticker-text", theme.ink);
           elements.storySticker.style.setProperty("--sticker-line", theme.line);
-          elements.themeRecommendation.textContent = labelPrefix + "：" + theme.name;
+          elements.themeRecommendation.textContent = labelPrefix + "：" + getStickerTypeText(shape.id, theme.id);
+        }
+
+        function getShape(shapeId) {
+          return STICKER_SHAPES.find(function (shape) {
+            return shape.id === shapeId;
+          }) || STICKER_SHAPES[1];
         }
 
         function getTheme(themeId) {
           return STICKER_THEMES.find(function (theme) {
             return theme.id === themeId;
-          }) || STICKER_THEMES[0];
+          }) || STICKER_THEMES[1];
         }
 
-        function getThemeName(themeId) {
-          return getTheme(themeId).name;
+        function getShapeLabel(shapeId) {
+          const shape = getShape(shapeId);
+          return shape.name + "（" + shape.label + "）";
         }
 
-        function recommendThemeForStory(title, body) {
-          const text = (title + "\n" + body).toLowerCase();
+        function getThemeLabel(themeId) {
+          const theme = getTheme(themeId);
+          return theme.name + "（" + theme.label + "）";
+        }
+
+        function getStickerTypeText(shapeId, themeId) {
+          return "shape: " + getShape(shapeId).name + " / theme: " + getTheme(themeId).name;
+        }
+
+        function recommendStickerType(title, body, sourceText) {
+          const text = (title + "\n" + body + "\n" + (sourceText || "")).toLowerCase();
+          const compactBodyLength = body.replace(/\s+/g, "").length;
+          const paragraphCount = body.split(/\n\s*\n/).filter(Boolean).length;
           const rules = [
-            { themeId: "pale-blue", keywords: ["迎え", "安心", "待ち合わせ", "ありがとう", "会う", "来てくれる"] },
-            { themeId: "pale-pink", keywords: ["ごめん", "待つ", "怒る", "寂しい", "すれ違い"] },
-            { themeId: "lavender", keywords: ["夢", "夜", "怖い", "不思議", "眠い"] },
-            { themeId: "pale-yellow", keywords: ["楽しい", "笑", "遊ぶ", "かわいい", "花束", "メイク"] },
-            { themeId: "beige", keywords: ["課題", "レポート", "参考文献", "ai", "授業", "提出"] }
+            { shapeId: "drop", themeId: "lavender", keywords: ["雨", "不安", "夜", "こわい", "怖い", "しんみり", "寂しい", "待つ"] },
+            { shapeId: "round", themeId: "beige", keywords: ["ありがとう", "やさしい", "優しい", "あたたかい", "安心", "迎え", "助かる"] },
+            { shapeId: "ticket", themeId: "yellow", keywords: ["花束", "おでかけ", "イベント", "特別", "ライブ", "会場", "集合", "駅"] },
+            { shapeId: "card", themeId: "ivory", keywords: ["課題", "レポート", "参考文献", "ai", "授業", "提出", "確認"] }
           ];
 
           const matched = rules.find(function (rule) {
@@ -1144,7 +1622,19 @@
             });
           });
 
-          return matched ? matched.themeId : "ivory";
+          if (matched) {
+            return { shapeId: matched.shapeId, themeId: matched.themeId };
+          }
+
+          if (compactBodyLength <= 90 || paragraphCount <= 1) {
+            return { shapeId: "label", themeId: "pink" };
+          }
+
+          if (compactBodyLength >= 180 || paragraphCount >= 3) {
+            return { shapeId: "long", themeId: "sky" };
+          }
+
+          return { shapeId: "card", themeId: "ivory" };
         }
 
         function firstParagraph(text) {
