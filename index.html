@@ -644,7 +644,7 @@
 
       .shape-drop {
         width: min(100%, 460px);
-        min-height: 560px;
+        min-height: 0;
         padding: 0;
         border: none;
         border-radius: 0;
@@ -658,129 +658,37 @@
         content: none;
       }
 
-      .shape-drop .drop-svg {
+      .drop-template-image {
+        display: none;
+      }
+
+      .shape-drop .drop-template-image {
         display: block;
-        position: absolute;
-        inset: 0;
         width: 100%;
-        height: 100%;
-        z-index: 0;
-        overflow: visible;
+        height: auto;
         pointer-events: none;
-      }
-
-      .drop-fill {
-        fill: var(--sticker-bg);
-        filter: drop-shadow(0 10px 22px rgba(55, 47, 70, 0.13));
-      }
-
-      .drop-outline {
-        fill: none;
-        stroke: var(--sticker-line);
-        stroke-width: 1.45;
-        stroke-linejoin: round;
-        opacity: 0.82;
-      }
-
-      .drop-inner {
-        fill: none;
-        stroke: var(--sticker-line);
-        stroke-width: 1.05;
-        stroke-linejoin: round;
-        opacity: 0.68;
-      }
-
-      .shape-drop .drop-decor {
-        display: block;
-        position: absolute;
-        z-index: 1;
-        pointer-events: none;
-      }
-
-      .shape-drop .drop-decor span {
-        position: absolute;
-        display: block;
-        border: 0;
-        border-radius: 0;
-        background: var(--sticker-line);
-        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34'%3E%3Cpath fill='black' d='M12 1 C18 8 22 16 22 24 C22 31 17 33 12 33 C7 33 2 31 2 24 C2 16 6 8 12 1 Z'/%3E%3C/svg%3E")
-          center / contain no-repeat;
-        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 34'%3E%3Cpath fill='black' d='M12 1 C18 8 22 16 22 24 C22 31 17 33 12 33 C7 33 2 31 2 24 C2 16 6 8 12 1 Z'/%3E%3C/svg%3E")
-          center / contain no-repeat;
-        transform: rotate(2deg);
-        opacity: 0.5;
-      }
-
-      .shape-drop .drop-decor span::after {
-        content: "";
-        position: absolute;
-        inset: 1.4px;
-        background: color-mix(in srgb, var(--sticker-line) 20%, var(--sticker-bg));
-        -webkit-mask: inherit;
-        mask: inherit;
-      }
-
-      .shape-drop .drop-decor-top {
-        top: 90px;
-        left: 136px;
-        width: 106px;
-        height: 82px;
-      }
-
-      .shape-drop .drop-decor-top span:nth-child(1) {
-        top: 26px;
-        left: 4px;
-        width: 13px;
-        height: 20px;
-      }
-
-      .shape-drop .drop-decor-top span:nth-child(2) {
-        top: 48px;
-        left: 42px;
-        width: 17px;
-        height: 26px;
-      }
-
-      .shape-drop .drop-decor-top span:nth-child(3) {
-        top: 0;
-        left: 68px;
-        width: 19px;
-        height: 31px;
-      }
-
-      .shape-drop .drop-decor-top span:nth-child(4) {
-        top: 56px;
-        left: 22px;
-        width: 11px;
-        height: 17px;
-      }
-
-      .shape-drop .drop-decor-bottom {
-        left: 50%;
-        bottom: 72px;
-        width: 22px;
-        height: 32px;
-        transform: translateX(-50%);
-      }
-
-      .shape-drop .drop-decor-bottom span {
-        inset: 0;
-        width: 18px;
-        height: 28px;
-        opacity: 0.5;
+        user-select: none;
       }
 
       .shape-drop .story-content {
-        width: min(300px, 100%);
-        margin: 0 auto;
-        padding: 154px 0 118px;
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
+        pointer-events: none;
       }
 
       .shape-drop .story-date {
-        width: 150px;
+        position: absolute;
+        top: 31.5%;
+        left: 57.8%;
+        width: 18%;
         min-height: 16px;
-        margin: 0 0 26px auto;
+        margin: 0;
         font-size: 12px;
         font-weight: 500;
         letter-spacing: 0.03em;
@@ -789,23 +697,32 @@
       }
 
       .shape-drop .story-title {
-        width: 100%;
-        min-height: 36px;
-        margin: 0 0 8px;
+        position: absolute;
+        top: 38.6%;
+        left: 24.4%;
+        width: 51.2%;
+        min-height: 0;
+        margin: 0;
         font-size: 30px;
         line-height: 1.2;
         text-align: left;
       }
 
       .shape-drop .story-divider {
-        width: 100%;
+        position: absolute;
+        top: 45.3%;
+        left: 24.4%;
+        width: 51.2%;
         height: 1.5px;
-        margin: 0 0 24px;
-        opacity: 0.78;
+        margin: 0;
+        opacity: 0;
       }
 
       .shape-drop .story-body {
-        width: 100%;
+        position: absolute;
+        top: 49%;
+        left: 24.4%;
+        width: 51.2%;
         letter-spacing: 0.055em;
         font-size: 13px;
         line-height: 1.9;
@@ -906,22 +823,21 @@
       }
 
       .shape-drop.text-small {
-        width: min(100%, 500px);
-        min-height: 610px;
+        width: min(100%, 460px);
+        min-height: 0;
         padding: 0;
       }
 
       .shape-drop.text-xsmall {
-        width: min(100%, 520px);
-        min-height: 640px;
+        width: min(100%, 460px);
+        min-height: 0;
         padding: 0;
       }
 
       .shape-drop.text-small .story-content,
       .shape-drop.text-xsmall .story-content {
-        width: min(326px, 100%);
-        padding-top: 166px;
-        padding-bottom: 130px;
+        width: 100%;
+        padding: 0;
       }
 
       .note {
@@ -969,7 +885,7 @@
           background-color: transparent;
         }
 
-        .shape-drop .drop-svg {
+        .shape-drop .drop-template-image {
           display: block;
         }
 
@@ -1044,28 +960,26 @@
 
         .shape-drop {
           width: min(390px, 90vw);
-          min-height: 470px;
+          min-height: 0;
           padding: 0;
         }
 
         .shape-drop.text-small,
         .shape-drop.text-xsmall {
-          width: min(410px, 90vw);
-          min-height: 510px;
+          width: min(390px, 90vw);
+          min-height: 0;
           padding: 0;
         }
 
         .shape-drop .story-content {
-          width: min(252px, 100%);
-          padding-top: 124px;
-          padding-bottom: 96px;
+          width: 100%;
+          padding: 0;
         }
 
         .shape-drop.text-small .story-content,
         .shape-drop.text-xsmall .story-content {
-          width: min(270px, 100%);
-          padding-top: 132px;
-          padding-bottom: 104px;
+          width: 100%;
+          padding: 0;
         }
 
         .shape-label,
@@ -1178,20 +1092,7 @@
             <div class="sticker-sheet" aria-label="ノートに貼ったシールのイメージ">
               <div class="print-area">
                 <article class="story-sticker shape-card theme-ivory text-medium" aria-label="シールプレビュー">
-                  <svg class="drop-svg" viewBox="0 0 480 560" aria-hidden="true" focusable="false">
-                    <path class="drop-fill" d="M292 25 C296 27 303 50 306 67 C311 80 335 101 358 124 C410 186 440 260 448 322 C460 430 352 538 240 543 C128 538 20 430 32 322 C42 222 114 130 204 76 C236 56 266 37 284 29 C287 27 289 24 292 25 Z"></path>
-                    <path class="drop-outline" d="M292 25 C296 27 303 50 306 67 C311 80 335 101 358 124 C410 186 440 260 448 322 C460 430 352 538 240 543 C128 538 20 430 32 322 C42 222 114 130 204 76 C236 56 266 37 284 29 C287 27 289 24 292 25 Z"></path>
-                    <path class="drop-inner" d="M292 25 C296 27 303 50 306 67 C311 80 335 101 358 124 C410 186 440 260 448 322 C460 430 352 538 240 543 C128 538 20 430 32 322 C42 222 114 130 204 76 C236 56 266 37 284 29 C287 27 289 24 292 25 Z" transform="translate(24 28) scale(0.9)"></path>
-                  </svg>
-                  <div class="drop-decor drop-decor-top" aria-hidden="true">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                  <div class="drop-decor drop-decor-bottom" aria-hidden="true">
-                    <span></span>
-                  </div>
+                  <img class="drop-template-image" src="assets/drop-template.png" alt="" aria-hidden="true">
                   <div class="story-content">
                     <div class="story-date" id="previewDate">日付なし</div>
                     <h3 class="story-title" id="previewTitle">まだシールがありません</h3>
