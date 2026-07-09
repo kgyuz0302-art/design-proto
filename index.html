@@ -412,6 +412,10 @@
         z-index: 2;
       }
 
+      .drop-preview {
+        display: contents;
+      }
+
       .story-date,
       .story-title,
       .story-divider,
@@ -662,10 +666,20 @@
         display: none;
       }
 
+      .shape-drop .drop-preview {
+        display: block;
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+      }
+
       .shape-drop .drop-template-image {
         display: block;
+        position: absolute;
+        inset: 0;
         width: 100%;
-        height: auto;
+        height: 100%;
+        object-fit: contain;
         pointer-events: none;
         user-select: none;
       }
@@ -1092,13 +1106,15 @@
             <div class="sticker-sheet" aria-label="ノートに貼ったシールのイメージ">
               <div class="print-area">
                 <article class="story-sticker shape-card theme-ivory text-medium" aria-label="シールプレビュー">
-                  <img class="drop-template-image" src="assets/drop-template.png" alt="" aria-hidden="true">
-                  <div class="story-content">
-                    <div class="story-date" id="previewDate">日付なし</div>
-                    <h3 class="story-title" id="previewTitle">まだシールがありません</h3>
-                    <div class="story-divider" aria-hidden="true"></div>
-                    <div class="story-body" id="previewBody">
-                      <p>候補を選ぶと、ここに内容に合った形と色のシールが表示されます。</p>
+                  <div class="drop-preview">
+                    <img class="drop-template-image" src="assets/drop-template.png" alt="" aria-hidden="true">
+                    <div class="story-content">
+                      <div class="story-date" id="previewDate">日付なし</div>
+                      <h3 class="story-title" id="previewTitle">まだシールがありません</h3>
+                      <div class="story-divider" aria-hidden="true"></div>
+                      <div class="story-body" id="previewBody">
+                        <p>候補を選ぶと、ここに内容に合った形と色のシールが表示されます。</p>
+                      </div>
                     </div>
                   </div>
                 </article>
