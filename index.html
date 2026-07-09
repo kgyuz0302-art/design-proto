@@ -662,7 +662,7 @@
         content: none;
       }
 
-      .drop-template-image {
+      .drop-template {
         display: none;
       }
 
@@ -673,30 +673,20 @@
         aspect-ratio: 1 / 1;
       }
 
-      .shape-drop .drop-template-image {
+      .shape-drop .drop-template {
         display: block;
-        position: absolute;
-        inset: 0;
         width: 100%;
-        height: 100%;
-        object-fit: contain;
+        height: auto;
         pointer-events: none;
         user-select: none;
       }
 
       .shape-drop .story-content {
-        position: absolute;
-        inset: 0;
-        z-index: 2;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        pointer-events: none;
+        display: contents;
       }
 
-      .shape-drop .story-date {
+      .shape-drop .story-date,
+      .shape-drop .drop-date {
         position: absolute;
         top: 31.5%;
         left: 57.8%;
@@ -710,7 +700,8 @@
         text-align: right;
       }
 
-      .shape-drop .story-title {
+      .shape-drop .story-title,
+      .shape-drop .drop-title {
         position: absolute;
         top: 38.6%;
         left: 24.4%;
@@ -732,7 +723,8 @@
         opacity: 0;
       }
 
-      .shape-drop .story-body {
+      .shape-drop .story-body,
+      .shape-drop .drop-body {
         position: absolute;
         top: 49%;
         left: 24.4%;
@@ -899,7 +891,7 @@
           background-color: transparent;
         }
 
-        .shape-drop .drop-template-image {
+        .shape-drop .drop-template {
           display: block;
         }
 
@@ -1107,14 +1099,12 @@
               <div class="print-area">
                 <article class="story-sticker shape-card theme-ivory text-medium" aria-label="シールプレビュー">
                   <div class="drop-preview">
-                    <img class="drop-template-image" src="assets/drop-template.png" alt="" aria-hidden="true">
-                    <div class="story-content">
-                      <div class="story-date" id="previewDate">日付なし</div>
-                      <h3 class="story-title" id="previewTitle">まだシールがありません</h3>
-                      <div class="story-divider" aria-hidden="true"></div>
-                      <div class="story-body" id="previewBody">
-                        <p>候補を選ぶと、ここに内容に合った形と色のシールが表示されます。</p>
-                      </div>
+                    <img class="drop-template" src="assets/drop-template.png" alt="" aria-hidden="true">
+                    <div class="story-date drop-date" id="previewDate">日付なし</div>
+                    <h3 class="story-title drop-title" id="previewTitle">まだシールがありません</h3>
+                    <div class="story-divider" aria-hidden="true"></div>
+                    <div class="story-body drop-body" id="previewBody">
+                      <p>候補を選ぶと、ここに内容に合った形と色のシールが表示されます。</p>
                     </div>
                   </div>
                 </article>
