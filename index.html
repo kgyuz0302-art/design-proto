@@ -688,9 +688,9 @@
       .shape-drop .story-date,
       .shape-drop .drop-date {
         position: absolute;
-        top: 31.5%;
-        left: 57.8%;
-        width: 18%;
+        top: 30.4%;
+        left: 54.8%;
+        width: 22%;
         min-height: 16px;
         margin: 0;
         font-size: 12px;
@@ -703,21 +703,23 @@
       .shape-drop .story-title,
       .shape-drop .drop-title {
         position: absolute;
-        top: 38.6%;
-        left: 24.4%;
-        width: 51.2%;
+        top: 37.2%;
+        left: 24.6%;
+        width: 48.8%;
         min-height: 0;
         margin: 0;
         font-size: 30px;
         line-height: 1.2;
+        letter-spacing: 0.04em;
         text-align: left;
+        overflow-wrap: anywhere;
       }
 
       .shape-drop .story-divider {
         position: absolute;
         top: 45.3%;
-        left: 24.4%;
-        width: 51.2%;
+        left: 24.6%;
+        width: 48.8%;
         height: 1.5px;
         margin: 0;
         opacity: 0;
@@ -726,13 +728,17 @@
       .shape-drop .story-body,
       .shape-drop .drop-body {
         position: absolute;
-        top: 49%;
-        left: 24.4%;
-        width: 51.2%;
-        letter-spacing: 0.055em;
-        font-size: 13px;
-        line-height: 1.9;
+        top: 47.2%;
+        right: 26.6%;
+        bottom: 20.5%;
+        left: 24.6%;
+        width: auto;
+        letter-spacing: 0.02em;
+        font-size: 14px;
+        line-height: 1.75;
         text-align: left;
+        box-sizing: border-box;
+        overflow: visible;
       }
 
       .shape-ticket {
@@ -814,18 +820,23 @@
 
       .shape-drop.text-large .story-body {
         font-size: 14px;
-        line-height: 1.9;
+        line-height: 1.75;
       }
 
       .shape-drop.text-medium .story-body {
-        font-size: 13px;
-        line-height: 1.86;
+        font-size: 14px;
+        line-height: 1.75;
       }
 
       .shape-drop.text-small .story-body,
       .shape-drop.text-xsmall .story-body {
-        font-size: 12px;
-        line-height: 1.76;
+        font-size: 12.5px;
+        line-height: 1.62;
+      }
+
+      .shape-drop.text-xsmall .story-body {
+        font-size: 11.5px;
+        line-height: 1.52;
       }
 
       .shape-drop.text-small {
@@ -1606,6 +1617,8 @@
 
         function renderStoryBody(text) {
           elements.previewBody.innerHTML = "";
+          elements.previewBody.style.removeProperty("font-size");
+          elements.previewBody.style.removeProperty("line-height");
           const paragraphs = text.split(/\n\s*\n/).map(function (paragraph) {
             return paragraph.trim();
           }).filter(Boolean);
@@ -1824,6 +1837,10 @@
             applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, labelPrefix || "AIおすすめ");
           }
 
+          if (selectedShapeId === "drop") {
+            fitDropBodyText();
+          }
+
           if (sticker.scrollHeight <= sticker.clientHeight + 2) {
             return;
           }
@@ -1840,6 +1857,28 @@
             selectedSizeClass = "text-xsmall";
             elements.shapeSelect.value = selectedShapeId;
             applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, labelPrefix || "AIおすすめ");
+          }
+        }
+
+        function fitDropBodyText() {
+          const body = elements.previewBody;
+          if (!body || !body.clientHeight) {
+            return;
+          }
+
+          const steps = [
+            { fontSize: "14px", lineHeight: "1.75" },
+            { fontSize: "13px", lineHeight: "1.64" },
+            { fontSize: "12px", lineHeight: "1.56" },
+            { fontSize: "11.5px", lineHeight: "1.48" }
+          ];
+
+          for (let i = 0; i < steps.length; i += 1) {
+            body.style.fontSize = steps[i].fontSize;
+            body.style.lineHeight = steps[i].lineHeight;
+            if (body.scrollHeight <= body.clientHeight + 2) {
+              return;
+            }
           }
         }
 
