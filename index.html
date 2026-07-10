@@ -7,16 +7,27 @@
     <style>
       :root {
         color-scheme: light;
-        --bg: #f7f1e6;
-        --paper: #fffdf8;
-        --paper-soft: #fbf6eb;
-        --ink: #1f1d1a;
-        --muted: #6c675f;
-        --line: #26221d;
-        --line-soft: #ded4c3;
-        --accent: #8f6f45;
-        --accent-soft: #efe3d0;
-        --shadow: 0 18px 50px rgba(61, 48, 31, 0.1);
+        --bg: #f7f2ec;
+        --bg-soft: #f5efe8;
+        --primary: #b3262d;
+        --primary-dark: #941e24;
+        --text: #3a2c2a;
+        --text-soft: #6a5b58;
+        --border: #d8c8bf;
+        --lavender: #d9c7eb;
+        --pink: #f2c9c9;
+        --yellow: #f3d88d;
+        --ivory-card: #eaddcb;
+        --white: #fffdfc;
+        --paper: var(--white);
+        --paper-soft: var(--bg-soft);
+        --ink: var(--text);
+        --muted: var(--text-soft);
+        --line: var(--primary);
+        --line-soft: var(--border);
+        --accent: var(--primary);
+        --accent-soft: #f4e2de;
+        --shadow: 0 18px 42px rgba(89, 55, 45, 0.09);
       }
 
       * {
@@ -25,7 +36,8 @@
 
       body {
         margin: 0;
-        background: var(--bg);
+        background:
+          linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
         color: var(--ink);
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         line-height: 1.7;
@@ -49,7 +61,7 @@
 
       .hero {
         padding: 28px 0 22px;
-        border-bottom: 1px solid var(--line-soft);
+        border-bottom: 1px solid color-mix(in srgb, var(--primary) 34%, var(--border));
       }
 
       .hero h1 {
@@ -58,6 +70,7 @@
         font-size: clamp(2.1rem, 5vw, 4rem);
         font-weight: 600;
         letter-spacing: 0;
+        color: var(--primary);
       }
 
       .hero p {
@@ -76,10 +89,14 @@
       .intro-text,
       .steps,
       .panel {
-        background: rgba(255, 253, 248, 0.72);
+        background: color-mix(in srgb, var(--white) 86%, var(--ivory-card));
         border: 1px solid var(--line-soft);
         border-radius: 8px;
         box-shadow: var(--shadow);
+      }
+
+      .intro-text {
+        border-top-color: color-mix(in srgb, var(--primary) 42%, var(--border));
       }
 
       .intro-text {
@@ -96,11 +113,13 @@
 
       .steps {
         padding: 20px 22px;
+        background: color-mix(in srgb, var(--yellow) 30%, var(--white));
       }
 
       .steps h2,
       .panel h2 {
         margin: 0 0 12px;
+        color: var(--primary);
         font-size: 1.08rem;
       }
 
@@ -122,19 +141,19 @@
         padding: 10px 14px;
         border: 1px solid var(--line-soft);
         border-radius: 8px;
-        background: var(--paper);
+        background: color-mix(in srgb, var(--white) 88%, var(--pink));
         color: var(--muted);
       }
 
       .status.is-active {
-        border-color: var(--line);
+        border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
         color: var(--ink);
       }
 
       .status.is-error {
-        border-color: #9f3b31;
-        color: #7f2f27;
-        background: #fff8f5;
+        border-color: var(--primary);
+        color: var(--primary-dark);
+        background: color-mix(in srgb, var(--pink) 38%, var(--white));
       }
 
       .workspace {
@@ -160,15 +179,15 @@
         width: 100%;
         border: 1px solid var(--line-soft);
         border-radius: 8px;
-        background: #fffefa;
+        background: var(--white);
         color: var(--ink);
         outline: none;
       }
 
       textarea:focus,
       input:focus {
-        border-color: var(--line);
-        box-shadow: 0 0 0 3px rgba(143, 111, 69, 0.16);
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(179, 38, 45, 0.14);
       }
 
       #talkInput {
@@ -188,15 +207,23 @@
       .button {
         min-height: 44px;
         border-radius: 999px;
-        border: 1px solid var(--line);
+        border: 1px solid var(--primary);
         padding: 0 18px;
-        background: var(--ink);
-        color: #fffdf8;
+        background: var(--primary);
+        color: var(--white);
+        box-shadow: 0 8px 18px rgba(179, 38, 45, 0.16);
+        transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
       }
 
       .button.secondary {
-        background: transparent;
-        color: var(--ink);
+        background: color-mix(in srgb, var(--white) 82%, var(--ivory-card));
+        color: var(--primary);
+      }
+
+      .button:hover {
+        background: var(--primary-dark);
+        border-color: var(--primary-dark);
+        color: var(--white);
       }
 
       .button:hover,
@@ -216,7 +243,7 @@
         border: 1px dashed var(--line-soft);
         border-radius: 8px;
         color: var(--muted);
-        background: rgba(255, 253, 248, 0.55);
+        background: color-mix(in srgb, var(--white) 76%, var(--lavender));
       }
 
       .candidate-card {
@@ -229,13 +256,30 @@
         border-radius: 8px;
         background: var(--paper);
         color: var(--ink);
-        transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+        box-shadow: 0 10px 24px rgba(93, 60, 48, 0.06);
+        transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+      }
+
+      .candidate-card:nth-child(4n + 1) {
+        background: color-mix(in srgb, var(--white) 82%, var(--ivory-card));
+      }
+
+      .candidate-card:nth-child(4n + 2) {
+        background: color-mix(in srgb, var(--white) 84%, var(--lavender));
+      }
+
+      .candidate-card:nth-child(4n + 3) {
+        background: color-mix(in srgb, var(--white) 84%, var(--pink));
+      }
+
+      .candidate-card:nth-child(4n + 4) {
+        background: color-mix(in srgb, var(--white) 78%, var(--yellow));
       }
 
       .candidate-card.is-selected {
-        border-color: var(--line);
+        border-color: var(--primary);
         background: var(--accent-soft);
-        box-shadow: inset 0 0 0 1px var(--line);
+        box-shadow: inset 0 0 0 1px var(--primary), 0 12px 28px rgba(179, 38, 45, 0.1);
       }
 
       .candidate-date,
@@ -248,6 +292,7 @@
 
       .candidate-card h3 {
         margin: 6px 0 8px;
+        color: var(--primary);
         font-size: 1.06rem;
       }
 
@@ -262,7 +307,7 @@
 
       .excerpt {
         margin: 0;
-        color: #3d3933;
+        color: var(--ink);
         font-family: "Yu Mincho", "Hiragino Mincho ProN", "Times New Roman", serif;
         font-size: 0.92rem;
       }
@@ -304,6 +349,7 @@
 
       .sticker-heading {
         margin: 0 0 6px;
+        color: var(--primary);
         font-size: 1rem;
       }
 
@@ -319,7 +365,7 @@
         padding: 12px;
         border: 1px solid var(--line-soft);
         border-radius: 8px;
-        background: rgba(255, 253, 248, 0.72);
+        background: color-mix(in srgb, var(--white) 80%, var(--lavender));
       }
 
       .theme-control-row {
@@ -335,7 +381,7 @@
         width: 100%;
         border: 1px solid var(--line-soft);
         border-radius: 8px;
-        background: #fffefa;
+        background: var(--white);
         color: var(--ink);
         padding: 8px 10px;
       }
@@ -355,12 +401,12 @@
         background:
           repeating-linear-gradient(
             to bottom,
-            rgba(143, 111, 69, 0.08) 0,
-            rgba(143, 111, 69, 0.08) 1px,
+            rgba(179, 38, 45, 0.08) 0,
+            rgba(179, 38, 45, 0.08) 1px,
             transparent 1px,
             transparent 28px
           ),
-          #fbf4e5;
+          color-mix(in srgb, var(--ivory-card) 50%, var(--white));
       }
 
       .print-area {
@@ -479,39 +525,39 @@
       }
 
       .theme-sky {
-        --sticker-bg: #dceff4;
-        --sticker-text: #45606a;
-        --sticker-line: #45606a;
+        --sticker-bg: #e7edf0;
+        --sticker-text: #4f585b;
+        --sticker-line: #8f9ca2;
       }
 
       .theme-ivory {
-        --sticker-bg: #f6f1e7;
-        --sticker-text: #5e5247;
-        --sticker-line: #5e5247;
+        --sticker-bg: #eaddcb;
+        --sticker-text: #3a2c2a;
+        --sticker-line: #b3262d;
       }
 
       .theme-pink {
-        --sticker-bg: #f6dce5;
-        --sticker-text: #6f4d59;
-        --sticker-line: #6f4d59;
+        --sticker-bg: #f2c9c9;
+        --sticker-text: #5f3a3b;
+        --sticker-line: #b3262d;
       }
 
       .theme-beige {
-        --sticker-bg: #efe4d6;
-        --sticker-text: #57483d;
-        --sticker-line: #57483d;
+        --sticker-bg: #eaddcb;
+        --sticker-text: #4f3c36;
+        --sticker-line: #9b6f62;
       }
 
       .theme-lavender {
-        --sticker-bg: #e9e1f4;
-        --sticker-text: #5a4d6a;
-        --sticker-line: #5a4d6a;
+        --sticker-bg: #d9c7eb;
+        --sticker-text: #4f3f5f;
+        --sticker-line: #7c6693;
       }
 
       .theme-yellow {
-        --sticker-bg: #f7efc9;
-        --sticker-text: #6b5f3f;
-        --sticker-line: #6b5f3f;
+        --sticker-bg: #f3d88d;
+        --sticker-text: #5c4a2d;
+        --sticker-line: #b3262d;
       }
 
       .shape-long {
@@ -551,8 +597,8 @@
         padding: 26px 42px 24px 92px;
         border-radius: 18px;
         background:
-          radial-gradient(circle at left center, #fbf4e5 0 23px, transparent 24px),
-          radial-gradient(circle at right center, #fbf4e5 0 23px, transparent 24px),
+          radial-gradient(circle at left center, var(--bg-soft) 0 23px, transparent 24px),
+          radial-gradient(circle at right center, var(--bg-soft) 0 23px, transparent 24px),
           var(--sticker-bg);
         box-shadow: 0 8px 18px rgba(97, 61, 70, 0.12);
       }
@@ -747,8 +793,8 @@
         padding: 28px 46px 28px 108px;
         border-radius: 14px;
         background:
-          radial-gradient(circle at left center, #fbf4e5 0 21px, transparent 22px),
-          radial-gradient(circle at right center, #fbf4e5 0 21px, transparent 22px),
+          radial-gradient(circle at left center, var(--bg-soft) 0 21px, transparent 22px),
+          radial-gradient(circle at right center, var(--bg-soft) 0 21px, transparent 22px),
           var(--sticker-bg);
         box-shadow: 0 9px 20px rgba(102, 84, 45, 0.12);
       }
@@ -1165,12 +1211,12 @@
         ];
 
         const STICKER_THEMES = [
-          { id: "sky", name: "sky", label: "水色", bg: "#DCEFF4", ink: "#45606A", line: "#45606A" },
-          { id: "ivory", name: "ivory", label: "アイボリー", bg: "#F6F1E7", ink: "#5E5247", line: "#5E5247" },
-          { id: "pink", name: "pink", label: "ピンク", bg: "#F6DCE5", ink: "#6F4D59", line: "#6F4D59" },
-          { id: "beige", name: "beige", label: "ベージュ", bg: "#EFE4D6", ink: "#57483D", line: "#57483D" },
-          { id: "lavender", name: "lavender", label: "ラベンダー", bg: "#E9E1F4", ink: "#5A4D6A", line: "#5A4D6A" },
-          { id: "yellow", name: "yellow", label: "イエロー", bg: "#F7EFC9", ink: "#6B5F3F", line: "#6B5F3F" }
+          { id: "sky", name: "sky", label: "水色", bg: "#E7EDF0", ink: "#4F585B", line: "#8F9CA2" },
+          { id: "ivory", name: "ivory", label: "アイボリー", bg: "#EADDCB", ink: "#3A2C2A", line: "#B3262D" },
+          { id: "pink", name: "pink", label: "ピンク", bg: "#F2C9C9", ink: "#5F3A3B", line: "#B3262D" },
+          { id: "beige", name: "beige", label: "ベージュ", bg: "#EADDCB", ink: "#4F3C36", line: "#9B6F62" },
+          { id: "lavender", name: "lavender", label: "ラベンダー", bg: "#D9C7EB", ink: "#4F3F5F", line: "#7C6693" },
+          { id: "yellow", name: "yellow", label: "イエロー", bg: "#F3D88D", ink: "#5C4A2D", line: "#B3262D" }
         ];
 
         const SHAPE_TEXT_LIMITS = {
