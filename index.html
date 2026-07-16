@@ -415,6 +415,15 @@
         font-weight: 700;
       }
 
+      .ai-badge {
+        display: inline-block;
+        margin: 6px 0 0;
+        color: var(--primary);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
       .excerpt {
         margin: 0;
         color: var(--ink);
@@ -1356,6 +1365,10 @@
 18:25 りく じゃあ少し待ってて
 18:26 まお ありがとう、今日いちばん安心した`;
 
+        const STORY_API_URL = window.location.hostname.endsWith("vercel.app")
+          ? "/api/generate-story"
+          : "https://design-proto-dikhh9vna-kgyuz0302-1965s-projects.vercel.app/api/generate-story";
+
         const STICKER_SHAPES = [
           { id: "long", name: "long", label: "縦長" },
           { id: "card", name: "card", label: "カード型" },
@@ -1558,11 +1571,11 @@
           }
         });
 
-        elements.generateButton.addEventListener("click", function () {
+        elements.generateButton.addEventListener("click", async function () {
           console.log("小説候補をつくる button clicked");
           try {
-            generateFromInput();
-            if (elements.talkInput.value.trim()) {
+            const generated = await generateFromInput();
+            if (generated) {
               showScreen("candidates");
             }
           } catch (error) {
@@ -1636,7 +1649,7 @@
           setStatus("エラーが起きました。もう一度試してください", true);
         });
 
-        function generateFromInput() {
+        async function generateFromInput() {
           const rawText = elements.talkInput.value.trim();
 
           if (!rawText) {
@@ -1646,10 +1659,30 @@
             clearEditor();
             setStatus("LINEトークを貼ってください", true);
             elements.talkInput.focus();
-            return;
+            return false;
           }
 
           const safeText = maskSensitiveText(rawText);
+          setStatus("AIで小説候補を作っています");
+
+          try {
+            const aiCandidates = await generateCandidatesWithOpenAI(safeText);
+
+            if (aiCandidates.length > 0) {
+              console.log("OpenAI API generation succeeded");
+              candidates = aiCandidates;
+              selectedIndex = 0;
+              renderCandidates();
+              selectCandidate(0);
+              setStatus(candidates.length + "件のAI生成候補を作りました");
+              return true;
+            }
+
+            throw new Error("AI生成候補が空でした");
+          } catch (error) {
+            console.error("OpenAI API generation failed", error);
+          }
+
           candidates = buildCandidates(safeText);
 
           if (candidates.length === 0) {
@@ -1658,13 +1691,65 @@
             renderCandidates();
             selectCandidate(0);
             setStatus("候補が見つかりませんでした。もう少し長い会話を貼ってください");
-            return;
+            return true;
           }
 
           selectedIndex = 0;
           renderCandidates();
           selectCandidate(0);
           setStatus(candidates.length + "件の小説候補を作りました");
+          return true;
+        }
+
+        async function generateCandidatesWithOpenAI(text) {
+          const response = await fetch(STORY_API_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              talkText: text
+            })
+          });
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error("API returned " + response.status + ": " + errorText);
+          }
+
+          const data = await response.json();
+
+          if (!data || !Array.isArray(data.candidates)) {
+            throw new Error("API response format was invalid");
+          }
+
+          return data.candidates.slice(0, 3).map(function (candidate, index) {
+            const title = String(candidate.title || "小さな会話").trim();
+            const body = String(candidate.body || "").trim();
+            const topicList = Array.isArray(candidate.topics)
+              ? candidate.topics.map(function (topic) {
+                  return String(topic || "").trim();
+                }).filter(Boolean).slice(0, 4)
+              : [];
+            const topicText = topicList.length > 0 ? topicList.join("、") : "AIが抽出した話題";
+            const stickerType = getStickerDesign(title, body, text + "\n" + topicText);
+
+            return {
+              id: "ai-" + index + "-" + Date.now(),
+              date: String(candidate.date || detectFirstDate(text)).trim() || "日付なし",
+              title: title,
+              topic: topicText,
+              topics: topicList,
+              body: body,
+              shapeId: stickerType.shapeId,
+              themeId: stickerType.themeId,
+              sizeClass: stickerType.sizeClass,
+              score: 10,
+              source: "ai"
+            };
+          }).filter(function (candidate) {
+            return candidate.body.length > 0;
+          });
         }
 
         function buildCandidates(text) {
@@ -1790,6 +1875,10 @@
             topic.className = "source-label";
             topic.textContent = "抽出した話題: " + candidate.topic;
 
+            const source = document.createElement("span");
+            source.className = "ai-badge";
+            source.textContent = "AI生成";
+
             const theme = document.createElement("span");
             theme.className = "theme-label";
             theme.textContent = "AIおすすめ：" + getStickerTypeText(candidate.shapeId, candidate.themeId);
@@ -1801,6 +1890,9 @@
             card.appendChild(date);
             card.appendChild(title);
             card.appendChild(topic);
+            if (candidate.source === "ai") {
+              card.appendChild(source);
+            }
             card.appendChild(theme);
             card.appendChild(excerpt);
 
