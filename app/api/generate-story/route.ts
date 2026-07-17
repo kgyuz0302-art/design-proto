@@ -150,7 +150,7 @@ async function callGemini(talkText: string) {
     throw new Error("GEMINI_API_KEY is not configured");
   }
 
-  const rawModel = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+  const rawModel = process.env.GEMINI_MODEL || "gemini-3.5-flash";
   const model = rawModel.replace(/^models\//, "");
   const url = `${GEMINI_ENDPOINT}/models/${encodeURIComponent(model)}:generateContent`;
 
