@@ -1367,7 +1367,7 @@
 
         const STORY_API_URL = window.location.hostname.endsWith("vercel.app")
           ? "/api/generate-story"
-          : "https://design-proto-dikhh9vna-kgyuz0302-1965s-projects.vercel.app/api/generate-story";
+          : "https://design-proto-kgyuz0302-1965s-projects.vercel.app/api/generate-story";
 
         const STICKER_SHAPES = [
           { id: "long", name: "long", label: "縦長" },
@@ -1681,6 +1681,7 @@
             throw new Error("AI生成候補が空でした");
           } catch (error) {
             console.error("OpenAI API generation failed", error);
+            setStatus("AI生成に失敗したため、キーワード生成に切り替えました");
           }
 
           candidates = buildCandidates(safeText);
