@@ -72,7 +72,10 @@ function sanitizeTalkText(text: string) {
 
 function parseOutput(text: string): StoryCandidate[] {
   const trimmed = text.trim().replace(/^```json\s*/i, "").replace(/```$/i, "").trim();
-  const parsed = JSON.parse(trimmed) as { candidates?: StoryCandidate[] };
+  const jsonText = trimmed.startsWith("{")
+    ? trimmed
+    : trimmed.slice(trimmed.indexOf("{"), trimmed.lastIndexOf("}") + 1);
+  const parsed = JSON.parse(jsonText) as { candidates?: StoryCandidate[] };
 
   if (!Array.isArray(parsed.candidates)) {
     throw new Error("OpenAI response did not include candidates");
@@ -120,10 +123,7 @@ export async function POST(request: Request) {
       temperature: 0.45,
       text: {
         format: {
-          type: "json_schema",
-          name: "chat_diary_story_candidates",
-          schema: storySchema,
-          strict: true,
+          type: "json_object",
         },
       },
       input: [
