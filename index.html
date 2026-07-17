@@ -1239,7 +1239,7 @@
           <h2>LINEトークを貼り付ける</h2>
           <p>CHATDIARYは、LINEに残った会話から小さな出来事を見つけ、縦長や丸型などの文章シールに変換するプロトタイプです。</p>
           <p>このプロトタイプでは、会話をそのまま保存せず、名前や場所をぼかして物語化する想定です。</p>
-          <p>今回はAI APIを使わず、ブラウザ上のJavaScriptだけでキーワードを見つけ、候補を作ります。</p>
+          <p>Gemini APIで小説候補を生成します。APIが使えない場合は、ブラウザ上のキーワード判定で候補を作ります。</p>
         </div>
         <div class="panel input-panel">
           <label class="label" for="talkInput">貼り付け欄</label>
@@ -1666,10 +1666,10 @@
           setStatus("AIで小説候補を作っています");
 
           try {
-            const aiCandidates = await generateCandidatesWithOpenAI(safeText);
+            const aiCandidates = await generateCandidatesWithGemini(safeText);
 
             if (aiCandidates.length > 0) {
-              console.log("OpenAI API generation succeeded");
+              console.log("Gemini API generation succeeded");
               candidates = aiCandidates;
               selectedIndex = 0;
               renderCandidates();
@@ -1680,7 +1680,7 @@
 
             throw new Error("AI生成候補が空でした");
           } catch (error) {
-            console.error("OpenAI API generation failed", error);
+            console.error("Gemini API generation failed", error);
             setStatus("AI生成に失敗したため、キーワード生成に切り替えました");
           }
 
@@ -1702,7 +1702,7 @@
           return true;
         }
 
-        async function generateCandidatesWithOpenAI(text) {
+        async function generateCandidatesWithGemini(text) {
           const response = await fetch(STORY_API_URL, {
             method: "POST",
             headers: {
