@@ -22,6 +22,33 @@ const corsHeaders = {
 
 const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta";
 
+const geminiResponseSchema = {
+  type: "OBJECT",
+  properties: {
+    candidates: {
+      type: "ARRAY",
+      minItems: 3,
+      maxItems: 3,
+      items: {
+        type: "OBJECT",
+        properties: {
+          date: { type: "STRING" },
+          title: { type: "STRING" },
+          topics: {
+            type: "ARRAY",
+            minItems: 1,
+            maxItems: 4,
+            items: { type: "STRING" },
+          },
+          body: { type: "STRING" },
+        },
+        required: ["date", "title", "topics", "body"],
+      },
+    },
+  },
+  required: ["candidates"],
+};
+
 function jsonResponse(body: unknown, status = 200) {
   return NextResponse.json(body, {
     status,
@@ -141,9 +168,10 @@ async function callGemini(talkText: string) {
         },
       ],
       generationConfig: {
-        temperature: 0.65,
+        temperature: 0.55,
         maxOutputTokens: 1800,
         response_mime_type: "application/json",
+        response_schema: geminiResponseSchema,
       },
     }),
   });
