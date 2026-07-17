@@ -1,4 +1,3 @@
-import OpenAI from "openai";
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
@@ -21,34 +20,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
-const storySchema = {
-  type: "object",
-  additionalProperties: false,
-  properties: {
-    candidates: {
-      type: "array",
-      minItems: 3,
-      maxItems: 3,
-      items: {
-        type: "object",
-        additionalProperties: false,
-        properties: {
-          date: { type: "string" },
-          title: { type: "string" },
-          topics: {
-            type: "array",
-            minItems: 1,
-            maxItems: 4,
-            items: { type: "string" },
-          },
-          body: { type: "string" },
-        },
-        required: ["date", "title", "topics", "body"],
-      },
-    },
-  },
-  required: ["candidates"],
-};
+const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta";
 
 function jsonResponse(body: unknown, status = 200) {
   return NextResponse.json(body, {
@@ -70,15 +42,32 @@ function sanitizeTalkText(text: string) {
     .slice(0, 6000);
 }
 
+function extractGeminiText(data: any) {
+  const parts = data?.candidates?.[0]?.content?.parts;
+  if (!Array.isArray(parts)) {
+    return "";
+  }
+
+  return parts
+    .map((part) => toText(part?.text))
+    .filter(Boolean)
+    .join("\n")
+    .trim();
+}
+
 function parseOutput(text: string): StoryCandidate[] {
   const trimmed = text.trim().replace(/^```json\s*/i, "").replace(/```$/i, "").trim();
-  const jsonText = trimmed.startsWith("{")
-    ? trimmed
-    : trimmed.slice(trimmed.indexOf("{"), trimmed.lastIndexOf("}") + 1);
-  const parsed = JSON.parse(jsonText) as { candidates?: StoryCandidate[] };
+  const start = trimmed.indexOf("{");
+  const end = trimmed.lastIndexOf("}");
+
+  if (start === -1 || end === -1 || end <= start) {
+    throw new Error("Gemini response did not include JSON");
+  }
+
+  const parsed = JSON.parse(trimmed.slice(start, end + 1)) as { candidates?: StoryCandidate[] };
 
   if (!Array.isArray(parsed.candidates)) {
-    throw new Error("OpenAI response did not include candidates");
+    throw new Error("Gemini response did not include candidates");
   }
 
   return parsed.candidates
@@ -94,6 +83,89 @@ function parseOutput(text: string): StoryCandidate[] {
     .filter((candidate) => candidate.body.length > 0);
 }
 
+function buildPrompt(talkText: string) {
+  return `あなたは大学生向けサービス「CHATDIARY」の物語生成AIです。
+次のLINE風トーク履歴だけを根拠にして、小説候補を3件作ってください。
+
+重要なルール:
+- 入力に書かれていない出来事、場所、人物関係、感情を新しく作らない
+- 実名、学校名、住所、電話番号、URL、決済情報は出さない
+- LINEの文をそのまま大量に引用しない
+- 単なる要約ではなく、会話から見える小さな出来事を短い物語として再構成する
+- 候補ごとに、切り取る話題や角度を変える
+- 本文は各候補200〜350字程度
+- 大学生が読んで自然な、やさしく余韻のある日本語にする
+- 必ずJSONだけを返す
+
+返す形式:
+{
+  "candidates": [
+    {
+      "date": "2026/06/27(土)",
+      "title": "迎え",
+      "topics": ["迎え", "待ち合わせ", "安心"],
+      "body": "短い物語本文"
+    }
+  ]
+}
+
+LINEトーク履歴:
+${talkText}`;
+}
+
+async function callGemini(talkText: string) {
+  const apiKey =
+    process.env.GEMINI_API_KEY ||
+    process.env.GOOGLE_API_KEY ||
+    process.env.OPENAI_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("GEMINI_API_KEY is not configured");
+  }
+
+  const rawModel = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+  const model = rawModel.replace(/^models\//, "");
+  const url = `${GEMINI_ENDPOINT}/models/${encodeURIComponent(model)}:generateContent`;
+
+  const geminiResponse = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-goog-api-key": apiKey,
+    },
+    body: JSON.stringify({
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: buildPrompt(talkText) }],
+        },
+      ],
+      generationConfig: {
+        temperature: 0.65,
+        maxOutputTokens: 1800,
+        response_mime_type: "application/json",
+      },
+    }),
+  });
+
+  const responseText = await geminiResponse.text();
+
+  if (!geminiResponse.ok) {
+    let detail = responseText;
+    try {
+      const errorJson = JSON.parse(responseText);
+      detail = errorJson?.error?.message || responseText;
+    } catch {
+      // Keep the raw response text.
+    }
+    throw new Error(`Gemini API returned ${geminiResponse.status}: ${detail}`);
+  }
+
+  const data = JSON.parse(responseText);
+  const outputText = extractGeminiText(data);
+  return parseOutput(outputText);
+}
+
 export async function OPTIONS() {
   return new NextResponse(null, {
     status: 204,
@@ -103,10 +175,6 @@ export async function OPTIONS() {
 
 export async function POST(request: Request) {
   try {
-    if (!process.env.OPENAI_API_KEY) {
-      return jsonResponse({ error: "OPENAI_API_KEY is not configured" }, 500);
-    }
-
     const body = (await request.json()) as GenerateStoryRequest;
     const talkText = sanitizeTalkText(toText(body.talkText));
 
@@ -114,43 +182,18 @@ export async function POST(request: Request) {
       return jsonResponse({ error: "talkText is required" }, 400);
     }
 
-    const client = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
-
-    const response = await client.responses.create({
-      model: process.env.OPENAI_MODEL || "gpt-4.1-mini",
-      temperature: 0.45,
-      text: {
-        format: {
-          type: "json_object",
-        },
-      },
-      input: [
-        {
-          role: "developer",
-          content:
-            "あなたは大学生向けサービス「CHATDIARY」の物語編集AIです。必ず入力されたLINE風トーク履歴だけを根拠にして、小さな出来事、空気感、関係性、感情の変化、物語になりそうな話題のまとまりを読み取り、短編小説シール候補を3件作ります。会話に出てこない予定、場所、持ち物、イベント、人物関係、感情、行動を新しく作らないでください。話題が1つしかない場合は、同じ会話を別の角度から3候補に分けてください。候補のtitleとtopicsは、入力会話から自然に分かる内容だけにしてください。実名、学校名、住所、電話番号、URL、支払い情報は出さないでください。LINEの文を大量に引用せず、ただし会話に存在する事実から離れずに、やさしく余韻のある短編小説として再構成してください。本文は各候補200〜350字程度。大学生が読んで自然な日本語にしてください。必ず指定JSONだけを返してください。",
-        },
-        {
-          role: "user",
-          content: `次のLINEトーク履歴だけを根拠にしてください。ここに書かれていない出来事は入れないでください。\n\nLINEトーク履歴:\n${talkText}`,
-        },
-      ],
-    } as any);
-
-    const candidates = parseOutput(response.output_text || "");
+    const candidates = await callGemini(talkText);
 
     if (candidates.length === 0) {
-      throw new Error("OpenAI response candidates were empty");
+      throw new Error("Gemini response candidates were empty");
     }
 
     return jsonResponse({ candidates });
   } catch (error) {
-    console.error("OpenAI story generation failed", error);
+    console.error("Gemini story generation failed", error);
     return jsonResponse(
       {
-        error: "OpenAI story generation failed",
+        error: "Gemini story generation failed",
         detail: error instanceof Error ? error.message : String(error),
       },
       500,
