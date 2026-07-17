@@ -169,7 +169,7 @@ async function callGemini(talkText) {
       ],
       generationConfig: {
         temperature: 0.55,
-        maxOutputTokens: 1800,
+        maxOutputTokens: 4096,
         response_mime_type: "application/json",
         response_schema: geminiResponseSchema,
       },
