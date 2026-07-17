@@ -82,13 +82,29 @@ function extractGeminiText(data: any) {
     .trim();
 }
 
+function summarizeGeminiResponse(data: any) {
+  return JSON.stringify({
+    promptFeedback: data?.promptFeedback,
+    candidates: Array.isArray(data?.candidates)
+      ? data.candidates.map((candidate: any) => ({
+          finishReason: candidate.finishReason,
+          safetyRatings: candidate.safetyRatings,
+          partTypes: Array.isArray(candidate?.content?.parts)
+            ? candidate.content.parts.map((part: any) => Object.keys(part || {}))
+            : [],
+          textPreview: extractGeminiText({ candidates: [candidate] }).slice(0, 240),
+        }))
+      : [],
+  });
+}
+
 function parseOutput(text: string): StoryCandidate[] {
   const trimmed = text.trim().replace(/^```json\s*/i, "").replace(/```$/i, "").trim();
   const start = trimmed.indexOf("{");
   const end = trimmed.lastIndexOf("}");
 
   if (start === -1 || end === -1 || end <= start) {
-    throw new Error("Gemini response did not include JSON");
+    throw new Error(`Gemini response did not include JSON: ${trimmed.slice(0, 320)}`);
   }
 
   const parsed = JSON.parse(trimmed.slice(start, end + 1)) as { candidates?: StoryCandidate[] };
@@ -191,6 +207,9 @@ async function callGemini(talkText: string) {
 
   const data = JSON.parse(responseText);
   const outputText = extractGeminiText(data);
+  if (!outputText) {
+    throw new Error(`Gemini response text was empty: ${summarizeGeminiResponse(data)}`);
+  }
   return parseOutput(outputText);
 }
 
