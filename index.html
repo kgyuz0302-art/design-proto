@@ -1550,6 +1550,252 @@
         font-weight: 700;
       }
 
+      .layout-select {
+        font-weight: 700;
+      }
+
+      .story-sticker.shape-roll {
+        --roll-preview-width: 326px;
+        width: var(--roll-preview-width);
+        max-width: calc(100vw - 64px);
+        border: 1.15px solid var(--sticker-line);
+        border-radius: 18px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0)),
+          var(--sticker-bg);
+        color: var(--sticker-text);
+        box-shadow: 0 18px 34px rgba(60, 42, 36, 0.16);
+      }
+
+      .story-sticker.shape-roll .story-content {
+        display: flex;
+        min-height: 100%;
+        flex-direction: column;
+        padding: 30px 28px 34px;
+      }
+
+      .story-sticker.shape-roll .story-content::before,
+      .story-sticker.shape-roll .story-content::after {
+        display: block;
+        color: var(--sticker-text);
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", "BIZ UDPMincho", serif;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        line-height: 1;
+        text-align: center;
+      }
+
+      .story-sticker.shape-roll .story-content::before {
+        order: 0;
+        margin-bottom: 22px;
+      }
+
+      .story-sticker.shape-roll .story-content::after {
+        order: 10;
+        margin-top: auto;
+        padding-top: 26px;
+      }
+
+      .story-sticker.shape-roll .story-title {
+        order: 1;
+        margin: 0;
+        color: var(--sticker-text);
+        font-size: 33px;
+        font-weight: 700;
+        line-height: 1.24;
+        letter-spacing: 0.055em;
+        text-align: center;
+      }
+
+      .story-sticker.shape-roll .story-date {
+        order: 2;
+        margin: 16px 0 14px;
+        color: var(--sticker-text);
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", "BIZ UDPMincho", serif;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        line-height: 1.3;
+        text-align: center;
+      }
+
+      .story-sticker.shape-roll .story-divider {
+        order: 3;
+        height: 1px;
+        margin: 0 0 24px;
+        background: var(--sticker-line);
+        opacity: 0.78;
+      }
+
+      .story-sticker.shape-roll .story-body {
+        order: 4;
+        color: var(--sticker-text);
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", "BIZ UDPMincho", serif;
+        font-size: 13.5px;
+        font-weight: 520;
+        line-height: 1.86;
+        letter-spacing: 0.035em;
+        text-align: left;
+        overflow: visible;
+        white-space: pre-wrap;
+      }
+
+      .story-sticker.shape-roll .story-body p {
+        margin: 0 0 1.15em;
+      }
+
+      .story-sticker.shape-roll .story-body p:last-child {
+        margin-bottom: 0;
+      }
+
+      .layout-long {
+        min-height: 670px;
+      }
+
+      .story-sticker.shape-roll.layout-long .story-content {
+        padding-top: 28px;
+        padding-bottom: 34px;
+      }
+
+      .story-sticker.shape-roll.layout-long .story-content::before {
+        content: "─  ·  ❦  ·  ─";
+      }
+
+      .story-sticker.shape-roll.layout-long .story-content::after {
+        content: "─  ·  ❦  ·  ─";
+      }
+
+      .story-sticker.shape-roll.layout-long .story-title {
+        font-size: 29px;
+        text-align: left;
+      }
+
+      .story-sticker.shape-roll.layout-long .story-date {
+        margin-top: 10px;
+        text-align: right;
+      }
+
+      .story-sticker.shape-roll.layout-long .story-body {
+        font-size: 12.8px;
+        line-height: 1.72;
+      }
+
+      .layout-medium {
+        min-height: 560px;
+      }
+
+      .story-sticker.shape-roll.layout-medium .story-content::before {
+        content: "────  ·  ✦  ·  ────";
+      }
+
+      .story-sticker.shape-roll.layout-medium .story-content::after {
+        content: "────  ·  ✦  ·  ────";
+      }
+
+      .story-sticker.shape-roll.layout-medium .story-title {
+        font-size: 32px;
+      }
+
+      .story-sticker.shape-roll.layout-medium .story-body {
+        font-size: 13.5px;
+        line-height: 1.82;
+      }
+
+      .layout-short {
+        min-height: 460px;
+      }
+
+      .story-sticker.shape-roll.layout-short .story-content {
+        padding: 34px 30px 34px;
+      }
+
+      .story-sticker.shape-roll.layout-short .story-content::before {
+        content: "────  ···  ♥  ···  ────";
+      }
+
+      .story-sticker.shape-roll.layout-short .story-content::after {
+        content: "────  ·  ♡  ·  ────";
+      }
+
+      .story-sticker.shape-roll.layout-short .story-title {
+        font-size: 36px;
+        line-height: 1.34;
+      }
+
+      .story-sticker.shape-roll.layout-short .story-date {
+        margin: 18px 0 12px;
+      }
+
+      .story-sticker.shape-roll.layout-short .story-divider {
+        margin-bottom: 28px;
+        background:
+          repeating-linear-gradient(
+            to right,
+            var(--sticker-line) 0,
+            var(--sticker-line) 2px,
+            transparent 2px,
+            transparent 8px
+          );
+      }
+
+      .story-sticker.shape-roll.layout-short .story-body {
+        font-size: 14px;
+        line-height: 1.9;
+      }
+
+      .layout-poem {
+        min-height: 390px;
+      }
+
+      .story-sticker.shape-roll.layout-poem .story-content {
+        justify-content: center;
+        padding: 34px 30px;
+      }
+
+      .story-sticker.shape-roll.layout-poem .story-content::before {
+        content: "──  ·  ✧  ·  ──";
+        margin-bottom: 24px;
+      }
+
+      .story-sticker.shape-roll.layout-poem .story-content::after {
+        content: "──  ·  ✧  ·  ──";
+        margin-top: 28px;
+        padding-top: 0;
+      }
+
+      .story-sticker.shape-roll.layout-poem .story-title {
+        font-size: 39px;
+        line-height: 1.35;
+      }
+
+      .story-sticker.shape-roll.layout-poem .story-date {
+        margin: 16px 0 18px;
+      }
+
+      .story-sticker.shape-roll.layout-poem .story-divider {
+        width: 70%;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .story-sticker.shape-roll.layout-poem .story-body {
+        font-size: 14.2px;
+        line-height: 2;
+        text-align: center;
+      }
+
+      .text-small .story-sticker.shape-roll .story-body,
+      .story-sticker.shape-roll.text-small .story-body {
+        font-size: 12.5px;
+        line-height: 1.68;
+      }
+
+      .text-xsmall .story-sticker.shape-roll .story-body,
+      .story-sticker.shape-roll.text-xsmall .story-body {
+        font-size: 12px;
+        line-height: 1.62;
+      }
+
       @media print {
         @page {
           size: 53mm auto;
@@ -1596,6 +1842,9 @@
           min-height: 0;
           margin: 0;
           padding: 0;
+          border-color: #111;
+          background: transparent;
+          color: #111;
           box-shadow: none;
           break-inside: avoid;
           page-break-inside: avoid;
@@ -1605,6 +1854,11 @@
 
         .story-content {
           padding: 6.5mm 5mm 7mm;
+        }
+
+        .story-content::before,
+        .story-content::after {
+          color: #111;
         }
 
         .story-date {
@@ -1620,8 +1874,16 @@
         .text-medium .story-body,
         .text-small .story-body,
         .text-xsmall .story-body {
-          font-size: 9.5pt;
-          line-height: 1.65;
+          color: #111;
+          font-size: 8.8pt;
+          line-height: 1.62;
+        }
+
+        .layout-poem,
+        .layout-short,
+        .layout-medium,
+        .layout-long {
+          min-height: 0;
         }
 
         .no-print {
@@ -1847,14 +2109,17 @@
             <div class="preview-wrap">
               <div class="no-print">
                 <h3 class="sticker-heading">シールプレビュー</h3>
-                <p class="preview-lead">候補を選ぶと、ここに内容に合った形と色のシールが表示されます。印刷してノートに貼ることを想定しています。</p>
               </div>
               <div class="sticker-actions no-print">
                 <button class="button" id="printButton" type="button">印刷する</button>
                 <button class="button secondary" id="saveStickerButton" type="button">シールとして残す</button>
               </div>
-              <div class="theme-controls no-print" aria-label="ロール紙カラー">
-                <p class="theme-recommendation" id="themeRecommendation">用紙カラー：ライラック</p>
+              <div class="theme-controls no-print" aria-label="シール設定">
+                <p class="theme-recommendation" id="themeRecommendation">おすすめ：Medium / ライラック</p>
+                <label class="theme-control-row" for="layoutSelect">
+                  <span class="label">レイアウト</span>
+                  <select class="theme-select layout-select" id="layoutSelect"></select>
+                </label>
                 <label class="theme-control-row" for="themeSelect">
                   <span class="label">ロール紙カラー</span>
                   <select class="theme-select" id="themeSelect"></select>
@@ -1862,7 +2127,7 @@
               </div>
               <div class="sticker-sheet" aria-label="ノートに貼ったシールのイメージ">
                 <div class="print-area">
-                  <article class="story-sticker shape-roll theme-lilac text-medium" aria-label="シールプレビュー">
+                  <article class="story-sticker shape-roll layout-medium theme-lilac text-medium" aria-label="シールプレビュー">
                     <div class="story-content">
                       <div class="story-date" id="previewDate">日付なし</div>
                       <h3 class="story-title" id="previewTitle">まだシールがありません</h3>
@@ -1874,7 +2139,6 @@
                   </article>
                 </div>
               </div>
-              <p class="note">Webリンクは「リンク」に置き換え、会話の名前は本文に出さない想定です。</p>
             </div>
           </div>
         </section>
@@ -1924,6 +2188,13 @@
           { id: "mint", name: "mint", label: "ミント", bg: "#DFF1E6", ink: "#28302B", line: "#425448" },
           { id: "orange", name: "orange", label: "薄いオレンジ", bg: "#F7DFC5", ink: "#312A24", line: "#5D4B3C" },
           { id: "silver", name: "silver", label: "シルバー", bg: "#EEEEEC", ink: "#282828", line: "#4B4B49" }
+        ];
+
+        const STICKER_LAYOUTS = [
+          { id: "poem", name: "Poem", label: "Poem" },
+          { id: "short", name: "Short", label: "Short" },
+          { id: "medium", name: "Medium", label: "Medium" },
+          { id: "long", name: "Long", label: "Long" }
         ];
 
         const STORY_RULES = [
@@ -2034,6 +2305,7 @@
           previewBody: document.getElementById("previewBody"),
           printButton: document.getElementById("printButton"),
           saveStickerButton: document.getElementById("saveStickerButton"),
+          layoutSelect: document.getElementById("layoutSelect"),
           themeSelect: document.getElementById("themeSelect"),
           themeRecommendation: document.getElementById("themeRecommendation"),
           storySticker: document.querySelector(".story-sticker")
@@ -2066,11 +2338,15 @@
         let selectedIndex = -1;
         let selectedShapeId = "roll";
         let selectedThemeId = "lilac";
+        let selectedLayoutId = "medium";
         let selectedSizeClass = "text-medium";
         let isGenerating = false;
+        let isManualLayout = false;
+        let isManualTheme = false;
 
+        setupLayoutSelect();
         setupThemeSelect();
-        applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "用紙カラー");
+        applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "おすすめ");
         showScreen("opening", false);
 
         elements.startButton.addEventListener("click", function () {
@@ -2127,10 +2403,19 @@
         });
 
         elements.themeSelect.addEventListener("change", function () {
-          console.log("色テーマ select changed", elements.themeSelect.value);
+          console.log("ロール紙カラー select changed", elements.themeSelect.value);
+          isManualTheme = true;
           selectedThemeId = elements.themeSelect.value;
-          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "用紙カラー");
-          fitStickerLayout("用紙カラー");
+          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "おすすめ");
+          fitStickerLayout("おすすめ");
+        });
+
+        elements.layoutSelect.addEventListener("change", function () {
+          console.log("レイアウト select changed", elements.layoutSelect.value);
+          isManualLayout = true;
+          selectedLayoutId = elements.layoutSelect.value;
+          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "おすすめ");
+          fitStickerLayout("おすすめ");
         });
 
         [elements.printButton, elements.saveStickerButton].forEach(function (button) {
@@ -2266,6 +2551,7 @@
               body: body,
               shapeId: stickerType.shapeId,
               themeId: stickerType.themeId,
+              layoutId: stickerType.layoutId,
               sizeClass: stickerType.sizeClass,
               score: 10,
               source: "ai"
@@ -2308,6 +2594,7 @@
                 body: rule.body,
                 shapeId: stickerType.shapeId,
                 themeId: stickerType.themeId,
+                layoutId: stickerType.layoutId,
                 sizeClass: stickerType.sizeClass,
                 score: matchedKeywords.length
               });
@@ -2327,6 +2614,7 @@
             body: GENERIC_STORY.body,
             shapeId: stickerType.shapeId,
             themeId: stickerType.themeId,
+            layoutId: stickerType.layoutId,
             sizeClass: stickerType.sizeClass,
             score: 0
           };
@@ -2404,7 +2692,7 @@
 
             const theme = document.createElement("span");
             theme.className = "theme-label";
-            theme.textContent = "用紙カラー：" + getStickerTypeText(candidate.shapeId, candidate.themeId);
+            theme.textContent = "おすすめ：" + getLayoutLabel(candidate.layoutId) + " / " + getStickerTypeText(candidate.shapeId, candidate.themeId);
 
             const excerpt = document.createElement("p");
             excerpt.className = "excerpt";
@@ -2445,9 +2733,13 @@
           elements.bodyEdit.value = candidate.body;
           selectedShapeId = "roll";
           selectedThemeId = getTheme(candidate.themeId).id;
+          selectedLayoutId = getLayout(candidate.layoutId).id;
           selectedSizeClass = candidate.sizeClass || "text-medium";
+          isManualLayout = false;
+          isManualTheme = false;
+          elements.layoutSelect.value = selectedLayoutId;
           elements.themeSelect.value = selectedThemeId;
-          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "用紙カラー");
+          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "おすすめ");
           renderCandidates();
           updatePreview();
         }
@@ -2458,9 +2750,13 @@
           elements.bodyEdit.value = "";
           selectedShapeId = "roll";
           selectedThemeId = "lilac";
+          selectedLayoutId = "medium";
           selectedSizeClass = "text-medium";
+          isManualLayout = false;
+          isManualTheme = false;
+          elements.layoutSelect.value = selectedLayoutId;
           elements.themeSelect.value = selectedThemeId;
-          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "用紙カラー");
+          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "おすすめ");
           updatePreview();
         }
 
@@ -2473,16 +2769,22 @@
           if (rawTitle || rawBody) {
             const design = getStickerDesign(title, body, "");
             selectedShapeId = design.shapeId;
-            selectedThemeId = design.themeId;
+            if (!isManualLayout) {
+              selectedLayoutId = design.layoutId;
+            }
+            if (!isManualTheme) {
+              selectedThemeId = design.themeId;
+            }
             selectedSizeClass = design.sizeClass;
+            elements.layoutSelect.value = selectedLayoutId;
             elements.themeSelect.value = selectedThemeId;
-            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "用紙カラー");
+            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "おすすめ");
           }
 
           elements.previewDate.textContent = elements.dateEdit.value.trim() || "日付なし";
           elements.previewTitle.textContent = title;
           renderStoryBody(body);
-          fitStickerLayout("用紙カラー");
+          fitStickerLayout("おすすめ");
         }
 
         function renderStoryBody(text) {
@@ -2500,6 +2802,16 @@
           });
         }
 
+        function setupLayoutSelect() {
+          STICKER_LAYOUTS.forEach(function (layout) {
+            const option = document.createElement("option");
+            option.value = layout.id;
+            option.textContent = layout.label;
+            elements.layoutSelect.appendChild(option);
+          });
+          elements.layoutSelect.value = selectedLayoutId;
+        }
+
         function setupThemeSelect() {
           STICKER_THEMES.forEach(function (theme) {
             const option = document.createElement("option");
@@ -2513,12 +2825,13 @@
         function applyStickerStyle(shapeId, themeId, sizeClass, labelPrefix) {
           const shape = getShape(shapeId);
           const theme = getTheme(themeId);
+          const layout = getLayout(selectedLayoutId);
           const safeSizeClass = ["text-large", "text-medium", "text-small", "text-xsmall"].includes(sizeClass) ? sizeClass : "text-medium";
-          elements.storySticker.className = "story-sticker shape-" + shape.id + " theme-" + theme.id + " " + safeSizeClass;
+          elements.storySticker.className = "story-sticker shape-" + shape.id + " layout-" + layout.id + " theme-" + theme.id + " " + safeSizeClass;
           elements.storySticker.style.setProperty("--sticker-bg", theme.bg);
           elements.storySticker.style.setProperty("--sticker-text", theme.ink);
           elements.storySticker.style.setProperty("--sticker-line", theme.line);
-          elements.themeRecommendation.textContent = (labelPrefix || "用紙カラー") + "：" + getStickerTypeText(shape.id, theme.id);
+          elements.themeRecommendation.textContent = (labelPrefix || "おすすめ") + "：" + layout.label + " / " + getStickerTypeText(shape.id, theme.id);
         }
 
         function getShape(shapeId) {
@@ -2533,6 +2846,12 @@
           }) || STICKER_THEMES[0];
         }
 
+        function getLayout(layoutId) {
+          return STICKER_LAYOUTS.find(function (layout) {
+            return layout.id === layoutId;
+          }) || STICKER_LAYOUTS[2];
+        }
+
         function getShapeLabel(shapeId) {
           const shape = getShape(shapeId);
           return shape.label;
@@ -2541,6 +2860,10 @@
         function getThemeLabel(themeId) {
           const theme = getTheme(themeId);
           return theme.label;
+        }
+
+        function getLayoutLabel(layoutId) {
+          return getLayout(layoutId).label;
         }
 
         function getStickerTypeText(shapeId, themeId) {
@@ -2568,8 +2891,11 @@
             themeId = "pink";
           }
 
+          const layoutId = getLayoutForLength(length);
           let sizeClass = "text-medium";
-          if (length > 520) {
+          if (length > 720) {
+            sizeClass = "text-xsmall";
+          } else if (length > 520) {
             sizeClass = "text-small";
           } else if (length <= 80) {
             sizeClass = "text-large";
@@ -2580,6 +2906,7 @@
             theme: "theme-" + themeId,
             shapeId: "roll",
             themeId: themeId,
+            layoutId: layoutId,
             sizeClass: sizeClass,
             length: length
           };
@@ -2589,13 +2916,30 @@
           return (text || "").replace(/\s/g, "").length;
         }
 
+        function getLayoutForLength(length) {
+          if (length <= 120) {
+            return "poem";
+          }
+
+          if (length <= 220) {
+            return "short";
+          }
+
+          if (length <= 380) {
+            return "medium";
+          }
+
+          return "long";
+        }
+
         function getSafeShapeForLength(shapeId, length) {
           return "roll";
         }
 
         function fitStickerLayout(labelPrefix) {
           selectedShapeId = "roll";
-          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, labelPrefix || "用紙カラー");
+          elements.layoutSelect.value = selectedLayoutId;
+          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, labelPrefix || "おすすめ");
         }
 
         function firstParagraph(text) {
