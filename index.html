@@ -1367,6 +1367,268 @@
         border-radius: 20px;
       }
 
+      .story-sticker,
+      .shape-roll,
+      .shape-long,
+      .shape-card,
+      .shape-label,
+      .shape-round,
+      .shape-drop,
+      .shape-ticket {
+        width: var(--roll-preview-width);
+        max-width: calc(100vw - 64px);
+        min-height: 0;
+        padding: 0;
+        border: 1.2px solid var(--sticker-line);
+        border-radius: 14px;
+        background: var(--sticker-bg);
+        color: var(--sticker-text);
+        box-shadow: 0 12px 28px rgba(68, 45, 38, 0.12);
+        overflow: visible;
+      }
+
+      .story-sticker {
+        --roll-preview-width: 300px;
+        --sticker-bg: #e7d8ef;
+        --sticker-text: #2c2929;
+        --sticker-line: #2c2929;
+      }
+
+      .story-sticker::before,
+      .story-sticker::after,
+      .shape-label::before,
+      .shape-label::after,
+      .shape-round::before,
+      .shape-round::after,
+      .shape-ticket::before,
+      .shape-ticket::after,
+      .story-divider::after {
+        content: none;
+      }
+
+      .story-content,
+      .shape-drop .story-content,
+      .shape-drop.text-small .story-content,
+      .shape-drop.text-xsmall .story-content {
+        position: relative;
+        z-index: 1;
+        width: auto;
+        min-height: 0;
+        margin: 0;
+        padding: 24px 22px 28px;
+        box-sizing: border-box;
+      }
+
+      .drop-preview {
+        display: contents;
+      }
+
+      .drop-template,
+      .shape-drop .drop-template {
+        display: none;
+      }
+
+      .story-date,
+      .shape-drop .story-date,
+      .drop-date {
+        position: static;
+        width: auto;
+        margin: 0 0 14px;
+        color: var(--sticker-text);
+        font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: 0.04em;
+        text-align: right;
+      }
+
+      .story-title,
+      .shape-drop .story-title,
+      .drop-title {
+        position: static;
+        width: auto;
+        margin: 0 0 9px;
+        color: var(--sticker-text);
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", "BIZ UDPMincho", serif;
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 1.22;
+        letter-spacing: 0.04em;
+        text-align: left;
+        overflow-wrap: anywhere;
+      }
+
+      .story-divider,
+      .shape-drop .story-divider {
+        position: static;
+        width: 100%;
+        height: 1px;
+        margin: 0 0 18px;
+        background: var(--sticker-line);
+        opacity: 0.72;
+      }
+
+      .story-body,
+      .shape-drop .story-body,
+      .drop-body {
+        position: static;
+        width: auto;
+        max-height: none;
+        margin: 0;
+        color: var(--sticker-text);
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", "BIZ UDPMincho", serif;
+        font-size: 13.5px;
+        font-weight: 500;
+        line-height: 1.78;
+        letter-spacing: 0.02em;
+        text-align: left;
+        white-space: pre-wrap;
+        overflow: visible;
+      }
+
+      .text-large .story-body,
+      .text-medium .story-body,
+      .text-small .story-body,
+      .text-xsmall .story-body,
+      .shape-drop .story-body {
+        font-size: 13.5px;
+        line-height: 1.78;
+      }
+
+      .text-xsmall .story-body {
+        font-size: 13px;
+        line-height: 1.72;
+      }
+
+      .story-body p {
+        margin: 0 0 1.05em;
+      }
+
+      .story-body p:last-child {
+        margin-bottom: 0;
+      }
+
+      .theme-lilac {
+        --sticker-bg: #e7d8ef;
+        --sticker-text: #2f2c31;
+        --sticker-line: #4f4854;
+      }
+
+      .theme-pink {
+        --sticker-bg: #f4d2d8;
+        --sticker-text: #302a2b;
+        --sticker-line: #59454a;
+      }
+
+      .theme-blue {
+        --sticker-bg: #dceff6;
+        --sticker-text: #283033;
+        --sticker-line: #42545a;
+      }
+
+      .theme-mint {
+        --sticker-bg: #dff1e6;
+        --sticker-text: #28302b;
+        --sticker-line: #425448;
+      }
+
+      .theme-orange {
+        --sticker-bg: #f7dfc5;
+        --sticker-text: #312a24;
+        --sticker-line: #5d4b3c;
+      }
+
+      .theme-silver {
+        --sticker-bg: #eeeeec;
+        --sticker-text: #282828;
+        --sticker-line: #4b4b49;
+      }
+
+      .theme-recommendation {
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      @media print {
+        @page {
+          size: 53mm auto;
+          margin: 0;
+        }
+
+        html,
+        body {
+          width: 53mm;
+          margin: 0;
+          padding: 0;
+          background: #fff;
+        }
+
+        body * {
+          visibility: hidden;
+        }
+
+        .print-area,
+        .print-area * {
+          visibility: visible;
+        }
+
+        .print-area {
+          position: absolute;
+          inset: 0 auto auto 0;
+          width: 53mm;
+          margin: 0;
+          padding: 0;
+          display: block;
+          background: #fff;
+        }
+
+        .story-sticker,
+        .shape-roll,
+        .shape-long,
+        .shape-card,
+        .shape-label,
+        .shape-round,
+        .shape-drop,
+        .shape-ticket {
+          width: 53mm;
+          max-width: 53mm;
+          min-height: 0;
+          margin: 0;
+          padding: 0;
+          box-shadow: none;
+          break-inside: avoid;
+          page-break-inside: avoid;
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+
+        .story-content {
+          padding: 6.5mm 5mm 7mm;
+        }
+
+        .story-date {
+          font-size: 8pt;
+        }
+
+        .story-title {
+          font-size: 16pt;
+        }
+
+        .story-body,
+        .text-large .story-body,
+        .text-medium .story-body,
+        .text-small .story-body,
+        .text-xsmall .story-body {
+          font-size: 9.5pt;
+          line-height: 1.65;
+        }
+
+        .no-print {
+          display: none !important;
+        }
+      }
+
       @media (max-width: 980px) {
         .candidate-list {
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1591,27 +1853,22 @@
                 <button class="button" id="printButton" type="button">印刷する</button>
                 <button class="button secondary" id="saveStickerButton" type="button">シールとして残す</button>
               </div>
-              <div class="theme-controls no-print" aria-label="シールのかたちと色テーマ">
-                <p class="theme-recommendation" id="themeRecommendation">AIおすすめ：カード型・アイボリー</p>
-                <label class="theme-control-row" for="shapeSelect">
-                  <span class="label">かたち</span>
-                  <select class="shape-select" id="shapeSelect"></select>
-                </label>
+              <div class="theme-controls no-print" aria-label="ロール紙カラー">
+                <p class="theme-recommendation" id="themeRecommendation">用紙カラー：ライラック</p>
                 <label class="theme-control-row" for="themeSelect">
-                  <span class="label">色テーマ</span>
+                  <span class="label">ロール紙カラー</span>
                   <select class="theme-select" id="themeSelect"></select>
                 </label>
               </div>
               <div class="sticker-sheet" aria-label="ノートに貼ったシールのイメージ">
                 <div class="print-area">
-                  <article class="story-sticker shape-card theme-ivory text-medium" aria-label="シールプレビュー">
-                    <div class="drop-preview">
-                      <img class="drop-template" src="assets/drop-template.png" alt="" aria-hidden="true">
-                      <div class="story-date drop-date" id="previewDate">日付なし</div>
-                      <h3 class="story-title drop-title" id="previewTitle">まだシールがありません</h3>
+                  <article class="story-sticker shape-roll theme-lilac text-medium" aria-label="シールプレビュー">
+                    <div class="story-content">
+                      <div class="story-date" id="previewDate">日付なし</div>
+                      <h3 class="story-title" id="previewTitle">まだシールがありません</h3>
                       <div class="story-divider" aria-hidden="true"></div>
-                      <div class="story-body drop-body" id="previewBody">
-                        <p>候補を選ぶと、ここに内容に合った形と色のシールが表示されます。</p>
+                      <div class="story-body" id="previewBody">
+                        <p>候補を選ぶと、ここに53mmロール紙用のシールが表示されます。</p>
                       </div>
                     </div>
                   </article>
@@ -1657,29 +1914,17 @@
           : "https://design-proto-kgyuz0302-1965s-projects.vercel.app/api/generate-story";
 
         const STICKER_SHAPES = [
-          { id: "long", name: "long", label: "縦長" },
-          { id: "card", name: "card", label: "カード型" },
-          { id: "label", name: "label", label: "ラベル型" },
-          { id: "round", name: "round", label: "丸型" },
-          { id: "drop", name: "drop", label: "しずく型" },
-          { id: "ticket", name: "ticket", label: "チケット型" }
+          { id: "roll", name: "roll", label: "53mmロール紙" }
         ];
 
         const STICKER_THEMES = [
-          { id: "sky", name: "sky", label: "水色", bg: "#E7EDF0", ink: "#4F585B", line: "#8F9CA2" },
-          { id: "ivory", name: "ivory", label: "アイボリー", bg: "#EADDCB", ink: "#3A2C2A", line: "#B3262D" },
-          { id: "pink", name: "pink", label: "ピンク", bg: "#F2C9C9", ink: "#5F3A3B", line: "#B3262D" },
-          { id: "beige", name: "beige", label: "ベージュ", bg: "#EADDCB", ink: "#4F3C36", line: "#9B6F62" },
-          { id: "lavender", name: "lavender", label: "ラベンダー", bg: "#D9C7EB", ink: "#4F3F5F", line: "#7C6693" },
-          { id: "yellow", name: "yellow", label: "イエロー", bg: "#F3D88D", ink: "#5C4A2D", line: "#B3262D" }
+          { id: "lilac", name: "lilac", label: "ライラック", bg: "#E7D8EF", ink: "#2F2C31", line: "#4F4854" },
+          { id: "pink", name: "pink", label: "ピンク", bg: "#F4D2D8", ink: "#302A2B", line: "#59454A" },
+          { id: "blue", name: "blue", label: "ブルー", bg: "#DCEFF6", ink: "#283033", line: "#42545A" },
+          { id: "mint", name: "mint", label: "ミント", bg: "#DFF1E6", ink: "#28302B", line: "#425448" },
+          { id: "orange", name: "orange", label: "薄いオレンジ", bg: "#F7DFC5", ink: "#312A24", line: "#5D4B3C" },
+          { id: "silver", name: "silver", label: "シルバー", bg: "#EEEEEC", ink: "#282828", line: "#4B4B49" }
         ];
-
-        const SHAPE_TEXT_LIMITS = {
-          label: 70,
-          round: 120,
-          drop: 280,
-          ticket: 160
-        };
 
         const STORY_RULES = [
           {
@@ -1789,7 +2034,6 @@
           previewBody: document.getElementById("previewBody"),
           printButton: document.getElementById("printButton"),
           saveStickerButton: document.getElementById("saveStickerButton"),
-          shapeSelect: document.getElementById("shapeSelect"),
           themeSelect: document.getElementById("themeSelect"),
           themeRecommendation: document.getElementById("themeRecommendation"),
           storySticker: document.querySelector(".story-sticker")
@@ -1820,14 +2064,13 @@
 
         let candidates = [];
         let selectedIndex = -1;
-        let selectedShapeId = "card";
-        let selectedThemeId = "ivory";
+        let selectedShapeId = "roll";
+        let selectedThemeId = "lilac";
         let selectedSizeClass = "text-medium";
         let isGenerating = false;
 
-        setupShapeSelect();
         setupThemeSelect();
-        applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "AIおすすめ");
+        applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "用紙カラー");
         showScreen("opening", false);
 
         elements.startButton.addEventListener("click", function () {
@@ -1886,21 +2129,8 @@
         elements.themeSelect.addEventListener("change", function () {
           console.log("色テーマ select changed", elements.themeSelect.value);
           selectedThemeId = elements.themeSelect.value;
-          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "選択中");
-          fitStickerLayout("選択中");
-        });
-
-        elements.shapeSelect.addEventListener("change", function () {
-          console.log("かたち select changed", elements.shapeSelect.value);
-          const requestedShapeId = elements.shapeSelect.value;
-          const safeShapeId = getSafeShapeForLength(requestedShapeId, countStoryChars(elements.bodyEdit.value));
-          selectedShapeId = safeShapeId;
-          elements.shapeSelect.value = selectedShapeId;
-          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "選択中");
-          fitStickerLayout("選択中");
-          if (safeShapeId !== requestedShapeId) {
-            return;
-          }
+          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "用紙カラー");
+          fitStickerLayout("用紙カラー");
         });
 
         [elements.printButton, elements.saveStickerButton].forEach(function (button) {
@@ -2174,7 +2404,7 @@
 
             const theme = document.createElement("span");
             theme.className = "theme-label";
-            theme.textContent = "AIおすすめ：" + getStickerTypeText(candidate.shapeId, candidate.themeId);
+            theme.textContent = "用紙カラー：" + getStickerTypeText(candidate.shapeId, candidate.themeId);
 
             const excerpt = document.createElement("p");
             excerpt.className = "excerpt";
@@ -2213,12 +2443,11 @@
           elements.dateEdit.value = candidate.date;
           elements.titleEdit.value = candidate.title;
           elements.bodyEdit.value = candidate.body;
-          selectedShapeId = candidate.shapeId || "card";
-          selectedThemeId = candidate.themeId || "ivory";
+          selectedShapeId = "roll";
+          selectedThemeId = getTheme(candidate.themeId).id;
           selectedSizeClass = candidate.sizeClass || "text-medium";
-          elements.shapeSelect.value = selectedShapeId;
           elements.themeSelect.value = selectedThemeId;
-          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "AIおすすめ");
+          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "用紙カラー");
           renderCandidates();
           updatePreview();
         }
@@ -2227,12 +2456,11 @@
           elements.dateEdit.value = "";
           elements.titleEdit.value = "";
           elements.bodyEdit.value = "";
-          selectedShapeId = "card";
-          selectedThemeId = "ivory";
+          selectedShapeId = "roll";
+          selectedThemeId = "lilac";
           selectedSizeClass = "text-medium";
-          elements.shapeSelect.value = selectedShapeId;
           elements.themeSelect.value = selectedThemeId;
-          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "AIおすすめ");
+          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "用紙カラー");
           updatePreview();
         }
 
@@ -2247,15 +2475,14 @@
             selectedShapeId = design.shapeId;
             selectedThemeId = design.themeId;
             selectedSizeClass = design.sizeClass;
-            elements.shapeSelect.value = selectedShapeId;
             elements.themeSelect.value = selectedThemeId;
-            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "AIおすすめ");
+            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "用紙カラー");
           }
 
           elements.previewDate.textContent = elements.dateEdit.value.trim() || "日付なし";
           elements.previewTitle.textContent = title;
           renderStoryBody(body);
-          fitStickerLayout("AIおすすめ");
+          fitStickerLayout("用紙カラー");
         }
 
         function renderStoryBody(text) {
@@ -2273,21 +2500,11 @@
           });
         }
 
-        function setupShapeSelect() {
-          STICKER_SHAPES.forEach(function (shape) {
-            const option = document.createElement("option");
-            option.value = shape.id;
-            option.textContent = shape.name + "（" + shape.label + "）";
-            elements.shapeSelect.appendChild(option);
-          });
-          elements.shapeSelect.value = selectedShapeId;
-        }
-
         function setupThemeSelect() {
           STICKER_THEMES.forEach(function (theme) {
             const option = document.createElement("option");
             option.value = theme.id;
-            option.textContent = theme.name + "（" + theme.label + "）";
+            option.textContent = theme.label;
             elements.themeSelect.appendChild(option);
           });
           elements.themeSelect.value = selectedThemeId;
@@ -2301,19 +2518,19 @@
           elements.storySticker.style.setProperty("--sticker-bg", theme.bg);
           elements.storySticker.style.setProperty("--sticker-text", theme.ink);
           elements.storySticker.style.setProperty("--sticker-line", theme.line);
-          elements.themeRecommendation.textContent = labelPrefix + "：" + getStickerTypeText(shape.id, theme.id);
+          elements.themeRecommendation.textContent = (labelPrefix || "用紙カラー") + "：" + getStickerTypeText(shape.id, theme.id);
         }
 
         function getShape(shapeId) {
           return STICKER_SHAPES.find(function (shape) {
             return shape.id === shapeId;
-          }) || STICKER_SHAPES[1];
+          }) || STICKER_SHAPES[0];
         }
 
         function getTheme(themeId) {
           return STICKER_THEMES.find(function (theme) {
             return theme.id === themeId;
-          }) || STICKER_THEMES[1];
+          }) || STICKER_THEMES[0];
         }
 
         function getShapeLabel(shapeId) {
@@ -2327,7 +2544,7 @@
         }
 
         function getStickerTypeText(shapeId, themeId) {
-          return getShape(shapeId).label + "・" + getTheme(themeId).label;
+          return getTheme(themeId).label;
         }
 
         function getStickerDesign(title, body, sourceText) {
@@ -2338,94 +2555,31 @@
           const isEvent = /花束|メイク|遊ぶ|遊び|おでかけ|ライブ|イベント|駅|集合|予定/.test(text);
           const isSchool = /課題|レポート|参考文献|AI|ai|授業|提出|確認|学校/.test(text);
 
-          let shape = "shape-card";
-          let theme = "theme-ivory";
-
-          if (length > 280) {
-            shape = "shape-long";
-            if (isRainy) {
-              theme = "theme-lavender";
-            } else if (isSchool) {
-              theme = "theme-beige";
-            } else if (isEvent) {
-              theme = "theme-yellow";
-            } else if (isWarm) {
-              theme = "theme-ivory";
-            } else {
-              theme = "theme-sky";
-            }
-          } else if (length > 160) {
-            if (isRainy) {
-              shape = "shape-drop";
-              theme = "theme-lavender";
-            } else if (isSchool) {
-              shape = "shape-long";
-              theme = "theme-beige";
-            } else if (isEvent) {
-              shape = "shape-card";
-              theme = "theme-yellow";
-            } else if (isWarm) {
-              shape = "shape-card";
-              theme = "theme-ivory";
-            } else {
-              shape = "shape-card";
-              theme = "theme-ivory";
-            }
-          } else if (length <= 70) {
-            if (isRainy) {
-              shape = "shape-drop";
-              theme = "theme-lavender";
-            } else if (isWarm) {
-              shape = "shape-round";
-              theme = "theme-beige";
-            } else if (isEvent) {
-              shape = "shape-ticket";
-              theme = "theme-yellow";
-            } else if (isSchool) {
-              shape = "shape-card";
-              theme = "theme-ivory";
-            } else {
-              shape = "shape-label";
-              theme = "theme-pink";
-            }
-          } else {
-            if (isRainy) {
-              shape = "shape-drop";
-              theme = "theme-lavender";
-            } else if (isWarm && length <= 120) {
-              shape = "shape-round";
-              theme = "theme-beige";
-            } else if (isWarm) {
-              shape = "shape-card";
-              theme = "theme-ivory";
-            } else if (isEvent) {
-              shape = "shape-ticket";
-              theme = "theme-yellow";
-            } else if (isSchool) {
-              shape = "shape-card";
-              theme = "theme-ivory";
-            } else {
-              shape = "shape-card";
-              theme = "theme-ivory";
-            }
+          let themeId = "lilac";
+          if (isRainy) {
+            themeId = "blue";
+          } else if (isWarm) {
+            themeId = "mint";
+          } else if (isEvent) {
+            themeId = "orange";
+          } else if (isSchool) {
+            themeId = "silver";
+          } else if (length <= 90) {
+            themeId = "pink";
           }
 
-          shape = "shape-" + getSafeShapeForLength(shape.replace("shape-", ""), length);
-
           let sizeClass = "text-medium";
-          if (length > 280) {
-            sizeClass = "text-xsmall";
-          } else if (length > 160) {
+          if (length > 520) {
             sizeClass = "text-small";
-          } else if (length <= 70) {
+          } else if (length <= 80) {
             sizeClass = "text-large";
           }
 
           return {
-            shape: shape,
-            theme: theme,
-            shapeId: shape.replace("shape-", ""),
-            themeId: theme.replace("theme-", ""),
+            shape: "shape-roll",
+            theme: "theme-" + themeId,
+            shapeId: "roll",
+            themeId: themeId,
             sizeClass: sizeClass,
             length: length
           };
@@ -2436,93 +2590,12 @@
         }
 
         function getSafeShapeForLength(shapeId, length) {
-          if (shapeId === "drop") {
-            if (length > SHAPE_TEXT_LIMITS.drop) {
-              return "long";
-            }
-            return "drop";
-          }
-
-          if (length > 280) {
-            return "long";
-          }
-
-          if (length > 160) {
-            return ["long", "card"].includes(shapeId) ? shapeId : "card";
-          }
-
-          if (length > SHAPE_TEXT_LIMITS.round && shapeId === "round") {
-            return "card";
-          }
-
-          if (length > SHAPE_TEXT_LIMITS.ticket && shapeId === "ticket") {
-            return "card";
-          }
-
-          if (length > SHAPE_TEXT_LIMITS.label && shapeId === "label") {
-            return "card";
-          }
-
-          return getShape(shapeId).id;
+          return "roll";
         }
 
         function fitStickerLayout(labelPrefix) {
-          const sticker = elements.storySticker;
-          if (!sticker || !sticker.scrollHeight || !sticker.clientHeight) {
-            return;
-          }
-
-          const length = countStoryChars(elements.bodyEdit.value || elements.previewBody.textContent || "");
-          const safeShapeId = getSafeShapeForLength(selectedShapeId, length);
-          if (safeShapeId !== selectedShapeId) {
-            selectedShapeId = safeShapeId;
-            elements.shapeSelect.value = selectedShapeId;
-            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, labelPrefix || "AIおすすめ");
-          }
-
-          if (selectedShapeId === "drop") {
-            fitDropBodyText();
-          }
-
-          if (sticker.scrollHeight <= sticker.clientHeight + 2) {
-            return;
-          }
-
-          const sizeOrder = ["text-large", "text-medium", "text-small", "text-xsmall"];
-          const currentSizeIndex = sizeOrder.indexOf(selectedSizeClass);
-          if (currentSizeIndex >= 0 && currentSizeIndex < sizeOrder.length - 1) {
-            selectedSizeClass = sizeOrder[currentSizeIndex + 1];
-            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, labelPrefix || "AIおすすめ");
-          }
-
-          if (sticker.scrollHeight > sticker.clientHeight + 2) {
-            selectedShapeId = "long";
-            selectedSizeClass = "text-xsmall";
-            elements.shapeSelect.value = selectedShapeId;
-            applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, labelPrefix || "AIおすすめ");
-          }
-        }
-
-        function fitDropBodyText() {
-          const body = elements.previewBody;
-          if (!body || !body.clientHeight) {
-            return;
-          }
-
-          const steps = [
-            { fontSize: "11.8px", lineHeight: "1.56" },
-            { fontSize: "11px", lineHeight: "1.48" },
-            { fontSize: "10.3px", lineHeight: "1.42" },
-            { fontSize: "9.8px", lineHeight: "1.38" }
-          ];
-
-          for (let i = 0; i < steps.length; i += 1) {
-            body.style.fontSize = steps[i].fontSize;
-            body.style.lineHeight = steps[i].lineHeight;
-            if (body.scrollHeight <= body.clientHeight + 2) {
-              return;
-            }
-          }
+          selectedShapeId = "roll";
+          applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, labelPrefix || "用紙カラー");
         }
 
         function firstParagraph(text) {
