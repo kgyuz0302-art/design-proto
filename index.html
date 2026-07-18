@@ -1852,31 +1852,42 @@
           -webkit-print-color-adjust: exact;
         }
 
-        .story-content {
-          padding: 6.5mm 5mm 7mm;
+        .story-sticker.shape-roll {
+          width: 53mm !important;
+          max-width: 53mm !important;
+          border-color: #111 !important;
+          background: transparent !important;
+          color: #111 !important;
+          box-shadow: none !important;
         }
 
-        .story-content::before,
-        .story-content::after {
-          color: #111;
+        .story-sticker.shape-roll .story-content {
+          padding: 6.5mm 5mm 7mm !important;
         }
 
-        .story-date {
-          font-size: 8pt;
+        .story-sticker.shape-roll .story-content::before,
+        .story-sticker.shape-roll .story-content::after {
+          color: #111 !important;
         }
 
-        .story-title {
-          font-size: 16pt;
+        .story-sticker.shape-roll .story-date {
+          color: #111 !important;
+          font-size: 8pt !important;
         }
 
-        .story-body,
-        .text-large .story-body,
-        .text-medium .story-body,
-        .text-small .story-body,
-        .text-xsmall .story-body {
-          color: #111;
-          font-size: 8.8pt;
-          line-height: 1.62;
+        .story-sticker.shape-roll .story-title {
+          color: #111 !important;
+          font-size: 16pt !important;
+        }
+
+        .story-sticker.shape-roll .story-body,
+        .story-sticker.shape-roll.text-large .story-body,
+        .story-sticker.shape-roll.text-medium .story-body,
+        .story-sticker.shape-roll.text-small .story-body,
+        .story-sticker.shape-roll.text-xsmall .story-body {
+          color: #111 !important;
+          font-size: 8.8pt !important;
+          line-height: 1.62 !important;
         }
 
         .layout-poem,
