@@ -1509,40 +1509,41 @@
         margin-bottom: 0;
       }
 
+      .theme-lavender,
       .theme-lilac {
         --sticker-bg: #e7d8ef;
-        --sticker-text: #2f2c31;
-        --sticker-line: #4f4854;
+        --sticker-text: #171717;
+        --sticker-line: #171717;
       }
 
       .theme-pink {
         --sticker-bg: #f4d2d8;
-        --sticker-text: #302a2b;
-        --sticker-line: #59454a;
+        --sticker-text: #171717;
+        --sticker-line: #171717;
       }
 
       .theme-blue {
         --sticker-bg: #dceff6;
-        --sticker-text: #283033;
-        --sticker-line: #42545a;
+        --sticker-text: #171717;
+        --sticker-line: #171717;
       }
 
       .theme-mint {
         --sticker-bg: #dff1e6;
-        --sticker-text: #28302b;
-        --sticker-line: #425448;
+        --sticker-text: #171717;
+        --sticker-line: #171717;
       }
 
       .theme-orange {
         --sticker-bg: #f7dfc5;
-        --sticker-text: #312a24;
-        --sticker-line: #5d4b3c;
+        --sticker-text: #171717;
+        --sticker-line: #171717;
       }
 
       .theme-silver {
         --sticker-bg: #eeeeec;
-        --sticker-text: #282828;
-        --sticker-line: #4b4b49;
+        --sticker-text: #171717;
+        --sticker-line: #171717;
       }
 
       .theme-recommendation {
@@ -1554,8 +1555,9 @@
         font-weight: 700;
       }
 
+      /* Sticker preview: size classes change the composition, theme classes change paper and motifs. */
       .story-sticker.shape-roll {
-        --roll-preview-width: 326px;
+        --roll-preview-width: 352px;
         width: var(--roll-preview-width);
         max-width: calc(100vw - 64px);
         border: 1.15px solid var(--sticker-line);
@@ -1571,7 +1573,7 @@
         display: flex;
         min-height: 100%;
         flex-direction: column;
-        padding: 30px 28px 34px;
+        padding: 32px 30px 36px;
       }
 
       .story-sticker.shape-roll .story-content::before,
@@ -1586,14 +1588,16 @@
       }
 
       .story-sticker.shape-roll .story-content::before {
+        content: var(--motif-top);
         order: 0;
-        margin-bottom: 22px;
+        margin-bottom: 24px;
       }
 
       .story-sticker.shape-roll .story-content::after {
+        content: var(--motif-bottom);
         order: 10;
         margin-top: auto;
-        padding-top: 26px;
+        padding-top: 28px;
       }
 
       .story-sticker.shape-roll .story-title {
@@ -1621,10 +1625,25 @@
 
       .story-sticker.shape-roll .story-divider {
         order: 3;
+        position: relative;
         height: 1px;
         margin: 0 0 24px;
         background: var(--sticker-line);
         opacity: 0.78;
+      }
+
+      .story-sticker.shape-roll .story-divider::after {
+        content: var(--motif-divider);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        padding: 0 9px;
+        background: var(--sticker-bg);
+        color: var(--sticker-text);
+        font-family: "Yu Mincho", "Hiragino Mincho ProN", "BIZ UDPMincho", serif;
+        font-size: 13px;
+        line-height: 1;
+        transform: translate(-50%, -50%);
       }
 
       .story-sticker.shape-roll .story-body {
@@ -1648,86 +1667,165 @@
         margin-bottom: 0;
       }
 
-      .layout-long {
-        min-height: 670px;
+      .layout-short {
+        min-height: 465px;
       }
 
-      .story-sticker.shape-roll.layout-long .story-content {
-        padding-top: 28px;
-        padding-bottom: 34px;
+      .story-sticker.shape-roll.layout-short .story-content {
+        justify-content: center;
+        padding: 38px 32px;
       }
 
-      .story-sticker.shape-roll.layout-long .story-content::before {
-        content: "─  ·  ❦  ·  ─";
+      .story-sticker.shape-roll.layout-short .story-content::before {
+        margin-bottom: 28px;
       }
 
-      .story-sticker.shape-roll.layout-long .story-content::after {
-        content: "─  ·  ❦  ·  ─";
+      .story-sticker.shape-roll.layout-short .story-content::after {
+        padding-top: 30px;
       }
 
-      .story-sticker.shape-roll.layout-long .story-title {
-        font-size: 29px;
-        text-align: left;
+      .story-sticker.shape-roll.layout-short .story-title {
+        font-size: 39px;
+        line-height: 1.33;
+        text-align: center;
       }
 
-      .story-sticker.shape-roll.layout-long .story-date {
-        margin-top: 10px;
-        text-align: right;
+      .story-sticker.shape-roll.layout-short .story-date {
+        margin: 18px 0 16px;
+        font-size: 12px;
+        text-align: center;
       }
 
-      .story-sticker.shape-roll.layout-long .story-body {
-        font-size: 12.8px;
-        line-height: 1.72;
+      .story-sticker.shape-roll.layout-short .story-divider {
+        width: 72%;
+        margin-right: auto;
+        margin-bottom: 28px;
+        margin-left: auto;
+      }
+
+      .story-sticker.shape-roll.layout-short .story-body {
+        font-size: 14.2px;
+        line-height: 1.95;
+        text-align: center;
       }
 
       .layout-medium {
-        min-height: 560px;
+        min-height: 590px;
+      }
+
+      .story-sticker.shape-roll.layout-medium .story-content {
+        padding: 34px 31px 38px;
       }
 
       .story-sticker.shape-roll.layout-medium .story-content::before {
-        content: "────  ·  ✦  ·  ────";
-      }
-
-      .story-sticker.shape-roll.layout-medium .story-content::after {
-        content: "────  ·  ✦  ·  ────";
+        margin-bottom: 28px;
       }
 
       .story-sticker.shape-roll.layout-medium .story-title {
-        font-size: 32px;
+        font-size: 34px;
+        text-align: center;
+      }
+
+      .story-sticker.shape-roll.layout-medium .story-date {
+        margin: 17px 0 16px;
+        text-align: center;
+      }
+
+      .story-sticker.shape-roll.layout-medium .story-divider {
+        margin-bottom: 30px;
       }
 
       .story-sticker.shape-roll.layout-medium .story-body {
         font-size: 13.5px;
-        line-height: 1.82;
+        line-height: 1.86;
       }
 
-      .layout-short {
-        min-height: 460px;
+      .layout-long {
+        min-height: 760px;
       }
 
-      .story-sticker.shape-roll.layout-short .story-content {
-        padding: 34px 30px 34px;
+      .story-sticker.shape-roll.layout-long .story-content {
+        padding: 30px 29px 36px;
       }
 
-      .story-sticker.shape-roll.layout-short .story-content::before {
-        content: "────  ···  ♥  ···  ────";
+      .story-sticker.shape-roll.layout-long .story-content::before {
+        margin-bottom: 20px;
       }
 
-      .story-sticker.shape-roll.layout-short .story-content::after {
-        content: "────  ·  ♡  ·  ────";
+      .story-sticker.shape-roll.layout-long .story-content::after {
+        padding-top: 24px;
       }
 
-      .story-sticker.shape-roll.layout-short .story-title {
-        font-size: 36px;
-        line-height: 1.34;
+      .story-sticker.shape-roll.layout-long .story-title {
+        font-size: 29px;
+        line-height: 1.25;
+        text-align: left;
       }
 
-      .story-sticker.shape-roll.layout-short .story-date {
-        margin: 18px 0 12px;
+      .story-sticker.shape-roll.layout-long .story-date {
+        order: 1;
+        margin: 0 0 8px;
+        font-size: 11px;
+        text-align: right;
       }
 
-      .story-sticker.shape-roll.layout-short .story-divider {
-        margin-bottom: 28px;
+      .story-sticker.shape-roll.layout-long .story-title {
+        order: 2;
+      }
+
+      .story-sticker.shape-roll.layout-long .story-divider {
+        margin: 14px 0 24px;
+      }
+
+      .story-sticker.shape-roll.layout-long .story-body {
+        font-size: 12.7px;
+        line-height: 1.74;
+        letter-spacing: 0.028em;
+      }
+
+      .layout-extraLong {
+        min-height: 980px;
+      }
+
+      .story-sticker.shape-roll.layout-extraLong .story-content {
+        padding: 28px 28px 34px;
+      }
+
+      .story-sticker.shape-roll.layout-extraLong .story-content::before {
+        margin-bottom: 16px;
+        font-size: 11px;
+      }
+
+      .story-sticker.shape-roll.layout-extraLong .story-content::after {
+        padding-top: 22px;
+        font-size: 11px;
+      }
+
+      .story-sticker.shape-roll.layout-extraLong .story-date {
+        order: 1;
+        margin: 0 0 8px;
+        font-size: 10.5px;
+        text-align: right;
+      }
+
+      .story-sticker.shape-roll.layout-extraLong .story-title {
+        order: 2;
+        font-size: 24px;
+        line-height: 1.25;
+        text-align: left;
+      }
+
+      .story-sticker.shape-roll.layout-extraLong .story-divider {
+        margin: 13px 0 20px;
+      }
+
+      .story-sticker.shape-roll.layout-extraLong .story-body {
+        font-size: 12.1px;
+        line-height: 1.66;
+        letter-spacing: 0.024em;
+      }
+
+      .theme-pink .story-divider {
         background:
           repeating-linear-gradient(
             to right,
@@ -1738,50 +1836,15 @@
           );
       }
 
-      .story-sticker.shape-roll.layout-short .story-body {
-        font-size: 14px;
-        line-height: 1.9;
+      .theme-silver .story-divider {
+        height: 2px;
+        background:
+          linear-gradient(to right, var(--sticker-line) 0 35%, transparent 35% 39%, var(--sticker-line) 39% 61%, transparent 61% 65%, var(--sticker-line) 65%);
       }
 
-      .layout-poem {
-        min-height: 390px;
-      }
-
-      .story-sticker.shape-roll.layout-poem .story-content {
-        justify-content: center;
-        padding: 34px 30px;
-      }
-
-      .story-sticker.shape-roll.layout-poem .story-content::before {
-        content: "──  ·  ✧  ·  ──";
-        margin-bottom: 24px;
-      }
-
-      .story-sticker.shape-roll.layout-poem .story-content::after {
-        content: "──  ·  ✧  ·  ──";
-        margin-top: 28px;
-        padding-top: 0;
-      }
-
-      .story-sticker.shape-roll.layout-poem .story-title {
-        font-size: 39px;
-        line-height: 1.35;
-      }
-
-      .story-sticker.shape-roll.layout-poem .story-date {
-        margin: 16px 0 18px;
-      }
-
-      .story-sticker.shape-roll.layout-poem .story-divider {
-        width: 70%;
-        margin-right: auto;
-        margin-left: auto;
-      }
-
-      .story-sticker.shape-roll.layout-poem .story-body {
-        font-size: 14.2px;
-        line-height: 2;
-        text-align: center;
+      .theme-orange .story-content::before,
+      .theme-orange .story-content::after {
+        letter-spacing: 0.12em;
       }
 
       .text-small .story-sticker.shape-roll .story-body,
@@ -1890,11 +1953,16 @@
           line-height: 1.62 !important;
         }
 
-        .layout-poem,
         .layout-short,
         .layout-medium,
-        .layout-long {
+        .layout-long,
+        .layout-extraLong {
           min-height: 0;
+        }
+
+        .story-sticker.shape-roll .story-divider::after {
+          background: #fff !important;
+          color: #111 !important;
         }
 
         .no-print {
@@ -2126,9 +2194,9 @@
                 <button class="button secondary" id="saveStickerButton" type="button">シールとして残す</button>
               </div>
               <div class="theme-controls no-print" aria-label="シール設定">
-                <p class="theme-recommendation" id="themeRecommendation">おすすめ：Medium / ライラック</p>
+                <p class="theme-recommendation" id="themeRecommendation">おすすめ：medium / ラベンダー</p>
                 <label class="theme-control-row" for="layoutSelect">
-                  <span class="label">レイアウト</span>
+                  <span class="label">サイズ</span>
                   <select class="theme-select layout-select" id="layoutSelect"></select>
                 </label>
                 <label class="theme-control-row" for="themeSelect">
@@ -2138,13 +2206,13 @@
               </div>
               <div class="sticker-sheet" aria-label="ノートに貼ったシールのイメージ">
                 <div class="print-area">
-                  <article class="story-sticker shape-roll layout-medium theme-lilac text-medium" aria-label="シールプレビュー">
+                  <article class="story-sticker shape-roll layout-medium theme-lavender text-medium" aria-label="シールプレビュー">
                     <div class="story-content">
                       <div class="story-date" id="previewDate">日付なし</div>
                       <h3 class="story-title" id="previewTitle">まだシールがありません</h3>
                       <div class="story-divider" aria-hidden="true"></div>
                       <div class="story-body" id="previewBody">
-                        <p>候補を選ぶと、ここに53mmロール紙用のシールが表示されます。</p>
+                        <p>候補を選ぶと、ここに本文量に合ったロール紙シールが表示されます。</p>
                       </div>
                     </div>
                   </article>
@@ -2192,20 +2260,21 @@
           { id: "roll", name: "roll", label: "53mmロール紙" }
         ];
 
+        // layout = length and text placement, theme = paper color and monochrome motifs.
         const STICKER_THEMES = [
-          { id: "lilac", name: "lilac", label: "ライラック", bg: "#E7D8EF", ink: "#2F2C31", line: "#4F4854" },
-          { id: "pink", name: "pink", label: "ピンク", bg: "#F4D2D8", ink: "#302A2B", line: "#59454A" },
-          { id: "blue", name: "blue", label: "ブルー", bg: "#DCEFF6", ink: "#283033", line: "#42545A" },
-          { id: "mint", name: "mint", label: "ミント", bg: "#DFF1E6", ink: "#28302B", line: "#425448" },
-          { id: "orange", name: "orange", label: "薄いオレンジ", bg: "#F7DFC5", ink: "#312A24", line: "#5D4B3C" },
-          { id: "silver", name: "silver", label: "シルバー", bg: "#EEEEEC", ink: "#282828", line: "#4B4B49" }
+          { id: "lavender", name: "lavender", label: "ラベンダー", bg: "#E7D8EF", ink: "#171717", line: "#171717", motifTop: "──  ·  ☾  ·  ──", motifDivider: "☾", motifBottom: "──  ·  ◦  ·  ──" },
+          { id: "pink", name: "pink", label: "ピンク", bg: "#F4D2D8", ink: "#171717", line: "#171717", motifTop: "──  ···  ♥  ···  ──", motifDivider: "♡", motifBottom: "──  ·  ♡  ·  ──" },
+          { id: "blue", name: "blue", label: "ブルー", bg: "#DCEFF6", ink: "#171717", line: "#171717", motifTop: "──  ·  ✦  ·  ──", motifDivider: "✧", motifBottom: "──  ·  ✦  ·  ──" },
+          { id: "mint", name: "mint", label: "ミント", bg: "#DFF1E6", ink: "#171717", line: "#171717", motifTop: "──  ·  ❧  ·  ──", motifDivider: "❦", motifBottom: "──  ·  ❧  ·  ──" },
+          { id: "orange", name: "orange", label: "薄いオレンジ", bg: "#F7DFC5", ink: "#171717", line: "#171717", motifTop: "──  ·  ☼  ·  ──", motifDivider: "⊙", motifBottom: "──  ·  ☼  ·  ──" },
+          { id: "silver", name: "silver", label: "シルバー", bg: "#EEEEEC", ink: "#171717", line: "#171717", motifTop: "──  △  ◇  □  ──", motifDivider: "◇", motifBottom: "──  □  ◇  △  ──" }
         ];
 
         const STICKER_LAYOUTS = [
-          { id: "poem", name: "Poem", label: "Poem" },
-          { id: "short", name: "Short", label: "Short" },
-          { id: "medium", name: "Medium", label: "Medium" },
-          { id: "long", name: "Long", label: "Long" }
+          { id: "short", name: "short", label: "short" },
+          { id: "medium", name: "medium", label: "medium" },
+          { id: "long", name: "long", label: "long" },
+          { id: "extraLong", name: "extraLong", label: "extraLong" }
         ];
 
         const STORY_RULES = [
@@ -2348,7 +2417,7 @@
         let candidates = [];
         let selectedIndex = -1;
         let selectedShapeId = "roll";
-        let selectedThemeId = "lilac";
+        let selectedThemeId = "lavender";
         let selectedLayoutId = "medium";
         let selectedSizeClass = "text-medium";
         let isGenerating = false;
@@ -2760,7 +2829,7 @@
           elements.titleEdit.value = "";
           elements.bodyEdit.value = "";
           selectedShapeId = "roll";
-          selectedThemeId = "lilac";
+          selectedThemeId = "lavender";
           selectedLayoutId = "medium";
           selectedSizeClass = "text-medium";
           isManualLayout = false;
@@ -2842,6 +2911,9 @@
           elements.storySticker.style.setProperty("--sticker-bg", theme.bg);
           elements.storySticker.style.setProperty("--sticker-text", theme.ink);
           elements.storySticker.style.setProperty("--sticker-line", theme.line);
+          elements.storySticker.style.setProperty("--motif-top", JSON.stringify(theme.motifTop));
+          elements.storySticker.style.setProperty("--motif-divider", JSON.stringify(theme.motifDivider));
+          elements.storySticker.style.setProperty("--motif-bottom", JSON.stringify(theme.motifBottom));
           elements.themeRecommendation.textContent = (labelPrefix || "おすすめ") + "：" + layout.label + " / " + getStickerTypeText(shape.id, theme.id);
         }
 
@@ -2860,7 +2932,7 @@
         function getLayout(layoutId) {
           return STICKER_LAYOUTS.find(function (layout) {
             return layout.id === layoutId;
-          }) || STICKER_LAYOUTS[2];
+          }) || STICKER_LAYOUTS[1];
         }
 
         function getShapeLabel(shapeId) {
@@ -2889,9 +2961,9 @@
           const isEvent = /花束|メイク|遊ぶ|遊び|おでかけ|ライブ|イベント|駅|集合|予定/.test(text);
           const isSchool = /課題|レポート|参考文献|AI|ai|授業|提出|確認|学校/.test(text);
 
-          let themeId = "lilac";
+          let themeId = "lavender";
           if (isRainy) {
-            themeId = "blue";
+            themeId = "lavender";
           } else if (isWarm) {
             themeId = "mint";
           } else if (isEvent) {
@@ -2929,18 +3001,18 @@
 
         function getLayoutForLength(length) {
           if (length <= 120) {
-            return "poem";
-          }
-
-          if (length <= 220) {
             return "short";
           }
 
-          if (length <= 380) {
+          if (length <= 260) {
             return "medium";
           }
 
-          return "long";
+          if (length <= 520) {
+            return "long";
+          }
+
+          return "extraLong";
         }
 
         function getSafeShapeForLength(shapeId, length) {
