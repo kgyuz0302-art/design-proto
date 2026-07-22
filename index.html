@@ -2262,12 +2262,12 @@
 
         // layout = length and text placement, theme = paper color and monochrome motifs.
         const STICKER_THEMES = [
-          { id: "lavender", name: "lavender", label: "ラベンダー", bg: "#E7D8EF", ink: "#171717", line: "#171717", motifTop: "──  ·  ☾  ·  ──", motifDivider: "☾", motifBottom: "──  ·  ◦  ·  ──" },
-          { id: "pink", name: "pink", label: "ピンク", bg: "#F4D2D8", ink: "#171717", line: "#171717", motifTop: "──  ···  ♥  ···  ──", motifDivider: "♡", motifBottom: "──  ·  ♡  ·  ──" },
-          { id: "blue", name: "blue", label: "ブルー", bg: "#DCEFF6", ink: "#171717", line: "#171717", motifTop: "──  ·  ✦  ·  ──", motifDivider: "✧", motifBottom: "──  ·  ✦  ·  ──" },
+          { id: "lavender", name: "lavender", label: "ラベンダー", bg: "#E7D8EF", ink: "#171717", line: "#171717", motifTop: "──  ·  💧  ·  ──", motifDivider: "💧", motifBottom: "──  ·  💧  ·  ──" },
+          { id: "pink", name: "pink", label: "ピンク", bg: "#F4D2D8", ink: "#171717", line: "#171717", motifTop: "──  ···  ♡  ···  ──", motifDivider: "♡", motifBottom: "──  ·  ♡  ·  ──" },
+          { id: "blue", name: "blue", label: "ブルー", bg: "#DCEFF6", ink: "#171717", line: "#171717", motifTop: "──  ·  ✨  ·  ──", motifDivider: "✨", motifBottom: "──  ·  ✨  ·  ──" },
           { id: "mint", name: "mint", label: "ミント", bg: "#DFF1E6", ink: "#171717", line: "#171717", motifTop: "──  ·  ❧  ·  ──", motifDivider: "❦", motifBottom: "──  ·  ❧  ·  ──" },
-          { id: "orange", name: "orange", label: "薄いオレンジ", bg: "#F7DFC5", ink: "#171717", line: "#171717", motifTop: "──  ·  ☼  ·  ──", motifDivider: "⊙", motifBottom: "──  ·  ☼  ·  ──" },
-          { id: "silver", name: "silver", label: "シルバー", bg: "#EEEEEC", ink: "#171717", line: "#171717", motifTop: "──  △  ◇  □  ──", motifDivider: "◇", motifBottom: "──  □  ◇  △  ──" }
+          { id: "orange", name: "orange", label: "薄いオレンジ", bg: "#F7DFC5", ink: "#171717", line: "#171717", motifTop: "──  ·  ☼  ·  ──", motifDivider: "☀", motifBottom: "──  ·  ☼  ·  ──" },
+          { id: "silver", name: "silver", label: "シルバー", bg: "#EEEEEC", ink: "#171717", line: "#171717", motifTop: "──  ·  ☆  ·  ──", motifDivider: "☆", motifBottom: "──  ·  ☆  ·  ──" }
         ];
 
         const STICKER_LAYOUTS = [
@@ -2365,6 +2365,123 @@
 日記にはならなかった会話も、切り抜いてみると小さな物語になっていた。`
         };
 
+        const SAMPLE_STICKER_CANDIDATES = [
+          {
+            title: "二階の待ち合わせ",
+            date: "2026/06/03(水)",
+            topic: "待ち合わせ、短い返信、安心",
+            body: `二階の窓際で、いつもの席だけが少し早く夕方になっていた。
+
+返事は短かったけれど、その短さがかえってやさしかった。待っている時間まで、誰かと分け合っている気がした。`,
+            color: "pink",
+            lengthType: "short",
+            layoutType: "short",
+            motifType: "heart"
+          },
+          {
+            title: "改札の前で",
+            date: "2026/06/05(金)",
+            topic: "駅、偶然、透明な時間",
+            body: `改札の前は、いつもより少しだけ明るかった。
+
+人の波に押されながら立ち止まると、通知がひとつ届く。急いでいるはずなのに、画面の文字を読むあいだだけ時間が薄くなる。
+
+顔を上げた先に見慣れた手があって、その瞬間、ただの待ち合わせが小さな合図みたいに思えた。`,
+            color: "blue",
+            lengthType: "medium",
+            layoutType: "medium",
+            motifType: "sparkle"
+          },
+          {
+            title: "全滅の夜に",
+            date: "2026/06/08(月)",
+            topic: "夜、静けさ、不安",
+            body: `その夜、予定はゆっくり崩れていった。
+
+返信は来ない。電車は遅れる。雨はやむ気配もなく、コンビニの明かりだけが道の端でぼんやりしていた。何か大変なことが起きたわけではないのに、少しずつ気持ちが沈んでいく。
+
+それでも、画面の中に一言だけ残っていた。「大丈夫？」その短い言葉が、濡れた袖より先に心を乾かしてくれた。
+
+帰り道は長かった。でも、長いままでもいいと思えた。誰かが気にしてくれているだけで、夜は完全には暗くならない。`,
+            color: "lavender",
+            lengthType: "long",
+            layoutType: "long",
+            motifType: "drop"
+          },
+          {
+            title: "夕方の返信",
+            date: "2026/06/11(木)",
+            topic: "返信、帰り道、一日の終わり",
+            body: `帰り道、スマホの画面が光った。
+
+「おつかれさま。今日はどうだった？」たったそれだけのメッセージに、少しだけ胸がじんわりした。急いで返したくなったけれど、電車は混んでいて、言葉はうまく見つからなかった。
+
+家に着いたのは、いつもより少し遅い時間だった。靴を脱いで、手を洗って、やかんを火にかける。湯気が立ちのぼるのを見ながら、ようやく落ち着いて、あの日のことを思い出した。
+
+朝、うまくいかなかった予定。昼休みに食べた冷めたお弁当。帰り道に見た夕焼け。それでも、最後に届いた一言が、全部をやわらかく結び直してくれた。
+
+返信は、ただのやりとりじゃない。一日の終わりに、心をつなぎ直す小さな印みたいなものだった。`,
+            color: "silver",
+            lengthType: "extraLong",
+            layoutType: "extraLong",
+            motifType: "star"
+          },
+          {
+            title: "朝の葉っぱ",
+            date: "2026/06/14(日)",
+            topic: "朝、植物、やさしい気分",
+            body: `朝のベランダで、小さな葉っぱが増えているのを見つけた。
+
+それを写真に撮って送ると、「ちゃんと育ってるね」と返ってきた。たった一枚の写真で、今日が少しだけ新しくなる。`,
+            color: "mint",
+            lengthType: "short",
+            layoutType: "short",
+            motifType: "leaf"
+          },
+          {
+            title: "夕焼けメイク",
+            date: "2026/06/18(木)",
+            topic: "出かける前、メイク、夕焼け",
+            body: `出かける前の部屋は、少しだけ慌ただしかった。
+
+鏡の前でリップを塗り直していると、窓の外がオレンジ色に染まっていく。今日の予定は特別なものではない。それでも、少しだけきれいにして出かけたい日がある。
+
+「もうすぐ着く」と届いた文字に、バッグを閉じる。夕焼けは急がないのに、こちらだけが少し急いでいる。その感じまで、なんだか楽しかった。
+
+駅へ向かう道で振り返ると、部屋の窓にもまだ光が残っていた。今日のはじまりが、そこに貼られているみたいだった。`,
+            color: "orange",
+            lengthType: "long",
+            layoutType: "long",
+            motifType: "sun"
+          },
+          {
+            title: "小さなきらめき",
+            date: "2026/06/20(土)",
+            topic: "写真、帰り道、うれしい瞬間",
+            body: `帰り道に撮った写真は、少しだけぶれていた。
+
+それでも送ると、「これ好き」と返ってきた。うまく撮れなかったものまで誰かが拾ってくれると、今日の端っこに小さな光が残る。`,
+            color: "blue",
+            lengthType: "short",
+            layoutType: "short",
+            motifType: "sparkle"
+          },
+          {
+            title: "雨上がりの予定",
+            date: "2026/06/22(月)",
+            topic: "雨上がり、予定、静かな期待",
+            body: `雨が上がったあと、予定の話は急に現実味を帯びた。
+
+どこで会うか、何時に出るか、何を持っていくか。決めることは小さいのに、会話の温度だけが少しずつ上がっていく。
+
+まだ何も始まっていないのに、もう楽しい気がしていた。`,
+            color: "lavender",
+            lengthType: "medium",
+            layoutType: "medium",
+            motifType: "drop"
+          }
+        ];
+
         const elements = {
           appPage: document.getElementById("appPage"),
           startButton: document.getElementById("startButton"),
@@ -2423,6 +2540,7 @@
         let isGenerating = false;
         let isManualLayout = false;
         let isManualTheme = false;
+        let isSampleTextActive = false;
 
         setupLayoutSelect();
         setupThemeSelect();
@@ -2453,10 +2571,19 @@
           console.log("サンプルを入れる button clicked");
           try {
             elements.talkInput.value = SAMPLE_TEXT;
+            isSampleTextActive = true;
+            candidates = buildSampleStickerCandidates();
+            selectedIndex = 0;
+            renderCandidates();
+            selectCandidate(0);
             clearStatus();
           } catch (error) {
             handleError(error);
           }
+        });
+
+        elements.talkInput.addEventListener("input", function () {
+          isSampleTextActive = elements.talkInput.value.trim() === SAMPLE_TEXT.trim();
         });
 
         elements.generateButton.addEventListener("click", async function () {
@@ -2550,6 +2677,16 @@
           }
 
           const safeText = maskSensitiveText(rawText);
+
+          if (isSampleTextActive && rawText === SAMPLE_TEXT.trim()) {
+            candidates = buildSampleStickerCandidates();
+            selectedIndex = 0;
+            renderCandidates();
+            selectCandidate(0);
+            setStatus(candidates.length + "件のサンプル候補を作りました");
+            return true;
+          }
+
           setStatus("AIで小説候補を作っています");
 
           try {
@@ -2700,6 +2837,28 @@
           };
         }
 
+        function buildSampleStickerCandidates() {
+          return SAMPLE_STICKER_CANDIDATES.map(function (sample, index) {
+            const length = countStoryChars(sample.body);
+            return {
+              id: "sample-" + index,
+              date: sample.date,
+              title: sample.title,
+              topic: sample.topic,
+              body: sample.body,
+              shapeId: "roll",
+              themeId: getTheme(sample.color).id,
+              layoutId: getLayout(sample.layoutType).id,
+              sizeClass: getSizeClassForLength(length),
+              color: sample.color,
+              lengthType: sample.lengthType,
+              motifType: sample.motifType,
+              score: SAMPLE_STICKER_CANDIDATES.length - index,
+              source: "sample"
+            };
+          });
+        }
+
         function splitByDate(text) {
           const lines = text.split(/\r?\n/);
           const blocks = [];
@@ -2821,7 +2980,7 @@
           elements.themeSelect.value = selectedThemeId;
           applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "おすすめ");
           renderCandidates();
-          updatePreview();
+          updatePreview({ keepDesign: true });
         }
 
         function clearEditor() {
@@ -2840,7 +2999,8 @@
           updatePreview();
         }
 
-        function updatePreview() {
+        function updatePreview(options) {
+          const shouldKeepDesign = Boolean(options && options.keepDesign);
           const rawTitle = elements.titleEdit.value.trim();
           const rawBody = elements.bodyEdit.value.trim();
           const title = rawTitle || "まだシールがありません";
@@ -2849,13 +3009,15 @@
           if (rawTitle || rawBody) {
             const design = getStickerDesign(title, body, "");
             selectedShapeId = design.shapeId;
-            if (!isManualLayout) {
+            if (!shouldKeepDesign && !isManualLayout) {
               selectedLayoutId = design.layoutId;
             }
-            if (!isManualTheme) {
+            if (!shouldKeepDesign && !isManualTheme) {
               selectedThemeId = design.themeId;
             }
-            selectedSizeClass = design.sizeClass;
+            if (!shouldKeepDesign) {
+              selectedSizeClass = design.sizeClass;
+            }
             elements.layoutSelect.value = selectedLayoutId;
             elements.themeSelect.value = selectedThemeId;
             applyStickerStyle(selectedShapeId, selectedThemeId, selectedSizeClass, "おすすめ");
@@ -2975,14 +3137,7 @@
           }
 
           const layoutId = getLayoutForLength(length);
-          let sizeClass = "text-medium";
-          if (length > 720) {
-            sizeClass = "text-xsmall";
-          } else if (length > 520) {
-            sizeClass = "text-small";
-          } else if (length <= 80) {
-            sizeClass = "text-large";
-          }
+          const sizeClass = getSizeClassForLength(length);
 
           return {
             shape: "shape-roll",
@@ -2997,6 +3152,22 @@
 
         function countStoryChars(text) {
           return (text || "").replace(/\s/g, "").length;
+        }
+
+        function getSizeClassForLength(length) {
+          if (length > 720) {
+            return "text-xsmall";
+          }
+
+          if (length > 520) {
+            return "text-small";
+          }
+
+          if (length <= 80) {
+            return "text-large";
+          }
+
+          return "text-medium";
         }
 
         function getLayoutForLength(length) {
